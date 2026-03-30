@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reserva tu Turno - Spa</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">🌿 SPA</div>
+  <nav class="nav">
+    <a href="index.html">Inicio</a>
+    <a href="servicios.html">Servicios</a>
+    <a href="turnos.html" class="active">Turnos</a>
+    <a href="#">Productos</a>
+    <a href="#">Iniciar Sesión</a>
+  </nav>
+</header>
+
+<main class="booking-container">
+  <h1>Reserva tu Turno</h1>
+  <p class="subtitle">Relájate y reserva tu momento de bienestar</p>
+
+  <div class="card">
+    <div class="grid-booking">
+
+      <!-- SERVICIOS -->
+      <div class="column services">
+        <div class="selector">
+          <img src="https://via.placeholder.com/60x40">
+          <select id="servicio">
+            <option>Masajes</option>
+            <option>Facial</option>
+            <option>Jacuzzi</option>
+          </select>
+        </div>
+
+        <button class="btn-reserva" id="btn-reserva">Reservar Turno</button>
+      </div>
+
+      <!-- HORARIOS -->
+      <div class="column times">
+        <div class="time-slot">08:00</div>
+        <div class="time-slot">10:00</div>
+        <div class="time-slot">12:00</div>
+        <div class="time-slot">14:00</div>
+        <div class="time-slot">16:00</div>
+      </div>
+
+      <!-- CALENDARIO -->
+      <div class="column calendar">
+        <div class="year-header">2026</div>
+        <div class="calendar-grid">
+          <span>SUN</span><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span>
+
+          <div class="day">15</div>
+          <div class="day">16</div>
+          <div class="day selected-day">17</div>
+          <div class="day">18</div>
+          <div class="day">19</div>
+          <div class="day">20</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

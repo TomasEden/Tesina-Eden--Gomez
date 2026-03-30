@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Carrito - Spa</title>
+<link rel="stylesheet" href="carrito.css">
+</head>
+
+<body>
+
+<header class="navbar">
+  <div>
+    <span>Inicio</span>
+    <span>Servicios</span>
+    <span>Turnos</span>
+    <span>Productos</span>
+  </div>
+
+  <span class="carrito-icon">
+    🛒 <span id="contador">0</span>
+  </span>
+</header>
+
+<h1 class="titulo">Tu Carrito</h1>
+
+<section class="container">
+
+  <div id="listaCarrito"></div>
+
+  <div class="resumen">
+    <h2>Total General: $<span id="total">0</span></h2>
+    <button id="comprarBtn">Pagar Todo</button>
+  </div>
+
+</section>
+
+<script src="carrito.js"></script>
+</body>
+</html>
