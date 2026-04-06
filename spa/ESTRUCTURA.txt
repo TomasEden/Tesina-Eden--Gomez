@@ -1,0 +1,128 @@
+📁 spa-m/                          ← Carpeta raíz (va dentro de htdocs/ en XAMPP)
+│
+├── 📄 index.html                  ← Página principal / landing
+├── 📄 index.css
+├── 📄 index.js
+│
+├── 📄 servicios.html              ← Catálogo de servicios con likes y filtro por categoría
+├── 📄 servicios.css
+├── 📄 servicios.js
+│
+├── 📄 turnos.html                 ← Reserva de turnos (multi-servicio + calendario)
+├── 📄 turnos.css
+├── 📄 turnos.js
+│
+├── 📄 productos.html              ← Catálogo de productos con filtros
+├── 📄 productos.css
+├── 📄 productos.js
+│
+├── 📄 carrito.html                ← Carrito (servicios + productos separados)
+├── 📄 carrito.css
+├── 📄 carrito.js
+│
+├── 📄 mis-turnos.html             ← Turnos del cliente (ver, cancelar, WhatsApp)
+├── 📄 mis-turnos.css
+├── 📄 mis-turnos.js
+│
+├── 📄 login.html                  ← Login cliente + botón acceso admin
+├── 📄 login.css
+├── 📄 login.js
+│
+├── 📄 registro.html               ← Registro cliente (2 pasos)
+├── 📄 registro.css
+├── 📄 registro.js
+│
+│── 📄 admin-login.html            ← Login exclusivo para administradores
+├── 📄 admin-login.css
+├── 📄 admin-login.js
+│
+├── 📄 admin-dashboard.html        ← Panel principal con estadísticas
+├── 📄 admin-dashboard.css
+├── 📄 admin-dashboard.js
+│
+├── 📄 admin-turnos.html           ← Gestión de turnos (cambiar estado, eliminar)
+├── 📄 admin-turnos.js             ← (usa admin.css compartido)
+│
+├── 📄 admin-servicios.html        ← CRUD de servicios
+├── 📄 admin-servicios.js          ← (usa admin.css compartido)
+│
+├── 📄 admin-productos.html        ← CRUD de productos
+├── 📄 admin-productos.js          ← (usa admin.css compartido)
+│
+└── 📄 admin.css                   ← CSS compartido de TODAS las páginas admin
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ESTRUCTURA FUTURA CON XAMPP + PHP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 htdocs/
+└── 📁 spa-m/
+    │
+    ├── (todos los archivos HTML, CSS y JS de arriba)
+    │
+    ├── 📁 api/                    ← Endpoints PHP que el JS llama con fetch()
+    │   ├── 📄 db.php              ← Conexión a MySQL (host, user, pass, db)
+    │   ├── 📄 turnos.php          ← GET /turnos  →  lista todos
+    │   │                            POST /turnos  →  crea uno nuevo
+    │   │                            PUT /turnos   →  cambia estado
+    │   │                            DELETE /turnos →  elimina
+    │   ├── 📄 servicios.php       ← CRUD de servicios
+    │   ├── 📄 productos.php       ← CRUD de productos
+    │   └── 📄 usuarios.php        ← Registro, login, sesión
+    │
+    └── 📁 sql/
+        └── 📄 spa_m.sql           ← Script que crea la base de datos completa
+                                     (tablas: usuarios, turnos, servicios, productos)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FLUJO DE DATOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  CLIENTE
+  ┌─────────────┐     ┌─────────────┐     ┌──────────────┐
+  │  registro   │────▶│    login    │────▶│    index     │
+  └─────────────┘     └─────────────┘     └──────┬───────┘
+                                                  │
+                          ┌───────────────────────┼───────────────────┐
+                          ▼                       ▼                   ▼
+                   ┌─────────────┐       ┌──────────────┐    ┌──────────────┐
+                   │  servicios  │       │    turnos    │    │  productos   │
+                   └──────┬──────┘       └──────┬───────┘    └──────┬───────┘
+                          │                     │                   │
+                          └─────────────────────┴───────────────────┘
+                                                │
+                                         ┌──────▼───────┐
+                                         │   carrito    │
+                                         └──────┬───────┘
+                                                │
+                                         ┌──────▼───────┐
+                                         │  mis-turnos  │
+                                         └──────────────┘
+
+  ADMIN
+  ┌──────────────┐     ┌──────────────────┐
+  │ admin-login  │────▶│ admin-dashboard  │
+  └──────────────┘     └────────┬─────────┘
+                                │
+               ┌────────────────┼────────────────┐
+               ▼                ▼                ▼
+        ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+        │admin-turnos │  │admin-serv.. │  │admin-prod.. │
+        └─────────────┘  └─────────────┘  └─────────────┘
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PALETA DE COLORES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  --rose-deep:  #AD717E  →  Botones, acentos, links activos
+  --rose:       #D3A1A9  →  Hovers, bordes suaves
+  --rose-mid:   #F3CFD4  →  Fondos de cards, badges, inputs
+  --rose-pale:  #faf0f2  →  Secciones alternas
+  --text:       #45634D  →  Navbar, footer, títulos (verde oscuro)
+  --text-light: #7a9080  →  Subtítulos, metadatos (verde grisáceo)
+  --accent:     #39311D  →  Detalles hover del footer (marrón)
+  --cream:      #faf7f5  →  Fondo general
+  --sand:       #e8ddd5  →  Bordes y separadores
