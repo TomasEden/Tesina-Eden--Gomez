@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Productos — 🌸 SPA M</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="productos.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">🌸 SPA M</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="turnos.html">Turnos</a></li>
+      <li><a href="productos.html" class="active">Productos</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="carrito.html" class="nav-cart">🛒
+        <span class="cart-badge" id="contador">0</span>
+      </a>
+      <a href="login.html" class="btn-login" id="btnSesion">Ingresar</a>
+    </div>
+  </nav>
+
+  <!-- HERO MINI -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <p class="page-tag">Catálogo by Selecta</p>
+      <h1 class="page-title">Productos de <em>belleza</em></h1>
+      <p class="page-desc">Cosméticos y tratamientos seleccionados para tu cuidado diario.</p>
+    </div>
+    <img class="page-hero-img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1400&q=80" alt="Productos"/>
+    <div class="page-hero-overlay"></div>
+  </section>
+
+  <!-- FILTROS + GRILLA -->
+  <div class="catalog-layout">
+
+    <!-- SIDEBAR FILTROS -->
+    <aside class="filters-sidebar">
+      <h3 class="filters-title">Filtros</h3>
+
+      <div class="filter-group">
+        <p class="filter-label">Categoría</p>
+        <div class="filter-options" id="filterCategorias"></div>
+      </div>
+
+      <div class="filter-group">
+        <p class="filter-label">Precio máximo</p>
+        <input type="range" id="rangePrecio" min="0" max="1500" value="1500" step="50"
+               oninput="filtrarProductos()"/>
+        <div class="range-labels">
+          <span>$0</span>
+          <span id="rangeValor">$1500</span>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <p class="filter-label">Disponibilidad</p>
+        <label class="filter-check">
+          <input type="checkbox" id="soloStock" onchange="filtrarProductos()"/>
+          Solo con stock
+        </label>
+      </div>
+
+      <button class="btn-reset" onclick="resetFiltros()">Limpiar filtros</button>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <div class="catalog-main">
+
+      <!-- BARRA SUPERIOR -->
+      <div class="catalog-topbar">
+        <p class="catalog-count" id="catalogCount"></p>
+        <div class="sort-wrap">
+          <label class="sort-label">Ordenar por</label>
+          <select id="sortSelect" onchange="filtrarProductos()">
+            <option value="default">Destacados</option>
+            <option value="precio-asc">Precio: menor a mayor</option>
+            <option value="precio-desc">Precio: mayor a menor</option>
+            <option value="nombre">Nombre A-Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- GRILLA PRODUCTOS -->
+      <div class="products-grid" id="productsGrid"></div>
+
+      <!-- EMPTY STATE -->
+      <div class="empty-state hidden" id="emptyState">
+        <span>🔍</span>
+        <p>No hay productos que coincidan con los filtros.</p>
+        <button class="btn-reset" onclick="resetFiltros()">Limpiar filtros</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="sesion.js"></script>
+  <script src="productos.js"></script>
+</body>
+</html>
