@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrito — 🌸 SPA M</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/carrito.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">🌸 SPA M</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="turnos.html">Turnos</a></li>
+      <li><a href="productos.html">Productos</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="carrito.html" class="nav-cart active-cart">🛒
+        <span class="cart-badge" id="contador">0</span>
+      </a>
+      <a href="login.html" class="btn-login" id="btnSesion">Ingresar</a>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <section class="cart-header">
+    <div class="cart-header-content">
+      <p class="page-tag">Tu selección</p>
+      <h1 class="page-title">Mi <em>carrito</em></h1>
+    </div>
+  </section>
+
+  <!-- LAYOUT -->
+  <div class="cart-layout" id="cartLayout">
+
+    <!-- ITEMS -->
+    <div class="cart-items">
+
+      <!-- Sección servicios -->
+      <div class="cart-section" id="seccionServicios"></div>
+
+      <!-- Sección productos -->
+      <div class="cart-section" id="seccionProductos"></div>
+
+      <!-- Estado vacío -->
+      <div class="cart-empty hidden" id="cartEmpty">
+        <div class="empty-icon">🛒</div>
+        <h2 class="empty-title">Tu carrito está vacío</h2>
+        <p class="empty-desc">Todavía no agregaste nada. Explorá nuestros servicios y productos.</p>
+        <div class="empty-actions">
+          <a href="servicios.html" class="btn-primary">Ver servicios</a>
+          <a href="productos.html" class="btn-outline">Ver productos</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="cart-summary" id="cartSummary">
+      <div class="summary-card">
+        <h3 class="summary-title">Resumen del pedido</h3>
+
+        <div class="summary-lines" id="summaryLines"></div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-total-row">
+          <span>Total</span>
+          <span class="summary-total-num" id="totalGeneral">$0</span>
+        </div>
+
+        <button class="btn-checkout" id="btnCheckout" onclick="pagarTodo()">
+          Confirmar y pagar todo
+        </button>
+
+        <div class="summary-links">
+          <a href="servicios.html">+ Agregar servicio</a>
+          <a href="productos.html">+ Agregar producto</a>
+        </div>
+
+        <!-- Toggle WhatsApp cliente -->
+        <label class="wa-toggle" id="waClienteToggle" style="margin-top:0.8rem">
+          <input type="checkbox" id="waClienteCheck"/>
+          <span class="wa-toggle-track">
+            <span class="wa-toggle-thumb"></span>
+          </span>
+          <span class="wa-toggle-label">💬 Avisame por WhatsApp cuando esté listo</span>
+        </label>
+
+        <div class="summary-links" style="margin-top:1rem">
+          <a href="mis-turnos.html">📅 Ver mis turnos &amp; pedidos</a>
+        </div>
+
+        <p class="summary-note">🔒 Tus datos están protegidos</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL CONFIRMACIÓN -->
+  <div class="modal-overlay hidden" id="modalPago">
+    <div class="modal">
+      <div class="modal-icon">✅</div>
+      <h2 class="modal-title">¡Pago confirmado!</h2>
+      <p class="modal-desc" id="modalDesc"></p>
+      <a href="mis-turnos.html" class="btn-primary">Ver mis turnos</a>
+      <a href="index.html" class="btn-outline" style="margin-top:0.8rem">Volver al inicio</a>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="../js/sesion.js"></script>
+  <script src="../js/historial.js"></script>
+  <script src="../js/carrito.js"></script>
+</body>
+</html>

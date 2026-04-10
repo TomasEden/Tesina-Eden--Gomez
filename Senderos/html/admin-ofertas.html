@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ofertas — Admin SPA M</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/admin.css"/>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <a href="admin-dashboard.html" class="sidebar-logo">🌸 SPA M <span>Panel Admin</span></a>
+    <nav class="sidebar-nav">
+      <span class="sidebar-section">Principal</span>
+      <a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon">📊</span> Dashboard</a>
+      <span class="sidebar-section">Gestión</span>
+      <a href="admin-turnos.html"    class="sidebar-link"><span class="sidebar-icon">📅</span> Turnos</a>
+      <a href="admin-servicios.html" class="sidebar-link"><span class="sidebar-icon">💆</span> Servicios</a>
+      <a href="admin-productos.html" class="sidebar-link"><span class="sidebar-icon">🛍️</span> Productos</a>
+      <a href="admin-ofertas.html"   class="sidebar-link active"><span class="sidebar-icon">🏷️</span> Ofertas</a>
+      <span class="sidebar-section">Sitio</span>
+      <a href="index.html" class="sidebar-link"><span class="sidebar-icon">🌐</span> Ver sitio</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">A</div>
+        <div><div class="sidebar-user-name">Administrador</div><div class="sidebar-user-role">Admin</div></div>
+      </div>
+      <button class="sidebar-logout" onclick="cerrarSesion()">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1 class="topbar-title">Gestión de Ofertas</h1>
+      <div class="topbar-right">
+        <button class="btn-primary" onclick="abrirModalNuevo()">+ Nueva oferta</button>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- STATS RÁPIDAS -->
+      <div class="stats-grid" id="statsGrid"></div>
+
+      <!-- TABLA -->
+      <div class="table-card">
+        <div class="table-header">
+          <h3 class="table-title">Todas las ofertas</h3>
+          <div class="table-actions">
+            <select class="filter-select" id="filterEstado" onchange="renderTabla()">
+              <option value="todas">Todos los estados</option>
+              <option value="activa">Activas</option>
+              <option value="pausada">Pausadas</option>
+              <option value="vencida">Vencidas</option>
+            </select>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Oferta</th>
+              <th>Aplica a</th>
+              <th>Descuento</th>
+              <th>Vigencia</th>
+              <th>Días</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="ofertasBody"></tbody>
+        </table>
+
+        <div class="table-empty hidden" id="tableEmpty">
+          <p style="padding:2rem;text-align:center;color:var(--text-light)">No hay ofertas creadas aún.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL CREAR / EDITAR -->
+  <div class="modal-overlay hidden" id="modalForm">
+    <div class="modal" style="max-width:560px">
+      <h2 class="modal-title" id="modalFormTitle">Nueva oferta</h2>
+      <input type="hidden" id="editId"/>
+
+      <div class="form-grid form-grid-2">
+
+        <div class="field-group" style="grid-column:1/-1">
+          <label>Nombre de la oferta</label>
+          <input type="text" id="fNombre" placeholder="Ej: 20% OFF en masajes"/>
+          <span class="field-error" id="err-nombre"></span>
+        </div>
+
+        <div class="field-group" style="grid-column:1/-1">
+          <label>Descripción (aparece en el ticker del sitio)</label>
+          <input type="text" id="fDesc" placeholder="Ej: Reservá 2 servicios y pagá 1"/>
+        </div>
+
+        <div class="field-group">
+          <label>Tipo de oferta</label>
+          <select id="fTipo" onchange="actualizarFormTipo()">
+            <option value="porcentaje">Porcentaje de descuento</option>
+            <option value="precio_fijo">Precio especial</option>
+            <option value="2x1">2x1</option>
+            <option value="texto">Solo texto/banner</option>
+          </select>
+        </div>
+
+        <div class="field-group" id="campoDescuento">
+          <label id="labelDescuento">Descuento (%)</label>
+          <input type="number" id="fDescuento" placeholder="20" min="1" max="100"/>
+          <span class="field-error" id="err-descuento"></span>
+        </div>
+
+        <div class="field-group">
+          <label>Aplica a</label>
+          <select id="fAplica">
+            <option value="todos">Todos los servicios y productos</option>
+            <option value="servicios">Todos los servicios</option>
+            <option value="productos">Todos los productos</option>
+            <option value="especifico">Servicio/Producto específico</option>
+          </select>
+        </div>
+
+        <div class="field-group" id="campoEspecifico" style="display:none">
+          <label>Nombre del servicio/producto</label>
+          <input type="text" id="fEspecifico" placeholder="Ej: Masaje Relajante"/>
+        </div>
+
+        <div class="field-group">
+          <label>Fecha de inicio</label>
+          <input type="date" id="fInicio"/>
+        </div>
+
+        <div class="field-group">
+          <label>Fecha de fin <span style="font-weight:400;text-transform:none;font-size:0.7rem">(dejar vacío = sin vencimiento)</span></label>
+          <input type="date" id="fFin"/>
+        </div>
+
+        <div class="field-group" style="grid-column:1/-1">
+          <label>Días de la semana activos</label>
+          <div class="dias-grid" id="diasGrid"></div>
+          <p style="font-size:0.72rem;color:var(--text-light);margin-top:0.4rem">Dejar todos sin marcar = activo todos los días</p>
+        </div>
+
+        <div class="field-group" style="grid-column:1/-1">
+          <label>Color del badge</label>
+          <div class="color-opts" id="colorOpts"></div>
+        </div>
+
+        <div class="field-group" style="grid-column:1/-1">
+          <label>Estado</label>
+          <select id="fEstado">
+            <option value="activa">Activa</option>
+            <option value="pausada">Pausada</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-ghost" onclick="cerrarModal('modalForm')">Cancelar</button>
+        <button class="btn-primary" onclick="guardarOferta()">Guardar oferta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ELIMINAR -->
+  <div class="modal-overlay hidden" id="modalEliminar">
+    <div class="modal modal-confirm">
+      <div class="modal-confirm-icon">🗑️</div>
+      <h2 class="modal-confirm-title">¿Eliminar oferta?</h2>
+      <p class="modal-confirm-desc">Esta acción no se puede deshacer.</p>
+      <div class="modal-confirm-actions">
+        <button class="btn-ghost" onclick="cerrarModal('modalEliminar')">Cancelar</button>
+        <button class="btn-danger" onclick="confirmarEliminar()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREVIEW TICKER -->
+  <div class="modal-overlay hidden" id="modalPreview">
+    <div class="modal" style="max-width:700px;text-align:center">
+      <h2 class="modal-title">Vista previa en el sitio</h2>
+      <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:1.5rem">Así se verán las ofertas activas en el ticker del index</p>
+      <div class="preview-ticker" id="previewTicker"></div>
+      <div class="modal-footer" style="justify-content:center;margin-top:1.5rem">
+        <button class="btn-primary" onclick="cerrarModal('modalPreview')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  
+  <script src="../js/admin-ofertas.js"></script>
+</body>
+</html>
