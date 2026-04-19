@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mis Turnos & Pedidos — 🌸 SPA M</title>
+  <title>Mis Turnos & Pedidos — — SPA M</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../css/mis-turnos.css"/>
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
 </head>
 <body>
-
+  <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
-    <a href="index.html" class="nav-logo">🌸 SPA M</a>
+    <a href="index.html" class="nav-logo">
+      <img src="../img/icons/logo.png" alt="SPA M" width="26" height="26"> SPA M
+    </a>
     <ul class="nav-links">
       <li><a href="index.html">Inicio</a></li>
       <li><a href="servicios.html">Servicios</a></li>
@@ -18,12 +21,36 @@
       <li><a href="productos.html">Productos</a></li>
     </ul>
     <div class="nav-right">
-      <a href="carrito.html" class="nav-cart">🛒
+      <a href="carrito.html" class="nav-cart">
+        <img src="../img/icons/carrito.png" alt="Carrito" width="22" height="22">
         <span class="cart-badge" id="contador">0</span>
+      </a>
+      <a href="buscar.html" class="nav-search" title="Buscar">
+        <img src="../img/icons/buscar.png" alt="Buscar" width="20" height="20">
       </a>
       <a href="login.html" class="btn-login" id="btnSesion">Ingresar</a>
     </div>
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MENÚ MÓVIL -->
+  <div class="nav-mobile" id="navMobile">
+    <button class="nav-mobile-close" onclick="toggleMenu()" aria-label="Cerrar">✕</button>
+    <nav class="nav-mobile-links">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="turnos.html">Turnos</a>
+      <a href="productos.html">Productos</a>
+    </nav>
+    <div class="nav-mobile-bottom">
+      <a href="carrito.html" class="nav-mobile-cart">
+        <img src="../img/icons/carrito.png" alt="" width="18" height="18"> Mi carrito
+      </a>
+      <a href="login.html" class="nav-mobile-login" id="btnSesionMobile">Ingresar</a>
+    </div>
+  </div>
 
   <section class="page-hero">
     <div class="page-hero-content">
@@ -40,10 +67,10 @@
     <!-- TABS PRINCIPALES -->
     <div class="main-tabs">
       <button class="main-tab active" data-tab="tabTurnos" onclick="cambiarMainTab(this)">
-        📅 Turnos <span class="tab-badge" id="badgeTurnos">0</span>
+        <img src="../img/icons/calendario.png" alt="" width="16" height="16" style="vertical-align:middle"> Turnos <span class="tab-badge" id="badgeTurnos">0</span>
       </button>
       <button class="main-tab" data-tab="tabPedidos" onclick="cambiarMainTab(this)">
-        🛍️ Pedidos <span class="tab-badge" id="badgePedidos">0</span>
+        <img src="../img/icons/productos.png" alt="" width="16" height="16" style="vertical-align:middle"> Pedidos <span class="tab-badge" id="badgePedidos">0</span>
       </button>
     </div>
 
@@ -57,7 +84,7 @@
       </div>
       <div class="mt-list" id="turnosList"></div>
       <div class="mt-empty hidden" id="turnosEmpty">
-        <div class="empty-icon">📅</div>
+        <div class="empty-icon"><img src="../img/icons/calendario.png" alt="" width="48" height="48" style="vertical-align:middle"></div>
         <h2 class="empty-title">No tenés turnos aún</h2>
         <p class="empty-desc">Reservá tu primer turno y aparecerá aquí.</p>
         <a href="turnos.html" class="btn-primary">Reservar ahora</a>
@@ -68,7 +95,7 @@
     <div class="tab-panel" id="tabPedidos">
       <div class="mt-list" id="pedidosList"></div>
       <div class="mt-empty hidden" id="pedidosEmpty">
-        <div class="empty-icon">🛍️</div>
+        <div class="empty-icon"><img src="../img/icons/productos.png" alt="" width="48" height="48" style="vertical-align:middle"></div>
         <h2 class="empty-title">No tenés pedidos aún</h2>
         <p class="empty-desc">Cuando compres productos aparecerán aquí con su estado.</p>
         <a href="productos.html" class="btn-primary">Ver productos</a>
@@ -80,7 +107,7 @@
   <!-- MODAL CANCELAR TURNO -->
   <div class="modal-overlay hidden" id="modalCancelar">
     <div class="modal">
-      <div class="modal-icon">⚠️</div>
+      <div class="modal-icon"><img src="../img/icons/advertencia.png" alt="" width="48" height="48" style="vertical-align:middle"></div>
       <h2 class="modal-title">¿Cancelar turno?</h2>
       <p class="modal-desc">Esta acción no se puede deshacer.</p>
       <div class="modal-actions">
@@ -89,6 +116,41 @@
       </div>
     </div>
   </div>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand-col">
+        <div class="footer-brand">
+          <img src="../img/icons/logo.png" alt="SPA M" width="26" height="26"> SPA M
+        </div>
+        <p class="footer-desc">Tu espacio de bienestar y belleza.<br>Reservas online · Productos seleccionados · Atención personalizada.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="productos.html">Productos</a>
+      </div>
+      <div class="footer-col">
+        <h4>Mi cuenta</h4>
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Registrarse</a>
+        <a href="mis-turnos.html">Mis turnos & pedidos</a>
+        <a href="carrito.html">Carrito</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <a href="https://wa.me/5493510000000" target="_blank">WhatsApp</a>
+        <a href="#">Instagram</a>
+        <a href="mailto:contacto@spam.com">contacto@spam.com</a>
+        <a href="politicas.html">Políticas</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 SPA M · Todos los derechos reservados</div>
+  </footer>
+
+
 
   <div class="toast" id="toast"></div>
 

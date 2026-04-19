@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Producto — 🌸 SPA M</title>
+  <title>Producto — — SPA M</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../css/producto-detalle.css"/>
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
 </head>
 <body>
 
-  <!-- NAVBAR -->
+    <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
-    <a href="index.html" class="nav-logo">🌸 SPA M</a>
+    <a href="index.html" class="nav-logo">
+      <img src="../img/icons/logo.png" alt="SPA M" width="26" height="26"> SPA M
+    </a>
     <ul class="nav-links">
       <li><a href="index.html">Inicio</a></li>
       <li><a href="servicios.html">Servicios</a></li>
@@ -19,12 +22,37 @@
       <li><a href="productos.html" class="active">Productos</a></li>
     </ul>
     <div class="nav-right">
-      <a href="carrito.html" class="nav-cart">🛒
+      <a href="carrito.html" class="nav-cart">
+        <img src="../img/icons/carrito.png" alt="Carrito" width="22" height="22">
         <span class="cart-badge" id="contador">0</span>
+      </a>
+      <a href="buscar.html" class="nav-search" title="Buscar">
+        <img src="../img/icons/buscar.png" alt="Buscar" width="20" height="20">
       </a>
       <a href="login.html" class="btn-login" id="btnSesion">Ingresar</a>
     </div>
+    <!-- Hamburguesa -->
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MENÚ MÓVIL -->
+  <div class="nav-mobile" id="navMobile">
+    <button class="nav-mobile-close" onclick="toggleMenu()" aria-label="Cerrar">✕</button>
+    <nav class="nav-mobile-links">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="turnos.html">Turnos</a>
+      <a href="productos.html" class="active">Productos</a>
+    </nav>
+    <div class="nav-mobile-bottom">
+      <a href="carrito.html" class="nav-mobile-cart">
+        <img src="../img/icons/carrito.png" alt="" width="18" height="18"> Mi carrito
+      </a>
+      <a href="login.html" class="nav-mobile-login" id="btnSesionMobile">Ingresar</a>
+    </div>
+  </div>
 
   <!-- BREADCRUMB -->
   <div class="breadcrumb">
@@ -70,7 +98,7 @@
 
       <div class="detalle-precio-wrap">
         <span class="detalle-precio" id="detallePrecio">$500</span>
-        <span class="detalle-stock" id="detalleStock">✅ 50 disponibles</span>
+        <span class="detalle-stock" id="detalleStock"><img src="../img/icons/check.png" alt="" width="14" height="14" style="vertical-align:middle"> 50 disponibles</span>
       </div>
 
       <p class="detalle-desc" id="detalleDesc">
@@ -80,10 +108,10 @@
 
       <!-- Beneficios -->
       <div class="detalle-beneficios">
-        <div class="beneficio"><span>🌿</span> Natural</div>
-        <div class="beneficio"><span>🧪</span> Dermotest.</div>
-        <div class="beneficio"><span>🐰</span> Cruelty free</div>
-        <div class="beneficio"><span>♻️</span> Eco pack</div>
+        <div class="beneficio"><span><img src="../img/icons/natural.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Natural</div>
+        <div class="beneficio"><span><img src="../img/icons/dermotesteado.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Dermotest.</div>
+        <div class="beneficio"><span><img src="../img/icons/cruelty-free.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Cruelty free</div>
+        <div class="beneficio"><span><img src="../img/icons/eco.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Eco pack</div>
       </div>
 
       <!-- Cantidad -->
@@ -99,31 +127,31 @@
       <!-- Acciones -->
       <div class="detalle-acciones">
         <button class="btn-agregar" id="btnAgregar" onclick="agregarAlCarrito()">
-          🛒 Agregar al carrito
+          <img src="../img/icons/carrito.png" class="icon-carrito" alt="" width="22" height="22" style="vertical-align:middle"> Agregar al carrito
         </button>
         <button class="btn-favorito" id="btnFav" onclick="toggleFav()" title="Guardar en favoritos">
-          🤍
+          <img src="../img/icons/favorito-off.png" alt="" width="22" height="22" style="vertical-align:middle">
         </button>
       </div>
 
       <!-- Info extra -->
       <div class="detalle-extras">
         <div class="extra-item">
-          <span class="extra-icon">🚚</span>
+          <span class="extra-icon"><img src="../img/icons/envio.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
           <div>
             <strong>Envío a domicilio</strong>
             <span>Consultá disponibilidad en tu zona</span>
           </div>
         </div>
         <div class="extra-item">
-          <span class="extra-icon">🏪</span>
+          <span class="extra-icon"><img src="../img/icons/tienda.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
           <div>
             <strong>Retiro en el spa</strong>
             <span>Lunes a Sábado · 9:00 a 20:00 hs</span>
           </div>
         </div>
         <div class="extra-item">
-          <span class="extra-icon">💬</span>
+          <span class="extra-icon"><img src="../img/icons/whatsapp.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
           <div>
             <strong>Consultas por WhatsApp</strong>
             <a href="https://wa.me/5493510000000" target="_blank">Escribinos</a>
@@ -168,6 +196,41 @@
       </p>
     </div>
   </section>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand-col">
+        <div class="footer-brand">
+          <img src="../img/icons/logo.png" alt="SPA M" width="26" height="26"> SPA M
+        </div>
+        <p class="footer-desc">Tu espacio de bienestar y belleza.<br>Reservas online · Productos seleccionados · Atención personalizada.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="productos.html">Productos</a>
+      </div>
+      <div class="footer-col">
+        <h4>Mi cuenta</h4>
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Registrarse</a>
+        <a href="mis-turnos.html">Mis turnos & pedidos</a>
+        <a href="carrito.html">Carrito</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <a href="https://wa.me/5493510000000" target="_blank">WhatsApp</a>
+        <a href="#">Instagram</a>
+        <a href="mailto:contacto@spam.com">contacto@spam.com</a>
+        <a href="politicas.html">Políticas</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 SPA M · Todos los derechos reservados</div>
+  </footer>
+
+
 
   <!-- TOAST -->
   <div class="toast" id="toast"></div>

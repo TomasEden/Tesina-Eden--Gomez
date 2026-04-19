@@ -25,6 +25,8 @@ html, body {
   color: var(--text);
 }
 
+
+
 body {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -334,3 +336,56 @@ body {
 
   .form-panel { padding: 2.5rem 1.5rem; }
 }
+
+/* ── FOOTER COMPARTIDO ── */
+.site-footer { background: var(--text); color: rgba(255,255,255,0.6); }
+.footer-inner {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem; padding: 3.5rem 5rem;
+}
+.footer-brand {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+  color: var(--rose-mid); margin-bottom: 0.8rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.footer-brand img { border-radius: 5px; }
+.footer-desc { font-size: 0.82rem; line-height: 1.65; }
+.footer-col h4 {
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.85); margin-bottom: 1.1rem; font-weight: 500;
+}
+.footer-col a {
+  display: block; color: rgba(255,255,255,0.48); text-decoration: none;
+  font-size: 0.82rem; margin-bottom: 0.55rem; transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--rose-mid); }
+.footer-bottom {
+  background: rgba(0,0,0,0.15); color: rgba(255,255,255,0.28);
+  text-align: center; padding: 1rem 5rem; font-size: 0.72rem;
+  letter-spacing: 0.04em; border-top: 1px solid rgba(255,255,255,0.06);
+}
+@media (max-width: 1100px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; padding: 3rem 3rem; }
+}
+@media (max-width: 640px) {
+  .footer-inner { grid-template-columns: 1fr; padding: 2.5rem 1.5rem; gap: 1.8rem; }
+  .footer-bottom { padding: 1rem 1.5rem; }
+}
+
+/* ── PERFIL EXTRA ── */
+.fav-grid-wrap {
+  padding: 3rem 5rem 5rem; max-width: 1200px; margin: 0 auto;
+}
+@media (max-width: 820px) { .fav-grid-wrap { padding: 2rem 2rem 4rem; } }
+@media (max-width: 640px) { .fav-grid-wrap { padding: 1.5rem 1.2rem 3rem; } }
+
+/* ── BOTÓN BUSCAR EN NAVBAR ── */
+.nav-search {
+  display: flex; align-items: center;
+  color: var(--text-light); transition: color 0.2s;
+  padding: 0.3rem; text-decoration: none;
+}
+.nav-search:hover { color: var(--rose-deep); }
+.nav-search img { display: block; opacity: 0.7; transition: opacity 0.2s; }
+.nav-search:hover img { opacity: 1; }
+@media (max-width: 820px) { .nav-search { display: none; } }

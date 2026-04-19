@@ -1,26 +1,34 @@
-/* SPA M - carrito.js */
+/* ═══════════════════════════════════════
+   SPA M — carrito.js (v2)
+   Productos agrupados + WA toggle + login guard
+   ═══════════════════════════════════════ */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   actualizarNavbar();
   render();
-  window.addEventListener('scroll', function() {
+  window.addEventListener('scroll', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
   });
 });
 
-function showToast(msg) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function() { t.classList.remove('show'); }, 2500);
+// ── Sesión ──────────────────────────────────────────────────────────────────
+`; btn.href = 'mis-turnos.html'; }
 }
 
+// ── Toast ───────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Agrupar productos iguales ───────────────────────────────────────────────
 function agruparProductos(items) {
-  var mapa = {};
-  items.forEach(function(item, idx) {
-    var key = item.nombre;
+  const mapa = {};
+  items.forEach((item, idx) => {
+    const key = item.nombre;
     if (!mapa[key]) {
-      mapa[key] = Object.assign({}, item, { cantidad: 1, indices: [idx] });
+      mapa[key] = { ...item, cantidad: 1, indices: [idx] };
     } else {
       mapa[key].cantidad++;
       mapa[key].indices.push(idx);
@@ -29,10 +37,11 @@ function agruparProductos(items) {
   return Object.values(mapa);
 }
 
+// ── Render completo ─────────────────────────────────────────────────────────
 function render() {
-  var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-  var empty   = document.getElementById('cartEmpty');
-  var summary = document.getElementById('cartSummary');
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  const empty   = document.getElementById('cartEmpty');
+  const summary = document.getElementById('cartSummary');
 
   document.getElementById('contador').textContent = carrito.length;
 
@@ -45,171 +54,182 @@ function render() {
   empty.classList.add('hidden');
   summary.style.display = '';
 
-  var servicios = carrito.filter(function(i) { return i.tipo === 'servicio'; });
-  var productos  = carrito.filter(function(i) { return i.tipo === 'producto'; });
-  var productosAgrupados = agruparProductos(productos);
+  const servicios = carrito.filter(i => i.tipo === 'servicio');
+  const productos  = carrito.filter(i => i.tipo === 'producto');
+  const productosAgrupados = agruparProductos(productos);
 
   renderSeccionServicios(servicios, carrito);
   renderSeccionProductos(productosAgrupados, carrito);
   renderResumen(servicios, productos);
 }
 
+// ── Sección servicios (sin agrupar — cada turno es único) ──────────────────
 function renderSeccionServicios(items, carritoCompleto) {
-  var container = document.getElementById('seccionServicios');
+  const container = document.getElementById('seccionServicios');
   container.innerHTML = '';
   if (!items.length) return;
 
-  var subtotal = items.reduce(function(s, i) { return s + i.precio; }, 0);
+  const subtotal = items.reduce((s, i) => s + i.precio, 0);
+  container.innerHTML = `
+    <div class="section-title-bar">
+      <h2>💆 Servicios</h2>
+      <span class="section-count">${items.length}</span>
+      <span class="section-subtotal">Subtotal: $${subtotal.toLocaleString()}</span>
+    </div>`;
 
-  var header = document.createElement('div');
-  header.className = 'section-title-bar';
-  header.innerHTML =
-    '<h2>Servicios</h2>' +
-    '<span class="section-count">' + items.length + '</span>' +
-    '<span class="section-subtotal">Subtotal: $' + subtotal.toLocaleString() + '</span>';
-  container.appendChild(header);
-
-  items.forEach(function(item) {
-    var realIndex = carritoCompleto.indexOf(item);
-    var div = document.createElement('div');
+  items.forEach(item => {
+    const realIndex = carritoCompleto.indexOf(item);
+    const div = document.createElement('div');
     div.className = 'cart-item';
-    div.innerHTML =
-      '<img class="item-img" src="' + (item.img || 'https://via.placeholder.com/72') + '" alt="' + item.nombre + '"/>' +
-      '<div class="item-info">' +
-        '<div class="item-name">' + item.nombre + '</div>' +
-        '<div class="item-meta">' +
-          (item.fecha   ? '&#128197; ' + item.fecha : '') +
-          (item.horario ? ' &middot; ' + item.horario + ' hs' : '') +
-        '</div>' +
-      '</div>' +
-      '<span class="item-price">$' + item.precio.toLocaleString() + '</span>' +
-      '<button class="btn-remove" onclick="eliminarItem(' + realIndex + ')">&#10005;</button>';
+    div.innerHTML = `
+      <img class="item-img" src="${item.img || 'https://via.placeholder.com/72'}" alt="${item.nombre}"/>
+      <div class="item-info">
+        <div class="item-name">${item.nombre}</div>
+        <div class="item-meta">
+          ${item.fecha  ? `📅 ${item.fecha}` : ''}
+          ${item.horario ? ` · ⏱ ${item.horario} hs` : ''}
+        </div>
+      </div>
+      <span class="item-price">$${item.precio.toLocaleString()}</span>
+      <button class="btn-remove" onclick="eliminarItem(${realIndex})">✕</button>`;
     container.appendChild(div);
   });
 }
 
+// ── Sección productos (agrupados) ───────────────────────────────────────────
 function renderSeccionProductos(agrupados, carritoCompleto) {
-  var container = document.getElementById('seccionProductos');
+  const container = document.getElementById('seccionProductos');
   container.innerHTML = '';
   if (!agrupados.length) return;
 
-  var totalUnidades = agrupados.reduce(function(s, p) { return s + p.cantidad; }, 0);
-  var subtotal      = agrupados.reduce(function(s, p) { return s + p.precio * p.cantidad; }, 0);
+  const totalUnidades = agrupados.reduce((s, p) => s + p.cantidad, 0);
+  const subtotal      = agrupados.reduce((s, p) => s + p.precio * p.cantidad, 0);
 
-  var header = document.createElement('div');
-  header.className = 'section-title-bar';
-  header.innerHTML =
-    '<h2>Productos</h2>' +
-    '<span class="section-count">' + totalUnidades + '</span>' +
-    '<span class="section-subtotal">Subtotal: $' + subtotal.toLocaleString() + '</span>';
-  container.appendChild(header);
+  container.innerHTML = `
+    <div class="section-title-bar">
+      <h2>🛍️ Productos</h2>
+      <span class="section-count">${totalUnidades}</span>
+      <span class="section-subtotal">Subtotal: $${subtotal.toLocaleString()}</span>
+    </div>`;
 
-  agrupados.forEach(function(item) {
-    var div = document.createElement('div');
+  agrupados.forEach(item => {
+    const div = document.createElement('div');
     div.className = 'cart-item';
-    div.innerHTML =
-      '<img class="item-img" src="' + (item.img || 'https://via.placeholder.com/72') + '" alt="' + item.nombre + '"/>' +
-      '<div class="item-info">' +
-        '<div class="item-name">' + item.nombre + '</div>' +
-        '<div class="item-meta">Producto</div>' +
-      '</div>' +
-      '<div class="item-qty">' +
-        '<button class="qty-btn" onclick="cambiarCantidad(\'' + item.nombre.replace(/'/g, "\\'") + '\',-1)">&#8722;</button>' +
-        '<span class="qty-num">' + item.cantidad + '</span>' +
-        '<button class="qty-btn" onclick="cambiarCantidad(\'' + item.nombre.replace(/'/g, "\\'") + '\',1)">&#43;</button>' +
-      '</div>' +
-      '<span class="item-price">$' + (item.precio * item.cantidad).toLocaleString() + '</span>' +
-      '<button class="btn-remove" onclick="eliminarTodos(\'' + item.nombre.replace(/'/g, "\\'") + '\')">&#10005;</button>';
+    div.innerHTML = `
+      <img class="item-img" src="${item.img || 'https://via.placeholder.com/72'}" alt="${item.nombre}"/>
+      <div class="item-info">
+        <div class="item-name">${item.nombre}</div>
+        <div class="item-meta">🛍️ Producto</div>
+      </div>
+      <div class="item-qty">
+        <button class="qty-btn" onclick="cambiarCantidad('${item.nombre}', -1)">−</button>
+        <span class="qty-num">${item.cantidad}</span>
+        <button class="qty-btn" onclick="cambiarCantidad('${item.nombre}', 1)">+</button>
+      </div>
+      <span class="item-price">$${(item.precio * item.cantidad).toLocaleString()}</span>
+      <button class="btn-remove" onclick="eliminarTodos('${item.nombre}')">✕</button>`;
     container.appendChild(div);
   });
 }
 
+// ── Cambiar cantidad de un producto agrupado ────────────────────────────────
 function cambiarCantidad(nombre, delta) {
-  var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
   if (delta === -1) {
-    var idx = carrito.findIndex(function(i) { return i.nombre === nombre && i.tipo === 'producto'; });
+    // Quitar una unidad
+    const idx = carrito.findIndex(i => i.nombre === nombre && i.tipo === 'producto');
     if (idx !== -1) carrito.splice(idx, 1);
   } else {
-    var base = carrito.find(function(i) { return i.nombre === nombre && i.tipo === 'producto'; });
-    if (base) carrito.push(Object.assign({}, base));
+    // Agregar una unidad más (clonar el primer item de ese nombre)
+    const base = carrito.find(i => i.nombre === nombre && i.tipo === 'producto');
+    if (base) carrito.push({ ...base });
   }
+
   localStorage.setItem('carrito', JSON.stringify(carrito));
   render();
 }
 
+// ── Eliminar todos los items de un producto ─────────────────────────────────
 function eliminarTodos(nombre) {
-  var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-  carrito = carrito.filter(function(i) { return !(i.nombre === nombre && i.tipo === 'producto'); });
+  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  carrito = carrito.filter(i => !(i.nombre === nombre && i.tipo === 'producto'));
   localStorage.setItem('carrito', JSON.stringify(carrito));
-  showToast('Producto eliminado');
+  showToast('🗑️ Producto eliminado');
   render();
 }
 
+// ── Eliminar ítem por índice real (servicios) ───────────────────────────────
 function eliminarItem(index) {
-  var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
   carrito.splice(index, 1);
   localStorage.setItem('carrito', JSON.stringify(carrito));
-  showToast('Item eliminado');
+  showToast('🗑️ Item eliminado');
   render();
 }
 
+// ── Render resumen lateral ──────────────────────────────────────────────────
 function renderResumen(servicios, productos) {
-  var lines   = document.getElementById('summaryLines');
-  var totalEl = document.getElementById('totalGeneral');
-  var btn     = document.getElementById('btnCheckout');
+  const lines   = document.getElementById('summaryLines');
+  const totalEl = document.getElementById('totalGeneral');
+  const btn     = document.getElementById('btnCheckout');
   lines.innerHTML = '';
 
-  var totalServ = servicios.reduce(function(s, i) { return s + i.precio; }, 0);
-  var totalProd = productos.reduce(function(s, i) { return s + i.precio; }, 0);
-  var total     = totalServ + totalProd;
+  const totalServ = servicios.reduce((s, i) => s + i.precio, 0);
+  const totalProd = productos.reduce((s, i) => s + i.precio, 0);
+  const total     = totalServ + totalProd;
 
   if (servicios.length) {
-    lines.innerHTML +=
-      '<div class="summary-line"><span>Servicios (' + servicios.length + ')</span><strong>$' + totalServ.toLocaleString() + '</strong></div>';
+    lines.innerHTML += `
+      <div class="summary-line">
+        <span>Servicios (${servicios.length})</span>
+        <strong>$${totalServ.toLocaleString()}</strong>
+      </div>`;
   }
   if (productos.length) {
-    lines.innerHTML +=
-      '<div class="summary-line"><span>Productos (' + productos.length + ')</span><strong>$' + totalProd.toLocaleString() + '</strong></div>';
+    lines.innerHTML += `
+      <div class="summary-line">
+        <span>Productos (${productos.length})</span>
+        <strong>$${totalProd.toLocaleString()}</strong>
+      </div>`;
   }
 
-  totalEl.textContent = '$' + total.toLocaleString();
+  totalEl.textContent = `$${total.toLocaleString()}`;
   btn.disabled = total === 0;
 }
 
+// ── Pagar todo ──────────────────────────────────────────────────────────────
 function pagarTodo() {
   if (!requireSesion('completar la compra')) return;
-  var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
   if (!carrito.length) return;
 
-  var totalServ = carrito.filter(function(i) { return i.tipo === 'servicio'; }).reduce(function(s,i) { return s + i.precio; }, 0);
-  var totalProd = carrito.filter(function(i) { return i.tipo === 'producto'; }).reduce(function(s,i) { return s + i.precio; }, 0);
-  var total     = totalServ + totalProd;
+  const totalServ = carrito.filter(i => i.tipo === 'servicio').reduce((s, i) => s + i.precio, 0);
+  const totalProd = carrito.filter(i => i.tipo === 'producto').reduce((s, i) => s + i.precio, 0);
+  const total     = totalServ + totalProd;
 
-  // Guardar en historial
-  var productos = agruparProductos(carrito.filter(function(i) { return i.tipo === 'producto'; }));
-  var serviciosCarrito = carrito.filter(function(i) { return i.tipo === 'servicio'; });
-  var todosItems = productos.map(function(p) { return { nombre: p.nombre, precio: p.precio, cantidad: p.cantidad, img: p.img }; })
-    .concat(serviciosCarrito.map(function(s) { return { nombre: s.nombre, precio: s.precio, cantidad: 1, img: s.img }; }));
-  guardarPedido(todosItems, total);
-
-  // WA al admin si el toggle está activado
-  var waCheck = document.getElementById('waClienteCheck');
+  // Si el toggle de WA está activado, abrir WhatsApp al admin con resumen del pedido
+  const waCheck = document.getElementById('waClienteCheck');
   if (waCheck && waCheck.checked) {
-    var sesion  = getSesion();
-    var nombre  = sesion ? sesion.nombre + ' ' + (sesion.apellido || '') : 'Cliente';
-    var telAdmin = '5493510000000';
-    var lista   = carrito.map(function(i) { return '  - ' + i.nombre + ' $' + i.precio.toLocaleString(); }).join('\n');
-    var msg     = 'Nuevo pedido de ' + nombre + '!\n\n' + lista + '\n\nTotal: $' + total.toLocaleString() + '\n\nPor favor avisarme cuando este listo';
-    window.open('https://wa.me/' + telAdmin + '?text=' + encodeURIComponent(msg), '_blank');
+    const sesion  = getSesion();
+    const nombre  = sesion ? `${sesion.nombre} ${sesion.apellido || ''}` : 'Cliente';
+    const telAdmin = '5493510000000'; // reemplazar con el número real del admin
+    const lista   = carrito.map(i => `  • ${i.nombre} — $${i.precio.toLocaleString()}`).join('\n');
+    const msg     = `🌸 Nuevo pedido de ${nombre}!\n\n${lista}\n\n💰 Total: $${total.toLocaleString()}\n\nPor favor avisarme cuando esté listo 😊`;
+    window.open(`https://wa.me/${telAdmin}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
-  document.getElementById('modalDesc').innerHTML =
-    'Se proceso el pago por <strong>$' + total.toLocaleString() + '</strong>.<br>' +
-    (totalServ ? 'Servicios: $' + totalServ.toLocaleString() + '<br>' : '') +
-    (totalProd ? 'Productos: $' + totalProd.toLocaleString() + '<br>' : '') +
-    'Gracias por elegirnos!';
-
+  // Agrupar productos para guardar en historial
+  const productosAgrup = agruparProductos(carrito.filter(i => i.tipo === 'producto'));
+  const serviciosCarrito = carrito.filter(i => i.tipo === 'servicio');
+  const todosItems = [
+    ...productosAgrup.map(p => ({ nombre: p.nombre, precio: p.precio, cantidad: p.cantidad, img: p.img })),
+    ...serviciosCarrito.map(s => ({ nombre: s.nombre, precio: s.precio, cantidad: 1, img: s.img }))
+  ];
+  guardarPedido(todosItems, total);
   localStorage.removeItem('carrito');
-  document.getElementById('modalPago').classList.remove('hidden');
-  actualizarNavbar();
+
+  // Redirigir a página de confirmación
+  window.location.href = 'confirmacion.html';
 }

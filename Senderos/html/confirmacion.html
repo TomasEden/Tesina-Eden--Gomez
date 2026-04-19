@@ -3,21 +3,20 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Servicios — — SPA M</title>
+  <title>¡Pedido confirmado! — SPA M</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../css/servicios.css"/>
-  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" href="../css/confirmacion.css"/>
 </head>
 <body>
 
-    <!-- NAVBAR -->
+  <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
     <a href="index.html" class="nav-logo">
       <img src="../img/icons/logo.png" alt="SPA M" width="26" height="26"> SPA M
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Inicio</a></li>
-      <li><a href="servicios.html" class="active">Servicios</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
       <li><a href="turnos.html">Turnos</a></li>
       <li><a href="productos.html">Productos</a></li>
     </ul>
@@ -26,12 +25,8 @@
         <img src="../img/icons/carrito.png" alt="Carrito" width="22" height="22">
         <span class="cart-badge" id="contador">0</span>
       </a>
-      <a href="buscar.html" class="nav-search" title="Buscar">
-        <img src="../img/icons/buscar.png" alt="Buscar" width="20" height="20">
-      </a>
       <a href="login.html" class="btn-login" id="btnSesion">Ingresar</a>
     </div>
-    <!-- Hamburguesa -->
     <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>
@@ -42,9 +37,10 @@
     <button class="nav-mobile-close" onclick="toggleMenu()" aria-label="Cerrar">✕</button>
     <nav class="nav-mobile-links">
       <a href="index.html">Inicio</a>
-      <a href="servicios.html" class="active">Servicios</a>
+      <a href="servicios.html">Servicios</a>
       <a href="turnos.html">Turnos</a>
       <a href="productos.html">Productos</a>
+          <a href="buscar.html">Buscar</a>
     </nav>
     <div class="nav-mobile-bottom">
       <a href="carrito.html" class="nav-mobile-cart">
@@ -54,43 +50,81 @@
     </div>
   </div>
 
-  <!-- HERO MINI -->
-  <section class="page-hero">
-    <div class="page-hero-content">
-      <p class="page-tag">Bienestar & relajación</p>
-      <h1 class="page-title">Nuestros <em>servicios</em></h1>
-      <p class="page-desc">Tratamientos diseñados para renovar tu cuerpo y tu mente.</p>
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="confirm-main">
+
+    <!-- ANIMACIÓN CHECK -->
+    <div class="confirm-icon-wrap">
+      <svg class="confirm-circle" viewBox="0 0 80 80">
+        <circle class="circle-bg" cx="40" cy="40" r="36"/>
+        <circle class="circle-fill" cx="40" cy="40" r="36"/>
+        <polyline class="check-mark" points="24,40 35,51 56,29"/>
+      </svg>
     </div>
-    <img class="page-hero-img" src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=1400&q=80" alt="Servicios SPA"/>
-    <div class="page-hero-overlay"></div>
-  </section>
 
-  <!-- FILTROS DE CATEGORÍA -->
-  <div class="category-bar">
-    <div class="category-inner" id="categoryBar"></div>
-  </div>
+    <h1 class="confirm-title">¡Pedido <em>confirmado!</em></h1>
+    <p class="confirm-subtitle">Tu pedido fue registrado correctamente.</p>
 
-  <!-- GRILLA DE SERVICIOS -->
-  <section class="services-section">
-    <div class="services-grid" id="servicesGrid"></div>
+    <!-- RESUMEN DEL PEDIDO -->
+    <div class="confirm-card">
+      <div class="confirm-card-header">
+        <span class="confirm-order-label">Número de pedido</span>
+        <span class="confirm-order-num" id="confirmOrderNum">#000000</span>
+      </div>
 
-    <div class="empty-state hidden" id="emptyState">
-      <span><img src="../img/icons/natural.png" alt="" width="18" height="18" style="vertical-align:middle"></span>
-      <p>No hay servicios en esta categoría.</p>
+      <div class="confirm-items" id="confirmItems">
+        <!-- generado por JS -->
+      </div>
+
+      <div class="confirm-divider"></div>
+
+      <div class="confirm-totals" id="confirmTotals">
+        <!-- generado por JS -->
+      </div>
     </div>
-  </section>
 
-  <!-- BANNER CTA -->
-  <section class="cta-section">
-    <div class="cta-content">
-      <p class="cta-tag">¿Lista para reservar?</p>
-      <h2 class="cta-title">Tu momento de calma<br><em>está a un click</em></h2>
-      <p class="cta-desc">Elegí el servicio que más te guste y reservá tu turno online en minutos.</p>
-      <a href="turnos.html" class="btn-primary">Reservar turno ahora</a>
+    <!-- PRÓXIMOS PASOS -->
+    <div class="confirm-steps">
+      <div class="confirm-step">
+        <div class="cstep-num">1</div>
+        <div class="cstep-text">
+          <strong>Recibimos tu pedido</strong>
+          <span>Lo estamos preparando</span>
+        </div>
+      </div>
+      <div class="confirm-step-line"></div>
+      <div class="confirm-step">
+        <div class="cstep-num pending">2</div>
+        <div class="cstep-text">
+          <strong>Listo para retirar</strong>
+          <span>Te avisamos por WhatsApp</span>
+        </div>
+      </div>
+      <div class="confirm-step-line"></div>
+      <div class="confirm-step">
+        <div class="cstep-num pending">3</div>
+        <div class="cstep-text">
+          <strong>Entregado</strong>
+          <span>En el spa o a domicilio</span>
+        </div>
+      </div>
     </div>
-    <img class="cta-img" src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80" alt="SPA"/>
-    <div class="cta-overlay"></div>
-  </section>
+
+    <!-- ACCIONES -->
+    <div class="confirm-actions">
+      <a href="mis-turnos.html" class="btn-primary">Ver mis pedidos</a>
+      <a href="productos.html" class="btn-outline">Seguir comprando</a>
+    </div>
+
+    <!-- WA AVISO -->
+    <div class="confirm-wa" id="confirmWa">
+      <img src="../img/icons/whatsapp.png" alt="" width="20" height="20">
+      <span>¿Querés que te avisemos cuando esté listo?</span>
+      <a class="btn-wa" id="btnWaConfirm" href="#" target="_blank">Avisar por WhatsApp</a>
+    </div>
+
+  </main>
+
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-inner">
@@ -125,13 +159,8 @@
     <div class="footer-bottom">© 2026 SPA M · Todos los derechos reservados</div>
   </footer>
 
-
-
-  <!-- TOAST -->
-  <div class="toast" id="toast"></div>
-
   <script src="../js/sesion.js"></script>
-  <script src="../js/ofertas.js"></script>
-  <script src="../js/servicios.js"></script>
+  <script src="../js/historial.js"></script>
+  <script src="../js/confirmacion.js"></script>
 </body>
 </html>

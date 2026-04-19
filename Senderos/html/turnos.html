@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Reservar Turno — 🌸 SPA M</title>
+  <title>Reservar Turno — — SPA M</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../css/turnos.css"/>
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
 </head>
 <body>
 
-  <!-- NAVBAR -->
+    <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
-    <a href="index.html" class="nav-logo">🌸 SPA M</a>
+    <a href="index.html" class="nav-logo">
+      <img src="../img/icons/logo.png" alt="SPA M" width="26" height="26"> SPA M
+    </a>
     <ul class="nav-links">
       <li><a href="index.html">Inicio</a></li>
       <li><a href="servicios.html">Servicios</a></li>
@@ -19,12 +22,37 @@
       <li><a href="productos.html">Productos</a></li>
     </ul>
     <div class="nav-right">
-      <a href="carrito.html" class="nav-cart">🛒
+      <a href="carrito.html" class="nav-cart">
+        <img src="../img/icons/carrito.png" alt="Carrito" width="22" height="22">
         <span class="cart-badge" id="contador">0</span>
+      </a>
+      <a href="buscar.html" class="nav-search" title="Buscar">
+        <img src="../img/icons/buscar.png" alt="Buscar" width="20" height="20">
       </a>
       <a href="login.html" class="btn-login" id="btnSesion">Ingresar</a>
     </div>
+    <!-- Hamburguesa -->
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MENÚ MÓVIL -->
+  <div class="nav-mobile" id="navMobile">
+    <button class="nav-mobile-close" onclick="toggleMenu()" aria-label="Cerrar">✕</button>
+    <nav class="nav-mobile-links">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="turnos.html" class="active">Turnos</a>
+      <a href="productos.html">Productos</a>
+    </nav>
+    <div class="nav-mobile-bottom">
+      <a href="carrito.html" class="nav-mobile-cart">
+        <img src="../img/icons/carrito.png" alt="" width="18" height="18"> Mi carrito
+      </a>
+      <a href="login.html" class="nav-mobile-login" id="btnSesionMobile">Ingresar</a>
+    </div>
+  </div>
 
   <!-- HERO MINI -->
   <section class="page-hero">
@@ -103,7 +131,7 @@
         <h3 class="summary-title">Resumen de tu reserva</h3>
 
         <div class="summary-empty" id="summaryEmpty">
-          <span class="summary-empty-icon">🌸</span>
+          <span class="summary-empty-icon"><img src="../img/icons/logo.png" alt="" width="40" height="40" style="vertical-align:middle"></span>
           <p>Completá los pasos para ver el resumen de tu turno.</p>
         </div>
 
@@ -140,11 +168,11 @@
           <span class="wa-toggle-track">
             <span class="wa-toggle-thumb"></span>
           </span>
-          <span class="wa-toggle-label">💬 Confirmar por WhatsApp</span>
+          <span class="wa-toggle-label"><img src="../img/icons/whatsapp.png" alt="" width="16" height="16" style="vertical-align:middle"> Confirmar por WhatsApp</span>
         </label>
 
         <p class="summary-note">
-          🔒 Tu reserva se guarda y podés gestionarla desde <a href="mis-turnos.html">Mis Turnos</a>
+          <img src="../img/icons/candado.png" alt="" width="14" height="14" style="vertical-align:middle"> Tu reserva se guarda y podés gestionarla desde <a href="mis-turnos.html">Mis Turnos</a>
         </p>
       </div>
     </div>
@@ -154,18 +182,53 @@
   <!-- MODAL CONFIRMACIÓN -->
   <div class="modal-overlay hidden" id="modalOverlay">
     <div class="modal">
-      <div class="modal-icon">✅</div>
+      <div class="modal-icon"><img src="../img/icons/check.png" alt="" width="48" height="48" style="vertical-align:middle"></div>
       <h2 class="modal-title">¡Turno reservado!</h2>
       <p class="modal-desc" id="modalDesc"></p>
       <div class="modal-actions">
         <a class="btn-primary" id="modalWhatsapp" href="#" target="_blank">
-          💬 Confirmar por WhatsApp
+          <img src="../img/icons/whatsapp.png" alt="" width="16" height="16" style="vertical-align:middle"> Confirmar por WhatsApp
         </a>
         <a class="btn-outline" href="mis-turnos.html">Ver mis turnos</a>
       </div>
       <p class="modal-redirect" id="modalRedirect">Redirigiendo en <span id="cuentaRegresiva">5</span>s...</p>
     </div>
   </div>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand-col">
+        <div class="footer-brand">
+          <img src="../img/icons/logo.png" alt="SPA M" width="26" height="26"> SPA M
+        </div>
+        <p class="footer-desc">Tu espacio de bienestar y belleza.<br>Reservas online · Productos seleccionados · Atención personalizada.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="productos.html">Productos</a>
+      </div>
+      <div class="footer-col">
+        <h4>Mi cuenta</h4>
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Registrarse</a>
+        <a href="mis-turnos.html">Mis turnos & pedidos</a>
+        <a href="carrito.html">Carrito</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <a href="https://wa.me/5493510000000" target="_blank">WhatsApp</a>
+        <a href="#">Instagram</a>
+        <a href="mailto:contacto@spam.com">contacto@spam.com</a>
+        <a href="politicas.html">Políticas</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 SPA M · Todos los derechos reservados</div>
+  </footer>
+
+
 
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
