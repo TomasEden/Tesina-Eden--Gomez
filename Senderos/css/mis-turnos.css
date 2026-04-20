@@ -116,19 +116,20 @@ html { scroll-behavior: smooth; }
 
 /* ── MENÚ MÓVIL ── */
 .nav-mobile {
-  display: none;
+  display: flex;
   position: fixed; inset: 0; z-index: 250;
   background: var(--cream);
   flex-direction: column;
   padding: 0;
   opacity: 0;
+  visibility: hidden;
   transform: translateX(100%);
-  transition: opacity 0.3s, transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  transition: opacity 0.3s, transform 0.35s cubic-bezier(0.4,0,0.2,1), visibility 0.35s;
   pointer-events: none;
 }
 .nav-mobile.open {
-  display: flex;
   opacity: 1;
+  visibility: visible;
   transform: translateX(0);
   pointer-events: auto;
 }

@@ -161,3 +161,86 @@ function requireSesion(accion) {
   }
   return false;
 }
+
+/* ══════════════════════════════════════════
+   HAMBURGUESA — menú móvil
+   ══════════════════════════════════════════ */
+
+/**
+ * Abre/cierra el menú móvil.
+ * Llamado desde onclick="toggleMenu()" en el botón hamburguesa.
+ */
+function toggleMenu() {
+  const hamburger = document.getElementById('navHamburger');
+  const menu      = document.getElementById('navMobile');
+  if (!hamburger || !menu) return;
+
+  const isOpen = menu.classList.contains('open');
+
+  if (isOpen) {
+    hamburger.classList.remove('open');
+    menu.classList.remove('open');
+    document.body.style.overflow = '';
+  } else {
+    hamburger.classList.add('open');
+    menu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+// Cerrar menú con tecla Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const menu = document.getElementById('navMobile');
+    if (menu && menu.classList.contains('open')) toggleMenu();
+  }
+});
+
+// Cerrar menú al hacer click en un link interno
+document.addEventListener('DOMContentLoaded', () => {
+  const mobileLinks = document.querySelectorAll('.nav-mobile-links a, .nav-mobile-cart');
+  mobileLinks.forEach(a => {
+    a.addEventListener('click', () => {
+      const menu = document.getElementById('navMobile');
+      if (menu && menu.classList.contains('open')) toggleMenu();
+    });
+  });
+
+  // Sincronizar botón de sesión del menú móvil
+  _syncMobileSession();
+});
+
+/**
+ * Actualiza el botón de sesión del menú móvil.
+ */
+function _syncMobileSession() {
+  const btnMobile = document.getElementById('btnSesionMobile');
+  if (!btnMobile) return;
+  const sesion = getSesion();
+  if (sesion) {
+    btnMobile.textContent = sesion.nombre;
+    btnMobile.href        = 'mis-turnos.html';
+    btnMobile.style.background = 'var(--text)';
+  } else {
+    btnMobile.textContent = 'Ingresar';
+    btnMobile.href        = 'login.html';
+    btnMobile.style.background = '';
+  }
+}
+
+// Scroll: agregar clase .scrolled al navbar
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+/**
+ * requireSesionPage: redirige al login si no hay sesión.
+ * Usar en páginas protegidas (mis-turnos, perfil, etc.)
+ */
+function requireSesionPage() {
+  if (!getSesion()) {
+    localStorage.setItem('redirectAfterLogin', window.location.href);
+    window.location.href = 'login.html';
+  }
+}
