@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════
-   SPA M — sesion.js
+   Senderos — sesion.js
    Helper compartido de sesión
    ═══════════════════════════════════════ */
 
@@ -244,3 +244,28 @@ function requireSesionPage() {
     window.location.href = 'login.html';
   }
 }
+
+/* ══════════════════════════════════════════
+   SCROLL REVEAL
+   ══════════════════════════════════════════ */
+(function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // se anima una sola vez
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  function initReveal() {
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
+      .forEach(function(el) { observer.observe(el); });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReveal);
+  } else {
+    initReveal();
+  }
+})();
