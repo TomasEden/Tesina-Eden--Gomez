@@ -1,0 +1,317 @@
+/* ═══════════════════════════════════════
+   Senderos — darkmode.css v2
+   ═══════════════════════════════════════ */
+
+/* ── Botón flotante ── */
+.dark-toggle {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  z-index: 400;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1.5px solid var(--sand);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  cursor: pointer; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s, background 0.3s;
+}
+.dark-toggle:hover {
+  transform: scale(1.15) rotate(15deg);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* ── Variables modo oscuro ── */
+html.dark {
+  --rose:        #c49aa2;
+  --rose-deep:   #c28a93;
+  --rose-pale:   #2d1f24;
+  --rose-mid:    #4a2f38;
+  --cream:       #181818;
+  --sand:        #2e2e2e;
+  --text:        #e4ddd8;
+  --text-light:  #8a9485;
+  --white:       #242424;
+  --accent:      #c9b8a8;
+}
+
+html.dark body {
+  background: var(--cream);
+  color: var(--text);
+}
+
+/* Transición suave en todo */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease !important;
+}
+/* Excepciones — no animar transform ni opacity con ese global */
+.service-card,
+.product-card,
+.turno-card,
+.equipo-card,
+.valor-card,
+.resena-card {
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+              transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.3s ease !important;
+}
+.nav-mobile,
+.srv-panel {
+  transition: background-color 0.3s ease, transform 0.38s cubic-bezier(0.4,0,0.2,1) !important;
+}
+
+/* ── NAVBAR ── */
+html.dark .navbar {
+  background: rgba(24,24,24,0.93);
+  border-bottom-color: rgba(200,140,150,0.15);
+}
+html.dark .navbar.scrolled {
+  background: rgba(24,24,24,0.99);
+  box-shadow: 0 2px 24px rgba(0,0,0,0.4);
+}
+html.dark .nav-logo { color: var(--rose-deep); }
+html.dark .nav-links a { color: var(--text-light); }
+html.dark .nav-links a:hover,
+html.dark .nav-links a.active { color: var(--rose-deep); }
+html.dark .btn-login {
+  border-color: var(--rose-deep); color: var(--rose-deep);
+}
+html.dark .btn-login:hover { background: var(--rose-deep); color: #fff; }
+html.dark .nav-cart { color: var(--text-light); }
+html.dark .nav-cart:hover { color: var(--rose-deep); }
+html.dark .nav-hamburger span { background: var(--rose-deep); }
+
+/* ── MENÚ MÓVIL ── */
+html.dark .nav-mobile { background: #181818; }
+html.dark .nav-mobile-links a { color: var(--text); border-bottom-color: rgba(200,140,150,0.1); }
+html.dark .nav-mobile-links a:hover,
+html.dark .nav-mobile-links a.active { color: var(--rose-deep); }
+html.dark .nav-mobile-close { background: #2d2d2d; color: var(--rose-deep); }
+html.dark .nav-mobile-bottom { border-top-color: rgba(200,140,150,0.12); }
+html.dark .nav-mobile-login { background: var(--rose-deep); }
+
+/* ── HERO ── */
+html.dark .page-hero-overlay,
+html.dark .nos-hero-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 55%, transparent 100%);
+}
+
+/* ── BARRA CATEGORÍAS ── */
+html.dark .category-bar {
+  background: #242424;
+  border-bottom-color: var(--sand);
+}
+html.dark .cat-tab { color: var(--text-light); }
+html.dark .cat-tab:hover { color: var(--rose-deep); }
+html.dark .cat-tab.active { color: var(--rose-deep); border-bottom-color: var(--rose-deep); }
+html.dark .cat-count { background: var(--rose-pale); color: var(--rose-deep); }
+html.dark .cat-tab.active .cat-count { background: var(--rose-deep); color: #fff; }
+
+/* ── CARDS SERVICIOS ── */
+html.dark .service-card {
+  background: #242424;
+  border-color: rgba(200,140,150,0.12);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+html.dark .service-card:hover {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 8px 16px rgba(0,0,0,0.3);
+}
+html.dark .service-name { color: var(--text); }
+html.dark .service-desc { color: var(--text-light); }
+html.dark .service-footer { border-top-color: var(--sand); }
+html.dark .service-likes {
+  background: rgba(36,36,36,0.92);
+  color: var(--text-light);
+}
+html.dark .btn-ver-servicio {
+  background: var(--rose-pale); color: var(--rose-deep);
+  border-color: var(--rose-mid);
+}
+html.dark .btn-ver-servicio:hover { background: var(--rose-deep); color: #fff; }
+
+/* ── PANEL LATERAL ── */
+html.dark .srv-panel {
+  background: #1e1e1e;
+  box-shadow: -8px 0 40px rgba(0,0,0,0.5);
+}
+html.dark .srv-overlay { background: rgba(0,0,0,0.7); }
+html.dark .panel-close { background: rgba(40,40,40,0.95); color: var(--text); }
+html.dark .panel-close:hover { background: #333; }
+html.dark .panel-precio-bar {
+  background: var(--rose-pale);
+  border-color: var(--rose-mid);
+}
+html.dark .panel-precio { color: var(--rose-deep); }
+html.dark .panel-precio-sub { color: var(--text-light); }
+html.dark .panel-desc { color: var(--text-light); }
+html.dark .panel-section-title { color: var(--text); border-bottom-color: var(--sand); }
+html.dark .panel-incluye-list li { color: var(--text-light); }
+html.dark .panel-reserva-inline {
+  background: #242424;
+  border-color: var(--sand);
+}
+html.dark .rpaso-label { color: var(--text-light); }
+html.dark .mcal-mes { color: var(--text); }
+html.dark .mcal-dias-semana span { color: var(--text-light); }
+html.dark .mcal-day { color: var(--text); }
+html.dark .mcal-day:hover { background: var(--rose-pale); border-color: var(--rose-mid); }
+html.dark .mcal-day.today { border-color: var(--rose-deep); color: var(--rose-deep); }
+html.dark .mcal-day.selected { background: var(--rose-deep); color: #fff; }
+html.dark .mcal-day.disabled { color: #555; }
+html.dark .mhor-btn {
+  background: #2e2e2e; border-color: #444; color: var(--text);
+}
+html.dark .mhor-btn:hover { background: var(--rose-pale); border-color: var(--rose-deep); color: var(--rose-deep); }
+html.dark .mhor-btn.selected { background: var(--rose-deep); color: #fff; border-color: var(--rose-deep); }
+html.dark .mhor-btn.ocupado { background: #252525; color: #555; }
+html.dark .btn-volver-paso { color: var(--text-light); }
+html.dark .reserva-resumen {
+  background: #2a2a2a;
+  border-color: var(--rose-mid);
+}
+html.dark .rres-item { border-bottom-color: #333; }
+html.dark .rres-item span { color: var(--text-light); }
+html.dark .rres-item strong { color: var(--text); }
+html.dark .reserva-ok-check { background: #1a3a24; color: #5c9e6e; }
+html.dark .reserva-ok-title { color: var(--text); }
+html.dark .reserva-ok-sub { color: var(--text-light); }
+html.dark .sugerido-item { background: #2a2a2a; border-color: #383838; }
+html.dark .sugerido-item:hover { background: var(--rose-pale); border-color: var(--rose-mid); }
+html.dark .sugerido-nombre { color: var(--text); }
+html.dark .sugerido-precio { color: var(--text-light); }
+
+/* ── INPUTS Y FORMULARIOS ── */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background: #2e2e2e !important;
+  border-color: #444 !important;
+  color: var(--text) !important;
+}
+html.dark input:focus,
+html.dark textarea:focus {
+  border-color: var(--rose-deep) !important;
+  box-shadow: 0 0 0 3px rgba(194,138,147,0.15) !important;
+}
+html.dark input::placeholder,
+html.dark textarea::placeholder { color: #666 !important; }
+
+/* ── RESEÑAS ── */
+html.dark .resena-card {
+  background: #2a2a2a;
+  border-color: rgba(200,140,150,0.1);
+}
+html.dark .resena-nombre { color: var(--text); }
+html.dark .resena-fecha { color: var(--text-light); }
+html.dark .resena-texto { color: var(--text-light); }
+html.dark .form-resena {
+  background: #2d1f24;
+  border-color: var(--rose-mid);
+}
+html.dark .form-resena-title { color: var(--text); }
+html.dark .resenas-avg { color: var(--text); }
+html.dark .resenas-count { color: var(--text-light); }
+
+/* ── FOOTER ── */
+html.dark .site-footer { background: #111; }
+html.dark .footer-brand { color: var(--rose-mid); }
+html.dark .footer-desc { color: rgba(255,255,255,0.3); }
+html.dark .footer-col h4 { color: rgba(255,255,255,0.6); }
+html.dark .footer-col a { color: rgba(255,255,255,0.3); }
+html.dark .footer-col a:hover { color: var(--rose-mid); }
+html.dark .footer-bottom { background: rgba(0,0,0,0.4); color: rgba(255,255,255,0.2); }
+
+/* ── TOAST ── */
+html.dark .toast { background: #333; color: #eee; }
+
+/* ── BOTÓN TOGGLE en dark ── */
+html.dark .dark-toggle {
+  background: #2a2a2a;
+  border-color: #444;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+/* ── OTRAS PÁGINAS ── */
+/* Index */
+html.dark .hero { background: #1a1a1a; }
+html.dark .promo-section { background: #1a1a1a; }
+html.dark .services-section { background: var(--cream) !important; }
+html.dark .products-section { background: var(--cream) !important; }
+
+/* Turnos */
+html.dark .step-card {
+  background: #242424;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+html.dark .step-card.dimmed { opacity: 0.3; }
+html.dark .sum-card {
+  background: #242424;
+  border-color: rgba(200,140,150,0.2);
+}
+
+/* Carrito */
+html.dark .cart-item {
+  background: #242424;
+  border-color: var(--sand);
+}
+html.dark .cart-summary { background: #242424; }
+
+/* Mis turnos */
+html.dark .turno-card {
+  background: #242424;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+html.dark .turno-fecha-block { background: var(--rose-pale); }
+html.dark .turno-dia { color: var(--rose-deep); }
+html.dark .turno-mes { color: var(--text-light); }
+
+/* Perfil */
+html.dark .perfil-stat { background: #242424; }
+html.dark .pstat-num { color: var(--rose-deep); }
+html.dark .pstat-label { color: var(--text-light); }
+
+/* Productos */
+html.dark .product-card {
+  background: #242424;
+  border-color: rgba(200,140,150,0.1);
+}
+html.dark .prod-name { color: var(--text); }
+html.dark .filters-sidebar {
+  background: #242424;
+  border-color: var(--sand);
+}
+
+/* Login / Registro */
+html.dark .login-panel-bg,
+html.dark .side-panel { filter: brightness(0.5); }
+html.dark .form-panel { background: #1e1e1e; }
+html.dark .form-title { color: var(--text); }
+
+/* Nosotros */
+html.dark .nos-historia { background: #1e1e1e; }
+html.dark .nos-body { color: var(--text-light); }
+html.dark .hito-year { color: var(--rose-deep); }
+html.dark .hito-desc { color: var(--text-light); }
+html.dark .nos-valores { background: var(--rose-pale); }
+html.dark .valor-card { background: #242424; }
+html.dark .valor-card h3 { color: var(--text); }
+html.dark .valor-card p { color: var(--text-light); }
+html.dark .nos-equipo { background: #1e1e1e; }
+html.dark .equipo-nombre { color: var(--text); }
+html.dark .equipo-rol { color: var(--rose-deep); }
+html.dark .equipo-desc { color: var(--text-light); }
+html.dark .nos-cta { background: #111; }
+
+/* Buscador */
+html.dark .search-hero { background: var(--rose-pale); border-bottom-color: var(--rose-mid); }
+html.dark .search-box-wrap { background: #2a2a2a; border-color: var(--rose-mid); }
+html.dark .result-card { background: #242424; }
+
+/* Confirmacion */
+html.dark .confirm-card { background: #242424; }
+
+@media (max-width: 640px) {
+  .dark-toggle { bottom: 1.2rem; right: 1.2rem; width: 40px; height: 40px; font-size: 1rem; }
+}
