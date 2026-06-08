@@ -269,3 +269,164 @@ function requireSesionPage() {
     initReveal();
   }
 })();
+
+// Limpiar sesión temporal cuando se cierra la pestaña (sin "recordar")
+window.addEventListener('beforeunload', function() {
+  if (sessionStorage.getItem('tempSession') === '1') {
+    localStorage.removeItem('sesion');
+  }
+});
+
+/* ══════════════════════════════════════════
+   WHATSAPP FLOTANTE
+   ══════════════════════════════════════════ */
+(function() {
+  const TEL = '5493510000000';
+
+  function crearWABtn() {
+    if (document.getElementById('waFloating')) return;
+    const btn = document.createElement('a');
+    btn.id        = 'waFloating';
+    btn.href      = 'https://wa.me/' + TEL + '?text=' + encodeURIComponent('Hola! Quiero consultar sobre los servicios de Senderos.');
+    btn.target    = '_blank';
+    btn.rel       = 'noopener';
+    btn.title     = 'Chatear con Senderos';
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.858L.057 23.98l6.304-1.654A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.852 0-3.587-.5-5.082-1.37l-.361-.215-3.743.981.998-3.648-.235-.373A9.937 9.937 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>';
+    btn.style.cssText = 'position:fixed;bottom:5rem;right:2rem;z-index:390;width:50px;height:50px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,0.45);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);text-decoration:none;';
+    btn.onmouseenter = () => btn.style.transform = 'scale(1.15)';
+    btn.onmouseleave = () => btn.style.transform = 'scale(1)';
+    document.body.appendChild(btn);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', crearWABtn);
+  } else {
+    crearWABtn();
+  }
+})();
+
+/* ══════════════════════════════════════════
+   SISTEMA DE NOTIFICACIONES
+   ══════════════════════════════════════════ */
+function getNotificaciones() {
+  return JSON.parse(localStorage.getItem('notificaciones') || '[]');
+}
+
+function agregarNotificacion(msg, tipo) {
+  tipo = tipo || 'info';
+  const notifs = getNotificaciones();
+  notifs.unshift({
+    id:     Date.now(),
+    msg:    msg,
+    tipo:   tipo,  // 'info' | 'success' | 'warning'
+    leida:  false,
+    fecha:  new Date().toISOString()
+  });
+  // Máximo 20 notificaciones
+  localStorage.setItem('notificaciones', JSON.stringify(notifs.slice(0, 20)));
+  actualizarBadgeNotif();
+}
+
+function marcarTodasLeidas() {
+  const notifs = getNotificaciones().map(n => ({ ...n, leida: true }));
+  localStorage.setItem('notificaciones', JSON.stringify(notifs));
+  actualizarBadgeNotif();
+  document.getElementById('notifPanel')?.remove();
+}
+
+function actualizarBadgeNotif() {
+  const badge = document.getElementById('notifBadge');
+  if (!badge) return;
+  const noLeidas = getNotificaciones().filter(n => !n.leida).length;
+  badge.textContent = noLeidas;
+  badge.style.display = noLeidas > 0 ? 'flex' : 'none';
+}
+
+function toggleNotifPanel() {
+  const existing = document.getElementById('notifPanel');
+  if (existing) { existing.remove(); return; }
+
+  const notifs = getNotificaciones();
+  const iconBtn = document.getElementById('notifBtn');
+  if (!iconBtn) return;
+
+  const panel = document.createElement('div');
+  panel.id = 'notifPanel';
+  panel.style.cssText = 'position:fixed;top:74px;right:1.5rem;z-index:500;width:min(340px,92vw);background:#fff;border-radius:18px;box-shadow:0 8px 36px rgba(0,0,0,0.16);border:1px solid rgba(211,161,169,0.2);overflow:hidden;animation:fadeUp 0.25s ease both;font-family:DM Sans,sans-serif;';
+
+  const noLeidas = notifs.filter(n => !n.leida).length;
+  const colores = { success:'#edf7f1', warning:'#fef4e6', info:'#faf0f2' };
+  const iconos  = { success:'✓', warning:'⚠', info:'ℹ' };
+
+  panel.innerHTML =
+    '<div style="padding:1rem 1.2rem 0.7rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0ece8">' +
+      '<span style="font-size:0.82rem;font-weight:600;color:#45634D">Notificaciones ' + (noLeidas > 0 ? '(' + noLeidas + ')' : '') + '</span>' +
+      (noLeidas > 0 ? '<button onclick="marcarTodasLeidas()" style="font-size:0.72rem;color:#AD717E;background:none;border:none;cursor:pointer;font-family:inherit">Marcar todas leídas</button>' : '') +
+    '</div>' +
+    (notifs.length === 0
+      ? '<p style="padding:1.5rem;text-align:center;font-size:0.85rem;color:#9a9a8e">Sin notificaciones</p>'
+      : notifs.map(n =>
+          '<div style="padding:0.8rem 1.2rem;border-bottom:1px solid #f9f5f2;background:' + (n.leida ? '#fff' : colores[n.tipo] || '#faf0f2') + ';display:flex;gap:0.7rem;align-items:flex-start">' +
+            '<span style="font-size:0.8rem;flex-shrink:0;margin-top:2px">' + (iconos[n.tipo] || 'ℹ') + '</span>' +
+            '<div><p style="font-size:0.82rem;color:#2d2d2d;margin:0 0 0.15rem">' + n.msg + '</p>' +
+            '<span style="font-size:0.7rem;color:#9a9a8e">' + new Date(n.fecha).toLocaleDateString('es-AR', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) + '</span></div>' +
+          '</div>').join('')) +
+    '<div style="padding:0.7rem 1.2rem;text-align:center">' +
+      '<a href="mis-turnos.html" style="font-size:0.78rem;color:#AD717E;text-decoration:none">Ver mis turnos →</a>' +
+    '</div>';
+
+  document.body.appendChild(panel);
+
+  // Marcar como leídas al abrir
+  setTimeout(() => {
+    const notifs2 = getNotificaciones().map(n => ({ ...n, leida: true }));
+    localStorage.setItem('notificaciones', JSON.stringify(notifs2));
+    actualizarBadgeNotif();
+  }, 800);
+
+  // Cerrar al click fuera
+  setTimeout(() => {
+    document.addEventListener('click', function handler(e) {
+      if (!panel.contains(e.target) && e.target !== iconBtn) {
+        panel.remove();
+        document.removeEventListener('click', handler);
+      }
+    });
+  }, 100);
+}
+
+// Inyectar botón campana en navbar al cargar
+(function() {
+  function addNotifBtn() {
+    const navRight = document.querySelector('.nav-right');
+    if (!navRight || document.getElementById('notifBtn')) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'notifBtn';
+    btn.onclick = toggleNotifPanel;
+    btn.style.cssText = 'position:relative;background:none;border:none;cursor:pointer;padding:0.3rem;display:flex;align-items:center;color:#7a9080;transition:color 0.2s;font-size:1.1rem;';
+    btn.innerHTML = '🔔<span id="notifBadge" style="display:none;position:absolute;top:-2px;right:-4px;background:#AD717E;color:#fff;font-size:0.58rem;font-weight:700;min-width:16px;height:16px;border-radius:50%;align-items:center;justify-content:center;padding:0 2px;border:1.5px solid rgba(250,247,245,0.95)">0</span>';
+    btn.onmouseenter = () => btn.style.color = '#AD717E';
+    btn.onmouseleave = () => btn.style.color = '#7a9080';
+
+    // Insertar antes del btn-login
+    const btnLogin = navRight.querySelector('.btn-login');
+    if (btnLogin) navRight.insertBefore(btn, btnLogin);
+    else navRight.appendChild(btn);
+
+    actualizarBadgeNotif();
+
+    // Demo: generar notificaciones de ejemplo si no hay ninguna
+    if (getNotificaciones().length === 0) {
+      agregarNotificacion('Tu turno del 20 de Abril fue confirmado ✅', 'success');
+      agregarNotificacion('Tu pedido #456789 está listo para retirar 🎉', 'success');
+      agregarNotificacion('Recordatorio: tenés un turno mañana a las 10:00 hs', 'info');
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addNotifBtn);
+  } else {
+    addNotifBtn();
+  }
+})();

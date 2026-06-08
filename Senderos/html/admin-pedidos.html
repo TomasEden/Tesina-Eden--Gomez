@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Turnos — Admin Senderos</title>
+  <title>Pedidos — Admin Senderos</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../css/admin.css"/>
 </head>
 <body>
 
   <aside class="admin-sidebar">
-    <a href="admin-dashboard.html" class="sidebar-logo"><img src="../img/icons/logo.png" alt="Senderos" width="28" height="28" style="vertical-align:middle;margin-right:0.4rem"> Senderos <span>Panel Admin</span></a>
+    <a href="admin-dashboard.html" class="sidebar-logo">Senderos <span>Panel Admin</span></a>
     <nav class="sidebar-nav">
       <span class="sidebar-section">Principal</span>
       <a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/dashboard.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Dashboard</a>
       <span class="sidebar-section">Gestión</span>
-      <a href="admin-turnos.html"    class="sidebar-link active"><span class="sidebar-icon"><img src="../img/icons/calendario.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Turnos</a>
+      <a href="admin-turnos.html"    class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/calendario.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Turnos</a>
+      <a href="admin-clientes.html" class="sidebar-link"><span class="sidebar-icon">👥</span> Clientes</a>
+              <a href="admin-pedidos.html"   class="sidebar-link active"><span class="sidebar-icon"><img src="../img/icons/pedidos.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Pedidos</a>
       <a href="admin-servicios.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/servicios.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Servicios</a>
       <a href="admin-productos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/productos.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Productos</a>
-      <a href="admin-ofertas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/ofertas.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Ofertas</a>
-      <a href="admin-pedidos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/pedidos.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Pedidos</a>
-      <a href="admin-clientes.html" class="sidebar-link"><span class="sidebar-icon">👥</span> Clientes</a>
+      <a href="admin-ofertas.html"   class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/ofertas.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Ofertas</a>
       <span class="sidebar-section">Sitio</span>
       <a href="index.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/sitio.png" alt="" width="18" height="18" style="vertical-align:middle"></span> Ver sitio</a>
     </nav>
@@ -35,21 +35,18 @@
 
   <main class="admin-main">
     <div class="admin-topbar">
-      <h1 class="topbar-title">Gestión de Turnos</h1>
+      <h1 class="topbar-title">Gestión de Pedidos</h1>
       <div class="topbar-right">
         <span class="topbar-date" id="topbarDate"></span>
       </div>
     </div>
 
     <div class="admin-content">
-
-      <!-- STATS RÁPIDAS -->
       <div class="stats-grid" id="statsGrid"></div>
 
-      <!-- TABLA -->
       <div class="table-card">
         <div class="table-header">
-          <h3 class="table-title">Todos los turnos</h3>
+          <h3 class="table-title">Todos los pedidos</h3>
           <div class="table-actions">
             <div class="search-input-wrap">
               <input type="text" id="searchInput" placeholder="Buscar cliente..." oninput="filtrar()"/>
@@ -57,65 +54,61 @@
             <select class="filter-select" id="filterEstado" onchange="filtrar()">
               <option value="todos">Todos los estados</option>
               <option value="pendiente">Pendiente</option>
-              <option value="confirmado">Confirmado</option>
-              <option value="cancelado">Cancelado</option>
+              <option value="listo">Listo para retirar</option>
+              <option value="entregado">Entregado</option>
             </select>
           </div>
         </div>
         <table>
           <thead>
             <tr>
+              <th>#</th>
               <th>Cliente</th>
-              <th>Servicio</th>
-              <th>Fecha & Hora</th>
+              <th>Productos</th>
+              <th>Total</th>
+              <th>Fecha</th>
               <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody id="turnosBody"></tbody>
+          <tbody id="pedidosBody"></tbody>
         </table>
         <div class="table-empty hidden" id="tableEmpty">
-          <p>No hay turnos que coincidan.</p>
+          <p style="padding:2rem;text-align:center;color:var(--text-light)">No hay pedidos aún.</p>
         </div>
       </div>
-
     </div>
   </main>
 
   <!-- MODAL CAMBIAR ESTADO -->
   <div class="modal-overlay hidden" id="modalEstado">
     <div class="modal">
-      <h2 class="modal-title">Cambiar estado del turno</h2>
-      <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:1.5rem" id="modalTurnoInfo"></p>
+      <h2 class="modal-title">Actualizar pedido</h2>
+      <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:1.5rem" id="modalPedidoInfo"></p>
       <div class="field-group">
         <label>Nuevo estado</label>
         <select id="nuevoEstado">
           <option value="pendiente">Pendiente</option>
-          <option value="confirmado">Confirmado</option>
-          <option value="cancelado">Cancelado</option>
+          <option value="listo">Listo para retirar</option>
+          <option value="entregado">Entregado</option>
         </select>
       </div>
-      <div class="modal-footer">
-        <button class="btn-ghost" onclick="cerrarModal('modalEstado')">Cancelar</button>
-        <button class="btn-primary" onclick="guardarEstado()">Guardar cambio</button>
+      <div class="field-group" style="margin-top:1rem">
+        <label>Notificar al cliente por WhatsApp</label>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-top:0.4rem">
+          <input type="checkbox" id="notificarWA" checked style="accent-color:var(--rose-deep);width:16px;height:16px"/>
+          <span style="font-size:0.84rem;color:var(--text-light)">Enviar mensaje automático al cliente</span>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <!-- MODAL CONFIRMAR ELIMINAR -->
-  <div class="modal-overlay hidden" id="modalEliminar">
-    <div class="modal modal-confirm">
-      <div class="modal-confirm-icon"><img src="../img/icons/eliminar.png" alt="" width="48" height="48" style="vertical-align:middle"></div>
-      <h2 class="modal-confirm-title">¿Eliminar turno?</h2>
-      <p class="modal-confirm-desc">Esta acción no se puede deshacer.</p>
-      <div class="modal-confirm-actions">
-        <button class="btn-ghost" onclick="cerrarModal('modalEliminar')">Cancelar</button>
-        <button class="btn-danger" onclick="confirmarEliminar()">Eliminar</button>
+      <div class="modal-footer">
+        <button class="btn-ghost" onclick="cerrarModal()">Cancelar</button>
+        <button class="btn-primary" onclick="guardarEstado()">Guardar</button>
       </div>
     </div>
   </div>
 
   <div class="toast" id="toast"></div>
-  <script src="../js/admin-turnos.js"></script>
+  <script src="../js/historial.js"></script>
+  <script src="../js/admin-pedidos.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════
-   SPA M — buscar.js
+   Senderos — buscar.js
    Buscador global de servicios y productos
    ═══════════════════════════════════════ */
 
@@ -10,12 +10,37 @@ let debounceTimer = null;
 // ── Datos ───────────────────────────────────────────────────────────────────
 // SERVICIOS y PRODUCTOS vienen de servicios.js y productos.js cargados antes
 
+// Datos embebidos para que buscar.html no dependa de servicios.js ni productos.js
+const DATOS_SERVICIOS_BUSCAR = [
+  { id:'masaje-relajante',  nombre:'Masaje Relajante',         categoria:'Masajes',        desc:'Técnica sueca de cuerpo completo para liberar tensiones musculares.',      duracion:'60 min', precio:5000, img:'https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=400&q=70' },
+  { id:'masaje-piedras',    nombre:'Masaje con Piedras Calientes', categoria:'Masajes',     desc:'Piedras volcánicas de basalto que penetran calor profundo en los músculos.', duracion:'75 min', precio:6500, img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=70' },
+  { id:'masaje-deportivo',  nombre:'Masaje Deportivo',         categoria:'Masajes',        desc:'Técnica de alta presión para deportistas y recuperación muscular.',         duracion:'50 min', precio:5500, img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=70' },
+  { id:'reflexologia',      nombre:'Reflexología Podal',       categoria:'Masajes',        desc:'Presión en puntos reflejos del pie que activan la energía del cuerpo.',     duracion:'40 min', precio:3500, img:'https://images.unsplash.com/photo-1598454444936-cf0b6f87f2b0?w=400&q=70' },
+  { id:'facial-premium',    nombre:'Tratamiento Facial Premium', categoria:'Faciales',     desc:'Limpieza profunda, exfoliación e hidratación intensiva con productos naturales.', duracion:'30 min', precio:3000, img:'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&q=70' },
+  { id:'facial-antiage',    nombre:'Facial Anti-Age',          categoria:'Faciales',       desc:'Tratamiento reafirmante con ácido hialurónico y vitamina C.',              duracion:'45 min', precio:4500, img:'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&q=70' },
+  { id:'jacuzzi',           nombre:'Jacuzzi Privado',          categoria:'Spa & Relax',    desc:'Sesión privada de hidroterapia con sales minerales y aceites esenciales.',  duracion:'80 min', precio:5000, img:'https://images.unsplash.com/photo-1610289982320-1a4c5b60f67c?w=400&q=70' },
+  { id:'aromaterapia',      nombre:'Aromaterapia',             categoria:'Spa & Relax',    desc:'Masaje suave con aceites esenciales premium. Alivia el estrés y mejora el sueño.', duracion:'50 min', precio:4000, img:'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&q=70' },
+  { id:'manicura',          nombre:'Manicura & Pedicura',      categoria:'Uñas & Estética', desc:'Cuidado completo de manos y pies con esmaltado semipermanente incluido.',  duracion:'45 min', precio:2500, img:'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&q=70' },
+  { id:'depilacion',        nombre:'Depilación con Cera',      categoria:'Uñas & Estética', desc:'Depilación profesional con cera natural. Resultado duradero y piel suave.', duracion:'40 min', precio:2000, img:'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=400&q=70' },
+];
+
+const DATOS_PRODUCTOS_BUSCAR = [
+  { id:1, nombre:'Crema Hidratante',     categoria:'Facial',  desc:'Hidratación profunda para piel seca y mixta.',            precio:500,  stock:true,  img:'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&q=70' },
+  { id:2, nombre:'Aceite de Lavanda',    categoria:'Facial',  desc:'Para piel mixta y sensible. Aroma relajante.',            precio:500,  stock:true,  img:'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=400&q=70' },
+  { id:3, nombre:'Serum de Crecimiento', categoria:'Capilar', desc:'Con biotina y extractos naturales para el cabello.',      precio:500,  stock:false, img:'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&q=70' },
+  { id:4, nombre:'Kit Capilar',          categoria:'Capilar', desc:'Cuidado completo para tu cabello.',                       precio:800,  stock:true,  img:'https://images.unsplash.com/photo-1598454444936-cf0b6f87f2b0?w=400&q=70' },
+  { id:5, nombre:'Aceite de Coco',       categoria:'Corporal', desc:'Hidratación y nutrición profunda para el cuerpo.',       precio:600,  stock:true,  img:'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=400&q=70' },
+  { id:6, nombre:'Bálsamo Natural',      categoria:'Corporal', desc:'Bálsamo con extractos de plantas medicinales.',          precio:450,  stock:true,  img:'https://images.unsplash.com/photo-1585386959984-a41552231658?w=400&q=70' },
+  { id:7, nombre:'Mascarilla Facial',    categoria:'Facial',  desc:'Limpieza profunda con arcilla y aloe vera.',              precio:650,  stock:true,  img:'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&q=70' },
+  { id:8, nombre:'Contorno de Ojos',     categoria:'Facial',  desc:'Reduce ojeras y bolsas con retinol y cafeína.',           precio:900,  stock:false, img:'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&q=70' },
+  { id:9, nombre:'Exfoliante Corporal',  categoria:'Corporal', desc:'Exfoliación suave con azúcar y aceites esenciales.',     precio:550,  stock:true,  img:'https://images.unsplash.com/photo-1610289982320-1a4c5b60f67c?w=400&q=70' },
+];
+
 function getDatos() {
-  // sync-admin si está disponible
   const adminServ = JSON.parse(localStorage.getItem('adminServicios') || 'null');
   const adminProd = JSON.parse(localStorage.getItem('adminProductos') || 'null');
-  const servs = adminServ || (typeof SERVICIOS !== 'undefined' ? SERVICIOS : []);
-  const prods = adminProd || (typeof PRODUCTOS !== 'undefined' ? PRODUCTOS : []);
+  const servs = adminServ || DATOS_SERVICIOS_BUSCAR;
+  const prods = adminProd || DATOS_PRODUCTOS_BUSCAR;
   return { servs, prods };
 }
 
