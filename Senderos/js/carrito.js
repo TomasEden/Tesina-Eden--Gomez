@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════
-   SPA M — carrito.js (v2)
+   SPA M — carrito.js (v2 - corregido)
    Productos agrupados + WA toggle + login guard
    ═══════════════════════════════════════ */
 
@@ -10,10 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
   });
 });
-
-// ── Sesión ──────────────────────────────────────────────────────────────────
-`; btn.href = 'mis-turnos.html'; }
-}
 
 // ── Toast ───────────────────────────────────────────────────────────────────
 function showToast(msg) {
