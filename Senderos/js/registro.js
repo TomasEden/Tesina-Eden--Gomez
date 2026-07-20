@@ -1,9 +1,10 @@
 /* ═══════════════════════════════════════
-   SPA M — registro.js
+   Senderos — registro.js
    ═══════════════════════════════════════ */
 
 // ── Datos del paso 1 (se guardan al avanzar) ────────────────────────────────
 let datosPaso1 = {};
+const API_BASE = '/senderos/api';
 
 // ── Mostrar / ocultar contraseña ────────────────────────────────────────────
 function togglePassword(inputId, btn) {
@@ -160,27 +161,56 @@ function registrar() {
 
   if (!valido) return;
 
-  // Verificar si el email ya está registrado
-  const usuarioExistente = JSON.parse(localStorage.getItem('usuario'));
-  if (usuarioExistente && usuarioExistente.email === email) {
-    marcarError('email', 'err-email', 'Este email ya está registrado');
-    return;
+
+  fetch(`${API_BASE}/registro.php`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      nombre: datosPaso1.nombre,
+      apellido: datosPaso1.apellido,
+      telefono: datosPaso1.telefono,
+      nacimiento: datosPaso1.nacimiento,
+      email,
+      password
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+
+    console.log("Respuesta del servidor:", data);
+  
+    if (!data.ok) {
+  
+      marcarError(
+        'email',
+        'err-email',
+        data.error || data.message || 'Error al registrar'
+      );
+  
+      return;
+    }
+  
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('stepExito').classList.remove('hidden');
+  
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 2500);
+  
+  })
+  .catch(error => {
+  
+    marcarError(
+      'email',
+      'err-email',
+      'Error de conexión con el servidor'
+    );
+  
+    console.error(error);
+  
+  });
   }
 
-  // Guardar usuario en localStorage
-  const usuario = {
-    ...datosPaso1,
-    email,
-    password,
-    fechaRegistro: new Date().toISOString()
-  };
-  localStorage.setItem('usuario', JSON.stringify(usuario));
-
-  // Mostrar pantalla de éxito y redirigir
-  document.getElementById('step2').classList.add('hidden');
-  document.getElementById('stepExito').classList.remove('hidden');
-
-  setTimeout(() => {
-    window.location.href = 'login.html';
-  }, 2500);
-}
+  

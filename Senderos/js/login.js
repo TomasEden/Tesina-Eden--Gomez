@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════
-   SPA M — login.js
+   Senderos — login.js
    ═══════════════════════════════════════ */
 
 // ── Mostrar / ocultar contraseña ────────────────────────────────────────────
@@ -52,6 +52,9 @@ function olvidoPassword(e) {
 
 // ── Iniciar sesión ──────────────────────────────────────────────────────────
 function iniciarSesion() {
+
+  console.log("FUNCION INICIAR SESION EJECUTADA");
+
   limpiarErrores();
 
   const email    = document.getElementById('email').value.trim();
@@ -83,55 +86,71 @@ function iniciarSesion() {
 
   // Simular carga
   setLoading(true);
+  console.log("Estoy enviando:", {
+    email,
+    password
+  });
 
-  setTimeout(() => {
-    // Verificar credenciales contra localStorage
-    const usuario = JSON.parse(localStorage.getItem('usuario'));
-
-    if (!usuario) {
-      setLoading(false);
-      mostrarError('err-email', 'No existe ninguna cuenta registrada');
-      document.getElementById('email').classList.add('error');
-      mostrarDemoHint(null);
+  fetch('/senderos/api/login.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email,
+      password
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    
+    console.log("Respuesta del servidor:", data);
+  
+    setLoading(false);
+  
+    if (!data.ok) {
+  
+      mostrarError(
+        'err-email',
+        data.error || 'Email o contraseña incorrectos'
+      );
+  
+      document.getElementById('email')
+        .classList.add('error');
+  
       return;
     }
-
-    if (usuario.email !== email) {
-      setLoading(false);
-      mostrarError('err-email', 'Email incorrecto');
-      document.getElementById('email').classList.add('error');
-      return;
-    }
-
-    if (usuario.password !== password) {
-      setLoading(false);
-      mostrarError('err-password', 'Contraseña incorrecta');
-      document.getElementById('password').classList.add('error');
-      return;
-    }
-
-    // ✅ Login correcto
-    const sesion = {
-      nombre:  usuario.nombre,
-      apellido: usuario.apellido,
-      email:   usuario.email,
-      telefono: usuario.telefono,
-      loginAt: new Date().toISOString()
-    };
-
-    // Recordar sesión o solo para esta pestaña
-    if (recordar) {
-      localStorage.setItem('sesion', JSON.stringify(sesion));
-    } else {
-      sessionStorage.setItem('sesion', JSON.stringify(sesion));
-    }
-
-    // Redirigir a la página desde donde vino, o al index
-    const redirect = sessionStorage.getItem('redirectAfterLogin') || localStorage.getItem('redirectAfterLogin') || 'index.html';
-    sessionStorage.removeItem('redirectAfterLogin');
-    localStorage.removeItem('redirectAfterLogin');
+  
+    localStorage.setItem(
+      'sesion',
+      JSON.stringify(data.usuario)
+    );
+  
+    sessionStorage.setItem(
+      'sesion',
+      JSON.stringify(data.usuario)
+    );
+  
+    const redirect =
+      sessionStorage.getItem('redirectAfterLogin')
+      || localStorage.getItem('redirectAfterLogin')
+      || 'index.html';
+  
     window.location.href = redirect;
-  }, 1000);
+  
+  })
+  .catch(error => {
+  
+    setLoading(false);
+  
+    console.error(error);
+  
+    mostrarError(
+      'err-email',
+      'Error de conexión con el servidor'
+    );
+  
+  });
 }
 
 // ── Hint de demo si no hay usuario registrado ───────────────────────────────

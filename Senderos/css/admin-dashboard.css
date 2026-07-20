@@ -1,4 +1,4 @@
-/* Senderos — admin-dashboard.css (complementa admin.css) */
+/* SPA M — admin-dashboard.css (complementa admin.css) */
 .dash-grid {
   display: grid; grid-template-columns: 1fr 340px;
   gap: 1.5rem; align-items: start;
@@ -50,48 +50,4 @@
 
 @media (max-width: 1024px) {
   .dash-grid { grid-template-columns: 1fr; }
-}
-
-/* ── GRÁFICOS ── */
-.charts-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 0.8fr;
-  gap: 1.2rem;
-  margin-bottom: 1.5rem;
-}
-.chart-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 1.2rem 1.4rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-  border: 1px solid #f0ece8;
-}
-.chart-card-sm { padding: 1.2rem 1.4rem; }
-.chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-}
-.chart-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1rem;
-  font-weight: 400;
-  color: #2d2d2d;
-}
-.chart-sub {
-  font-size: 0.72rem;
-  color: #AD717E;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.bar-chart-wrap { min-height: 120px; }
-
-@media (max-width: 1100px) {
-  .charts-row { grid-template-columns: 1fr 1fr; }
-  .chart-card-sm { grid-column: 1 / -1; }
-}
-@media (max-width: 700px) {
-  .charts-row { grid-template-columns: 1fr; }
-  .chart-card-sm { grid-column: auto; }
 }

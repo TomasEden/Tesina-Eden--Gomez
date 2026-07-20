@@ -293,8 +293,8 @@ function abrirPanel(id) {
           <div class="panel-precio">$${s.precio.toLocaleString('es-AR')}</div>
           <div class="panel-precio-sub">por sesión</div>
         </div>
-        <button class="btn-reservar-panel" onclick="abrirReservaInline()">
-          Reservar turno
+        <button class="btn-reservar-panel" onclick="agregarServicioCarrito('${s.id}')">
+          Agregar al carrito
         </button>
       </div>
 
@@ -539,4 +539,34 @@ function toggleLike(id, btn) {
     btn.classList.remove('liked');
   }
   localStorage.setItem('likes', JSON.stringify(likesGuardados));
+}
+
+/* ── AGREGAR SERVICIO AL CARRITO ── */
+function agregarServicioCarrito(id) {
+  if (!requireSesion('agregar servicios al carrito')) return;
+  const s = SERVICIOS.find(x => x.id === id);
+  if (!s) return;
+
+  const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+  carrito.push({
+    id:       s.id,
+    nombre:   s.nombre,
+    precio:   s.precio,
+    duracion: s.duracion,
+    tipo:     'servicio',
+    img:      s.img
+  });
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+  actualizarNavbar();
+  showToast('💆 ' + s.nombre + ' agregado al carrito');
+
+  const btn = document.querySelector('.btn-reservar-panel');
+  if (btn) {
+    btn.textContent = '✓ Agregado';
+    btn.style.background = '#5c9e6e';
+    setTimeout(() => {
+      btn.textContent = 'Agregar al carrito';
+      btn.style.background = '';
+    }, 2000);
+  }
 }

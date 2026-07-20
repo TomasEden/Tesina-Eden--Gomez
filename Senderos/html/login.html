@@ -3,35 +3,44 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Iniciar Sesión — 🌸 SPA M</title>
+  <title>Ingresar | Senderos</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../css/login.css"/>
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
+  <meta name="description" content="Ingresá a tu cuenta en Senderos para gestionar tus turnos y pedidos."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Ingresar | Senderos"/>
+  <meta property="og:description" content="Ingresá a tu cuenta en Senderos para gestionar tus turnos y pedidos."/>
+  <meta property="og:image" content="https://senderos.com/img/og-preview.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Ingresar | Senderos"/>
+  <meta name="twitter:description" content="Ingresá a tu cuenta en Senderos para gestionar tus turnos y pedidos."/>
 </head>
 <body>
 
   <!-- PANEL IZQUIERDO: imagen + frase -->
   <aside class="side-panel">
-    <a href="index.html" class="side-logo">🌸 SPA M</a>
+    <a href="index.html" class="side-logo"><img src="../img/icons/logo.png" alt="Senderos" width="28" height="28" style="vertical-align:middle;margin-right:0.4rem"> Senderos</a>
     <div class="side-content">
       <p class="side-tag">Bienvenida de vuelta</p>
       <h2 class="side-title">Tu calma<br>te está<br><em>esperando</em></h2>
       <p class="side-desc">Iniciá sesión para gestionar tus turnos, ver tus reservas y acceder a ofertas exclusivas.</p>
       <div class="side-features">
         <div class="feature-item">
-          <span class="feature-icon">📅</span>
+          <span class="feature-icon"><img src="../img/icons/calendario.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
           <span>Tus turnos en un solo lugar</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon">🛒</span>
+          <span class="feature-icon"><img src="../img/icons/carrito.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
           <span>Tu carrito guardado</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon">🎁</span>
+          <span class="feature-icon"><img src="../img/icons/regalo.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
           <span>Ofertas exclusivas para miembros</span>
         </div>
       </div>
     </div>
-    <img class="side-img" src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&q=80" alt="SPA"/>
+    <img class="side-img" src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&q=80" alt="SPA"/ loading="lazy">
     <div class="side-overlay"></div>
   </aside>
 
@@ -49,7 +58,7 @@
         <div class="field-group">
           <label for="email">Email</label>
           <div class="input-icon-wrap">
-            <span class="input-icon">✉️</span>
+            <span class="input-icon"><img src="../img/icons/email.png" alt="" width="16" height="16" style="vertical-align:middle"></span>
             <input type="email" id="email" placeholder="tu@email.com" autocomplete="email"/>
           </div>
           <span class="field-error" id="err-email"></span>
@@ -61,9 +70,9 @@
             <a href="#" class="forgot-link" onclick="olvidoPassword(event)">¿Olvidaste tu contraseña?</a>
           </label>
           <div class="input-icon-wrap">
-            <span class="input-icon">🔒</span>
+            <span class="input-icon"><img src="../img/icons/candado.png" alt="" width="16" height="16" style="vertical-align:middle"></span>
             <input type="password" id="password" placeholder="Tu contraseña" autocomplete="current-password"/>
-            <button class="toggle-pw" type="button" onclick="togglePassword()">👁</button>
+            <button class="toggle-pw" type="button" onclick="togglePassword()"><img src="../img/icons/ver.png" alt="" width="16" height="16" style="vertical-align:middle"></button>
           </div>
           <span class="field-error" id="err-password"></span>
         </div>
@@ -83,7 +92,7 @@
         <a href="registro.html" class="btn-outline">Crear cuenta nueva</a>
 
         <a href="admin-login.html" class="btn-admin">
-          🔐 ¿Sos admin? Ingresá aquí
+          <img src="../img/icons/admin.png" alt="" width="16" height="16" style="vertical-align:middle"> ¿Sos admin? Ingresá aquí
         </a>
 
         <!-- Demo hint -->

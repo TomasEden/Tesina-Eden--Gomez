@@ -3,23 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title> — SPA M</title>
+  <title>Senderos — Tu momento de pura calma</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../css/index.css"/>
   <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
+  <meta name="description" content="Reservá turnos, explorá servicios y descubrí productos de belleza en Senderos, tu spa en Córdoba. Todo en un solo lugar."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Senderos — Tu momento de pura calma"/>
+  <meta property="og:description" content="Reservá turnos, explorá servicios y descubrí productos de belleza en Senderos, tu spa en Córdoba. Todo en un solo lugar."/>
+  <meta property="og:image" content="https://senderos.com/img/og-preview.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Senderos — Tu momento de pura calma"/>
+  <meta name="twitter:description" content="Reservá turnos, explorá servicios y descubrí productos de belleza en Senderos, tu spa en Córdoba. Todo en un solo lugar."/>
+  <link rel="stylesheet" href="../css/darkmode.css"/>
 </head>
 <body>
 
     <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
     <a href="index.html" class="nav-logo">
-      <img src="../img/icons/logo.png" alt="SPA M" width="26" height="26"> SPA M
+      <img src="../img/icons/logo.png" alt="Senderos" width="26" height="26"> Senderos
     </a>
     <ul class="nav-links">
       <li><a href="index.html" class="active">Inicio</a></li>
       <li><a href="servicios.html">Servicios</a></li>
       <li><a href="turnos.html">Turnos</a></li>
       <li><a href="productos.html">Productos</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
     </ul>
     <div class="nav-right">
       <a href="carrito.html" class="nav-cart">
@@ -45,6 +55,7 @@
       <a href="servicios.html">Servicios</a>
       <a href="turnos.html">Turnos</a>
       <a href="productos.html">Productos</a>
+      <a href="nosotros.html">Nosotros</a>
     </nav>
     <div class="nav-mobile-bottom">
       <a href="carrito.html" class="nav-mobile-cart">
@@ -84,7 +95,7 @@
       </div>
     </div>
     <div class="hero-right">
-      <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&q=80" alt="SPA M"/>
+      <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&q=80" alt="Senderos"/ loading="lazy">
       <div class="hero-badge">
         <div class="badge-icon"><img src="../img/icons/logo.png" alt="" width="28" height="28" style="vertical-align:middle"></div>
         <div class="badge-text">
@@ -114,7 +125,7 @@
   </div>
 
   <!-- BANNERS PROMOCIONALES -->
-  <section class="banners-section">
+  <section class="banners-section reveal">
     <div class="section-header">
       <div>
         <p class="section-tag">Ofertas especiales</p>
@@ -124,7 +135,7 @@
     </div>
     <div class="banners-grid">
       <div class="banner banner-tall">
-        <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=700&q=80" alt="Masaje"/>
+        <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=700&q=80" alt="Masaje"/ loading="lazy">
         <div class="banner-overlay">
           <span class="banner-label">Servicio estrella</span>
           <span class="banner-title">Masaje Relajante<br>de 60 minutos</span>
@@ -133,7 +144,7 @@
       </div>
       <div style="display:flex;flex-direction:column;gap:1.2rem;">
         <div class="banner banner-short">
-          <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=80" alt="Facial"/>
+          <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=80" alt="Facial"/ loading="lazy">
           <div class="banner-overlay">
             <span class="banner-label">Nuevo</span>
             <span class="banner-title">Tratamiento Facial Premium</span>
@@ -141,7 +152,7 @@
           </div>
         </div>
         <div class="banner banner-short">
-          <img src="https://images.unsplash.com/photo-1610289982320-1a4c5b60f67c?w=500&q=80" alt="Jacuzzi"/>
+          <img src="https://images.unsplash.com/photo-1610289982320-1a4c5b60f67c?w=500&q=80" alt="Jacuzzi"/ loading="lazy">
           <div class="banner-overlay">
             <span class="banner-label">Imperdible</span>
             <span class="banner-title">Jacuzzi Privado</span>
@@ -151,7 +162,7 @@
       </div>
       <div style="display:flex;flex-direction:column;gap:1.2rem;">
         <div class="banner banner-short">
-          <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" alt="Productos"/>
+          <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" alt="Productos"/ loading="lazy">
           <div class="banner-overlay">
             <span class="banner-label">Catálogo</span>
             <span class="banner-title">Kit de productos seleccionados</span>
@@ -159,7 +170,7 @@
           </div>
         </div>
         <div class="banner banner-short">
-          <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=500&q=80" alt="Cumpleaños"/>
+          <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=500&q=80" alt="Cumpleaños"/ loading="lazy">
           <div class="banner-overlay">
             <span class="banner-label">Regalo de cumpleaños</span>
             <span class="banner-title">Facial gratis<br>en tu día</span>
@@ -171,7 +182,7 @@
   </section>
 
   <!-- SERVICIOS DESTACADOS -->
-  <section class="services-section">
+  <section class="services-section reveal">
     <div class="section-header">
       <div>
         <p class="section-tag">Lo más reservado</p>
@@ -183,7 +194,7 @@
   </section>
 
   <!-- PRODUCTOS DESTACADOS -->
-  <section class="products-section">
+  <section class="products-section reveal">
     <div class="section-header">
       <div>
         <p class="section-tag">Catálogo</p>
@@ -195,7 +206,7 @@
   </section>
 
   <!-- CONTACTO -->
-  <section class="contact-section">
+  <section class="contact-section reveal">
     <div class="contact-left">
       <div>
         <p class="section-tag">Encontranos</p>
@@ -227,7 +238,7 @@
           <div class="contact-icon"><img src="../img/icons/email.png" alt="" width="22" height="22" style="vertical-align:middle"></div>
           <div class="contact-item-text">
             <strong>Email</strong>
-            <span><a href="mailto:contacto@spam.com">contacto@spam.com</a></span>
+            <span><a href="mailto:contacto@senderos.com">contacto@senderos.com</a></span>
           </div>
         </div>
       </div>
@@ -273,7 +284,7 @@
   <!-- FOOTER -->
   <footer>
     <div>
-      <div class="footer-brand"><img src="../img/icons/logo.png" alt="SPA M" width="28" height="28" style="vertical-align:middle;margin-right:0.4rem"> SPA M</div>
+      <div class="footer-brand"><img src="../img/icons/logo.png" alt="Senderos" width="28" height="28" style="vertical-align:middle;margin-right:0.4rem"> Senderos</div>
       <p class="footer-desc">Tu espacio de bienestar y belleza.<br>Reservas online · Productos seleccionados · Atención personalizada.</p>
     </div>
     <div class="footer-col">
@@ -294,10 +305,10 @@
       <h4>Contacto</h4>
       <a href="https://wa.me/5493510000000" target="_blank">WhatsApp</a>
       <a href="#">Instagram</a>
-      <a href="mailto:contacto@spam.com">contacto@spam.com</a>
+      <a href="mailto:contacto@senderos.com">contacto@senderos.com</a>
     </div>
   </footer>
-  <div class="footer-bottom">© 2026 SPA M · Todos los derechos reservados</div>
+  <div class="footer-bottom">© 2026 Senderos · Todos los derechos reservados</div>
 
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
@@ -305,5 +316,6 @@
   <script src="../js/sesion.js"></script>
   <script src="../js/ofertas.js"></script>
   <script src="../js/index.js"></script>
+  <script src="../js/darkmode.js"></script>
 </body>
 </html>
