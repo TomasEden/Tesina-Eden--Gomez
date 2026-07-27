@@ -4,16 +4,16 @@
 
 # Senderos
 
-### Sistema web de reservas para spa y catálogo de belleza
+### Sistema web de reservas, ventas y gestión para spa
 
 <p>
   <img src="https://img.shields.io/badge/Estado-En%20desarrollo-AD717E?style=for-the-badge&labelColor=39311D" alt="Estado del proyecto" />
-  <img src="https://img.shields.io/badge/Versi%C3%B3n-1.0-D3A1A9?style=for-the-badge&labelColor=39311D" alt="Versión" />
+  <img src="https://img.shields.io/badge/Versi%C3%B3n-1.1-D3A1A9?style=for-the-badge&labelColor=39311D" alt="Versión" />
   <img src="https://img.shields.io/badge/Plataforma-Web-45634D?style=for-the-badge&labelColor=39311D" alt="Plataforma" />
 </p>
 
 <p>
-  <strong>Reservas, servicios, productos y administración en una experiencia digital serena, clara y responsive.</strong>
+  <strong>Reservas, catálogo, carrito y administración interna en una experiencia digital serena, clara y responsive.</strong>
 </p>
 
 </div>
@@ -36,21 +36,32 @@
 
 ## Descripción general
 
-**Senderos** es una aplicación web pensada para digitalizar la gestión de un spa: permite reservar turnos, visualizar servicios, explorar productos de belleza y administrar información clave desde paneles internos.
+**Senderos** es una aplicación web orientada a digitalizar la operación de un spa. El sistema reúne reservas de turnos, visualización de servicios, catálogo de productos, carrito, seguimiento de citas y administración interna en una misma plataforma.
 
-El objetivo del sistema es centralizar procesos que suelen resolverse de forma manual o dispersa, reduciendo errores en la agenda, mejorando la visibilidad de los servicios y ofreciendo una experiencia de navegación simple para clientes, personal y administradores.
+La versión actual documentada es **1.1**. Esta actualización corresponde a una mejora de documentación y presentación del proyecto: no cambia el alcance funcional del sistema, pero sí ordena la información para reflejar mejor los módulos existentes y el propósito general de Senderos.
 
 ---
 
 ## Propósito del proyecto
 
-La gestión tradicional de turnos puede generar conflictos de horarios, pérdida de información y una comunicación poco clara con los clientes. Este proyecto propone una solución organizada para:
+La gestión tradicional de un spa puede generar conflictos de horarios, pérdida de información, baja visibilidad de servicios y dificultad para administrar productos o pedidos. Este proyecto propone una solución organizada para:
 
-- Centralizar reservas, servicios y productos en un mismo entorno.
-- Evitar superposición de turnos y mejorar el seguimiento de citas.
-- Facilitar la administración de productos, ofertas, clientes y pedidos.
+- Centralizar reservas, servicios, productos y pedidos en un mismo entorno.
+- Reducir errores de agenda y mejorar el seguimiento de citas.
+- Facilitar la administración de productos, ofertas, clientes, turnos y pedidos.
 - Brindar una interfaz visualmente coherente con la identidad del spa.
 - Optimizar la experiencia en dispositivos móviles y de escritorio.
+- Mejorar la comunicación con clientes mediante confirmaciones y canales directos.
+
+---
+
+## Versión actual
+
+| Versión | Tipo de actualización | Alcance |
+|---|---|---|
+| **1.1** | Documentación y presentación | README actualizado, información más precisa, propósito ajustado y estructura profesional. |
+
+**Criterio de versión:** se considera **1.1** porque la actualización mejora la documentación del proyecto y reorganiza su presentación, pero no incorpora cambios funcionales en el código de la aplicación. La versión funcional base del sistema se mantiene dentro del alcance académico actual.
 
 ---
 
@@ -89,9 +100,9 @@ La gestión tradicional de turnos puede generar conflictos de horarios, pérdida
 
 | Rol | Alcance |
 |---|---|
-| **Cliente** | Explora servicios, consulta productos, reserva turnos y revisa sus solicitudes. |
-| **Personal** | Acompaña la disponibilidad de servicios y la atención de reservas. |
-| **Administrador** | Gestiona productos, servicios, ofertas, pedidos, clientes, turnos y métricas del negocio. |
+| **Cliente** | Explora servicios, consulta productos, reserva turnos, utiliza el carrito y revisa sus solicitudes. |
+| **Personal** | Acompaña la disponibilidad de servicios, la atención de reservas y la organización operativa. |
+| **Administrador** | Gestiona productos, servicios, ofertas, pedidos, clientes, turnos y la información general del negocio. |
 
 ---
 
@@ -141,6 +152,7 @@ La gestión tradicional de turnos puede generar conflictos de horarios, pérdida
 - Modificación y cancelación de reservas.
 - Seguimiento de turnos por usuario.
 - Dashboard con información general para administración.
+- Gestión de ofertas, pedidos, clientes y reseñas desde módulos dedicados.
 
 ---
 
@@ -151,8 +163,9 @@ La gestión tradicional de turnos puede generar conflictos de horarios, pérdida
 - Interfaz limpia, consistente y fácil de usar.
 - Manejo seguro de datos de usuarios.
 - Soporte para múltiples usuarios.
-- Disponibilidad permanente del sitio.
+- Disponibilidad permanente del sitio según el entorno de despliegue.
 - Paleta visual coherente con la identidad de Senderos.
+- Organización modular de estilos, vistas, scripts y endpoints para facilitar mantenimiento.
 
 ---
 
@@ -177,6 +190,7 @@ La gestión tradicional de turnos puede generar conflictos de horarios, pérdida
 | **Base de datos** | MySQL mediante PDO |
 | **Diseño responsive** | CSS modular por vista |
 | **Comunicación** | Integración con WhatsApp para confirmaciones |
+| **Organización** | Separación por carpetas `api`, `css`, `html`, `img` y `js` |
 
 ---
 
