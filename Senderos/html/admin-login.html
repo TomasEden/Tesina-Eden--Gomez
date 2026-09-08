@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — 🌸 SPA M</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/admin-login.css"/>
+</head>
+<body>
+
+  <aside class="side-panel">
+    <a href="index.html" class="side-logo">🌸 SPA M</a>
+    <div class="side-content">
+      <p class="side-tag">Panel de administración</p>
+      <h2 class="side-title">Gestión<br><em>centralizada</em></h2>
+      <p class="side-desc">Administrá turnos, servicios, productos y estadísticas desde un solo lugar.</p>
+      <div class="side-features">
+        <div class="feature-item"><span class="feature-icon">📊</span><span>Dashboard con estadísticas</span></div>
+        <div class="feature-item"><span class="feature-icon">📅</span><span>Gestión de turnos en tiempo real</span></div>
+        <div class="feature-item"><span class="feature-icon">🛍️</span><span>CRUD de productos y servicios</span></div>
+      </div>
+    </div>
+    <img class="side-img" src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&q=80" alt="SPA"/>
+    <div class="side-overlay"></div>
+  </aside>
+
+  <main class="form-panel">
+    <div class="form-container">
+      <div class="form-header">
+        <div class="admin-badge">🔐 Acceso restringido</div>
+        <h1 class="form-title">Panel Admin</h1>
+        <p class="form-subtitle">Solo para administradores autorizados.</p>
+      </div>
+
+      <div class="field-group">
+        <label>Usuario admin</label>
+        <div class="input-icon-wrap">
+          <span class="input-icon">👤</span>
+          <input type="text" id="usuario" placeholder="admin" autocomplete="username"/>
+        </div>
+        <span class="field-error" id="err-usuario"></span>
+      </div>
+
+      <div class="field-group">
+        <label>Contraseña</label>
+        <div class="input-icon-wrap">
+          <span class="input-icon">🔒</span>
+          <input type="password" id="password" placeholder="••••••••"/>
+          <button class="toggle-pw" type="button" onclick="togglePw()">👁</button>
+        </div>
+        <span class="field-error" id="err-password"></span>
+      </div>
+
+      <button class="btn-primary" id="btnLogin" onclick="loginAdmin()">
+        <span id="btnText">Ingresar al panel</span>
+        <span id="btnLoader" class="btn-loader hidden"></span>
+      </button>
+
+      <p class="hint">💡 Demo: usuario <strong>admin</strong> / contraseña <strong>admin123</strong></p>
+      <a href="index.html" class="back-link">← Volver al sitio</a>
+    </div>
+  </main>
+
+  <script src="../js/admin-login.js"></script>
+</body>
+</html>

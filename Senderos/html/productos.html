@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Productos de belleza | Senderos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/productos.css"/>
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
+  <meta name="description" content="Cremas, aceites y kits de cuidado personal seleccionados. Comprá online en Senderos."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Productos de belleza | Senderos"/>
+  <meta property="og:description" content="Cremas, aceites y kits de cuidado personal seleccionados. Comprá online en Senderos."/>
+  <meta property="og:image" content="https://senderos.com/img/og-preview.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Productos de belleza | Senderos"/>
+  <meta name="twitter:description" content="Cremas, aceites y kits de cuidado personal seleccionados. Comprá online en Senderos."/>
+  <link rel="stylesheet" href="../css/darkmode.css"/>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="../img/icons/logo.png" alt="Senderos" width="26" height="26"> Senderos
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="turnos.html">Turnos</a></li>
+      <li><a href="productos.html" class="active">Productos</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="carrito.html" class="nav-cart">
+        <img src="../img/icons/carrito.png" alt="Carrito" width="22" height="22">
+        <span class="cart-badge" id="contador">0</span>
+      </a>
+      <a href="buscar.html" class="nav-search" title="Buscar">
+        <img src="../img/icons/buscar.png" alt="Buscar" width="20" height="20">
+      </a>
+      <a href="login.html" class="btn-login" id="btnSesion">Ingresar</a>
+    </div>
+    <!-- Hamburguesa -->
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MENÚ MÓVIL -->
+  <div class="nav-mobile" id="navMobile">
+    <button class="nav-mobile-close" onclick="toggleMenu()" aria-label="Cerrar">✕</button>
+    <nav class="nav-mobile-links">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="turnos.html">Turnos</a>
+      <a href="productos.html" class="active">Productos</a>
+      <a href="nosotros.html">Nosotros</a>
+    </nav>
+    <div class="nav-mobile-bottom">
+      <a href="carrito.html" class="nav-mobile-cart">
+        <img src="../img/icons/carrito.png" alt="" width="18" height="18"> Mi carrito
+      </a>
+      <a href="login.html" class="nav-mobile-login" id="btnSesionMobile">Ingresar</a>
+    </div>
+  </div>
+
+  <!-- HERO MINI -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <p class="page-tag">Catálogo by Selecta</p>
+      <h1 class="page-title">Productos de <em>belleza</em></h1>
+      <p class="page-desc">Cosméticos y tratamientos seleccionados para tu cuidado diario.</p>
+    </div>
+    <img class="page-hero-img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1400&q=80" alt="Productos"/ loading="lazy">
+    <div class="page-hero-overlay"></div>
+  </section>
+
+  <!-- FILTROS + GRILLA -->
+  <div class="catalog-layout">
+
+    <!-- SIDEBAR FILTROS -->
+    <aside class="filters-sidebar">
+      <h3 class="filters-title">Filtros</h3>
+
+      <div class="filter-group">
+        <p class="filter-label">Categoría</p>
+        <div class="filter-options" id="filterCategorias"></div>
+      </div>
+
+      <div class="filter-group">
+        <p class="filter-label">Precio máximo</p>
+        <input type="range" id="rangePrecio" min="0" max="1500" value="1500" step="50"
+               oninput="filtrarProductos()"/>
+        <div class="range-labels">
+          <span>$0</span>
+          <span id="rangeValor">$1500</span>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <p class="filter-label">Disponibilidad</p>
+        <label class="filter-check">
+          <input type="checkbox" id="soloStock" onchange="filtrarProductos()"/>
+          Solo con stock
+        </label>
+      </div>
+
+      <button class="btn-reset" onclick="resetFiltros()">Limpiar filtros</button>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <div class="catalog-main">
+
+      <!-- BARRA SUPERIOR -->
+      <div class="catalog-topbar">
+        <p class="catalog-count" id="catalogCount"></p>
+        <div class="sort-wrap">
+          <label class="sort-label">Ordenar por</label>
+          <select id="sortSelect" onchange="filtrarProductos()">
+            <option value="default">Destacados</option>
+            <option value="precio-asc">Precio: menor a mayor</option>
+            <option value="precio-desc">Precio: mayor a menor</option>
+            <option value="nombre">Nombre A-Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- GRILLA PRODUCTOS -->
+      <div class="products-grid" id="productsGrid"></div>
+
+      <!-- EMPTY STATE -->
+      <div class="empty-state hidden" id="emptyState">
+        <span><img src="../img/icons/buscar.png" alt="" width="48" height="48" style="vertical-align:middle"></span>
+        <p>No hay productos que coincidan con los filtros.</p>
+        <button class="btn-reset" onclick="resetFiltros()">Limpiar filtros</button>
+      </div>
+
+    </div>
+  </div>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand-col">
+        <div class="footer-brand">
+          <img src="../img/icons/logo.png" alt="Senderos" width="26" height="26"> Senderos
+        </div>
+        <p class="footer-desc">Tu espacio de bienestar y belleza.<br>Reservas online · Productos seleccionados · Atención personalizada.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="productos.html">Productos</a>
+      </div>
+      <div class="footer-col">
+        <h4>Mi cuenta</h4>
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Registrarse</a>
+        <a href="mis-turnos.html">Mis turnos & pedidos</a>
+        <a href="carrito.html">Carrito</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <a href="https://wa.me/5493510000000" target="_blank">WhatsApp</a>
+        <a href="#">Instagram</a>
+        <a href="mailto:contacto@senderos.com">contacto@senderos.com</a>
+        <a href="politicas.html">Políticas</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Senderos · Todos los derechos reservados</div>
+  </footer>
+
+
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="../js/sesion.js"></script>
+  <script src="../js/ofertas.js"></script>
+  <script src="../js/productos.js"></script>
+  <script src="../js/darkmode.js"></script>
+</body>
+</html>

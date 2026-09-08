@@ -1,0 +1,332 @@
+/* ═══════════════════════════════════════
+   Senderos — darkmode.css v3
+   Legible en absolutamente todo
+   ═══════════════════════════════════════ */
+
+/* ── Botón flotante ── */
+.dark-toggle {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 400;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--white); border: 1.5px solid var(--sand);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  cursor: pointer; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+}
+.dark-toggle:hover { transform: scale(1.15) rotate(15deg); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+
+/* ── VARIABLES MODO OSCURO ── */
+html.dark {
+  --rose:       #c49aa2;
+  --rose-deep:  #d4969f;
+  --rose-pale:  #2d2028;
+  --rose-mid:   #4a303a;
+  --cream:      #1a1a1a;
+  --sand:       #333333;
+  --text:       #eae4de;
+  --text-light: #9a9a8e;
+  --white:      #252525;
+}
+
+html.dark body { background: var(--cream); color: var(--text); }
+
+/* Transición suave en cambio de tema */
+html.dark *,
+html.dark *::before,
+html.dark *::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease,
+              box-shadow 0.25s ease !important;
+}
+/* Restoreamos las transiciones de animación para elementos que las necesitan */
+html.dark .service-card,
+html.dark .product-card,
+html.dark .valor-card,
+html.dark .equipo-card,
+html.dark .resena-card,
+html.dark .srv-panel,
+html.dark .nav-mobile,
+html.dark .dark-toggle {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease,
+              transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.3s ease !important;
+}
+
+/* ── NAVBAR ── */
+html.dark .navbar { background: rgba(20,20,20,0.95); border-bottom-color: rgba(200,140,150,0.15); }
+html.dark .navbar.scrolled { background: rgba(20,20,20,0.99); box-shadow: 0 2px 24px rgba(0,0,0,0.5); }
+html.dark .nav-logo { color: var(--rose-deep); }
+html.dark .nav-links a { color: var(--text-light); }
+html.dark .nav-links a:hover, html.dark .nav-links a.active { color: var(--rose-deep); }
+html.dark .btn-login { border-color: var(--rose-deep); color: var(--rose-deep); }
+html.dark .btn-login:hover { background: var(--rose-deep); color: #fff; }
+html.dark .nav-cart { color: var(--text-light); }
+html.dark .nav-cart:hover { color: var(--rose-deep); }
+html.dark .nav-hamburger span { background: var(--rose-deep); }
+html.dark .nav-search img { opacity: 0.6; }
+
+/* ── MENÚ MÓVIL ── */
+html.dark .nav-mobile { background: #1a1a1a; box-shadow: -8px 0 32px rgba(0,0,0,0.5); }
+html.dark .nav-mobile-close { background: #2d2d2d; color: var(--rose-deep); }
+html.dark .nav-mobile-links a { color: var(--text); border-bottom-color: rgba(200,140,150,0.1); }
+html.dark .nav-mobile-links a:hover, html.dark .nav-mobile-links a.active { color: var(--rose-deep); }
+html.dark .nav-mobile-bottom { border-top-color: rgba(200,140,150,0.12); }
+html.dark .nav-mobile-cart { color: var(--text-light); }
+html.dark .nav-mobile-login { background: var(--rose-deep); color: #fff; }
+
+/* ── HERO / PAGE HERO ── */
+html.dark .page-hero-overlay,
+html.dark .nos-hero-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.45) 55%, transparent 100%);
+}
+
+/* ── CATEGORÍAS BAR ── */
+html.dark .category-bar { background: #202020; border-bottom-color: var(--sand); }
+html.dark .cat-tab { color: var(--text-light); }
+html.dark .cat-tab:hover { color: var(--rose-deep); }
+html.dark .cat-tab.active { color: var(--rose-deep); border-bottom-color: var(--rose-deep); }
+html.dark .cat-count { background: var(--rose-pale); color: var(--rose-deep); }
+html.dark .cat-tab.active .cat-count { background: var(--rose-deep); color: #fff; }
+
+/* ── CARDS SERVICIOS ── */
+html.dark .service-card { background: #262626; border-color: rgba(200,150,160,0.12); }
+html.dark .service-name { color: var(--text); }
+html.dark .service-desc { color: var(--text-light); }
+html.dark .service-footer { border-top-color: var(--sand); }
+html.dark .service-likes { background: rgba(30,30,30,0.95); color: var(--text-light); }
+html.dark .btn-ver-servicio { background: var(--rose-pale); color: var(--rose-deep); border-color: var(--rose-mid); }
+html.dark .btn-ver-servicio:hover { background: var(--rose-deep); color: #fff; }
+
+/* ── PANEL LATERAL SERVICIOS ── */
+html.dark .srv-panel { background: #1e1e1e; box-shadow: -8px 0 40px rgba(0,0,0,0.6); }
+html.dark .srv-overlay { background: rgba(0,0,0,0.7); }
+html.dark .panel-close { background: rgba(40,40,40,0.95); color: var(--text); }
+html.dark .panel-close:hover { background: #333; }
+html.dark .panel-precio-bar { background: var(--rose-pale); border-color: var(--rose-mid); }
+html.dark .panel-precio { color: var(--rose-deep); }
+html.dark .panel-precio-sub { color: var(--text-light); }
+html.dark .panel-desc { color: var(--text-light); }
+html.dark .panel-section-title { color: var(--text); border-bottom-color: var(--sand); }
+html.dark .panel-incluye-list li { color: var(--text-light); }
+html.dark .panel-incluye-list li::before { color: var(--rose-deep); }
+html.dark .sugerido-item { background: #2a2a2a; border-color: #383838; }
+html.dark .sugerido-item:hover { background: var(--rose-pale); border-color: var(--rose-mid); }
+html.dark .sugerido-nombre { color: var(--text); }
+html.dark .sugerido-precio { color: var(--text-light); }
+
+/* ── CALENDARIO MINI ── */
+html.dark .mcal-mes, html.dark .mcal-month { color: var(--text); }
+html.dark .mcal-dow span, html.dark .mcal-dias-semana span { color: var(--text-light); }
+html.dark .mcal-day, html.dark .mcal-nav-btn { color: var(--text); background: #2a2a2a; border-color: #3a3a3a; }
+html.dark .mcal-day:hover { background: var(--rose-pale); border-color: var(--rose-mid); }
+html.dark .mcal-day.today { border-color: var(--rose-deep); color: var(--rose-deep); background: #2a2a2a; }
+html.dark .mcal-day.sel, html.dark .mcal-day.selected { background: var(--rose-deep); color: #fff; border-color: var(--rose-deep); }
+html.dark .mcal-day.dis, html.dark .mcal-day.disabled { color: #555; background: #1e1e1e; cursor: not-allowed; }
+
+/* ── HORARIOS ── */
+html.dark .hor-btn, html.dark .mhor-btn { background: #2e2e2e; border-color: #444; color: var(--text); }
+html.dark .hor-btn:hover, html.dark .mhor-btn:hover { background: var(--rose-pale); border-color: var(--rose-deep); color: var(--rose-deep); }
+html.dark .hor-btn.sel, html.dark .mhor-btn.selected { background: var(--rose-deep); color: #fff; border-color: var(--rose-deep); }
+html.dark .hor-btn.ocu, html.dark .mhor-btn.ocupado { background: #252525; color: #555; }
+
+/* ── PRODUCTOS ── */
+html.dark .product-card { background: #262626; border-color: rgba(200,150,160,0.1); }
+html.dark .product-name, html.dark .prod-name { color: var(--text); }
+html.dark .product-desc, html.dark .prod-desc { color: var(--text-light); }
+html.dark .product-footer, html.dark .prod-footer { border-top-color: var(--sand); }
+html.dark .filters-sidebar { background: #242424; border-color: var(--sand); }
+html.dark .filter-title { color: var(--text); }
+html.dark .filter-label { color: var(--text-light); }
+html.dark .filter-chip { border-color: var(--sand); color: var(--text-light); background: #2a2a2a; }
+html.dark .filter-chip.active { border-color: var(--rose-deep); color: var(--rose-deep); background: var(--rose-pale); }
+html.dark .btn-add { background: var(--rose-deep); color: #fff; }
+html.dark .btn-add:hover { background: #8d5560; }
+html.dark .topbar { border-bottom-color: var(--sand); }
+
+/* ── CARRITO ── */
+html.dark .cart-header { border-bottom-color: var(--sand); }
+html.dark .cart-title { color: var(--text); }
+html.dark .cart-super { color: var(--rose-deep); }
+html.dark .cart-tab { color: var(--text-light); }
+html.dark .cart-tab:hover { color: var(--rose-deep); }
+html.dark .cart-tab.active { color: var(--rose-deep); border-bottom-color: var(--rose-deep); }
+html.dark .cart-item { background: #262626; border-color: rgba(200,150,160,0.1); }
+html.dark .item-nombre { color: var(--text); }
+html.dark .item-meta { color: var(--text-light); }
+html.dark .item-precio { color: var(--rose-deep); }
+html.dark .item-remove { border-color: var(--sand); color: var(--text-light); }
+html.dark .item-remove:hover { background: #3a1a1a; border-color: #e05050; color: #e05050; }
+html.dark .qty-btn { border-color: var(--sand); background: #2e2e2e; color: var(--text-light); }
+html.dark .qty-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); }
+html.dark .qty-num { color: var(--text); }
+html.dark .reserva-block { background: var(--rose-pale); border-color: var(--rose-mid); }
+html.dark .rb-title { color: var(--text); }
+html.dark .rb-sub { color: var(--text-light); }
+html.dark .asig-item { background: #2a2a2a; border-color: var(--sand); }
+html.dark .asig-nombre { color: var(--text); }
+html.dark .asig-precio { color: var(--rose-deep); }
+html.dark .asig-step-label { color: var(--text-light); }
+html.dark .btn-expandir-asig { color: var(--rose-deep); border-color: var(--rose-mid); }
+html.dark .entrega-op { background: #2a2a2a; border-color: var(--sand); }
+html.dark .entrega-op strong { color: var(--text); }
+html.dark .entrega-op span { color: var(--text-light); }
+html.dark .entrega-op.active { border-color: var(--rose-deep); background: var(--rose-pale); }
+html.dark .cart-input { background: #2e2e2e; border-color: #444; color: var(--text); }
+html.dark .cart-input:focus { border-color: var(--rose-deep); }
+html.dark .cart-summary-card { background: #262626; border-color: rgba(200,150,160,0.15); }
+html.dark .sum-title { color: var(--text); }
+html.dark .sum-line { color: var(--text-light); }
+html.dark .sum-line.warn { color: #d4850a; }
+html.dark .sum-divider { background: var(--sand); }
+html.dark .pago-label { color: var(--text-light); }
+html.dark .pago-opt { background: #2a2a2a; border-color: var(--sand); }
+html.dark .pago-opt:hover { border-color: var(--rose-mid); }
+html.dark .pago-opt.active { border-color: var(--rose-deep); background: var(--rose-pale); }
+html.dark .po-info strong { color: var(--text); }
+html.dark .po-info span { color: var(--rose-deep); }
+html.dark .sum-total-row span:first-child { color: var(--text); }
+html.dark .sum-badges { color: var(--text-light); }
+html.dark .btn-seguir { background: var(--rose-pale); color: var(--rose-deep); }
+html.dark .section-title-bar h2 { color: var(--text); }
+html.dark .cart-section-title { color: var(--text); }
+html.dark .cart-section-sub { color: var(--text-light); }
+
+/* ── INPUTS Y FORMULARIOS ── */
+html.dark input:not([type="radio"]):not([type="checkbox"]),
+html.dark textarea,
+html.dark select {
+  background: #2e2e2e !important; border-color: #444 !important; color: var(--text) !important;
+}
+html.dark input:focus, html.dark textarea:focus { border-color: var(--rose-deep) !important; }
+html.dark input::placeholder, html.dark textarea::placeholder { color: #666 !important; }
+
+/* ── RESEÑAS ── */
+html.dark .resena-card { background: #2a2a2a; border-color: rgba(200,150,160,0.1); }
+html.dark .resena-nombre { color: var(--text); }
+html.dark .resena-fecha { color: var(--text-light); }
+html.dark .resena-texto { color: var(--text-light); }
+html.dark .form-resena { background: #2a2028; border-color: var(--rose-mid); }
+html.dark .form-resena-title { color: var(--text); }
+html.dark .resena-textarea { background: #2e2e2e; border-color: #444; color: var(--text); }
+html.dark .resenas-avg { color: var(--text); }
+html.dark .resenas-count { color: var(--text-light); }
+html.dark .btn-ver-mas-resenas { border-color: var(--sand); color: var(--text-light); background: transparent; }
+html.dark .resenas-wrap { border-top-color: var(--sand); }
+
+/* ── TURNOS ── */
+html.dark .step-card { background: #262626; border-color: rgba(200,150,160,0.1); }
+html.dark .step-card.dimmed { opacity: 0.3; }
+html.dark .step-header h2, html.dark .step-title { color: var(--text); }
+html.dark .sum-card, html.dark .booking-summary .sum-card { background: #262626; border-color: rgba(200,150,160,0.15); }
+html.dark .sum-row { border-bottom-color: var(--sand); color: var(--text-light); }
+html.dark .btn-reservar { background: var(--rose-deep); }
+html.dark .horario-btn { background: #2e2e2e; border-color: #444; color: var(--text); }
+html.dark .horario-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); }
+html.dark .horario-btn.selected { background: var(--rose-deep); color: #fff; }
+html.dark .horario-btn.ocupado { background: #222; color: #555; }
+
+/* ── MIS TURNOS ── */
+html.dark .turno-card { background: #262626; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+html.dark .turno-fecha-block { background: var(--rose-pale); }
+html.dark .turno-dia { color: var(--rose-deep); }
+html.dark .turno-mes { color: var(--text-light); }
+html.dark .turno-nombre { color: var(--text); }
+html.dark .turno-meta { color: var(--text-light); }
+html.dark .main-tab { color: var(--text-light); border-bottom-color: transparent; }
+html.dark .main-tab.active { color: var(--rose-deep); border-bottom-color: var(--rose-deep); }
+html.dark .filter-tabs-row .ftab { border-color: var(--sand); color: var(--text-light); background: #2a2a2a; }
+html.dark .filter-tabs-row .ftab.active { border-color: var(--rose-deep); color: var(--rose-deep); background: var(--rose-pale); }
+
+/* ── PERFIL ── */
+html.dark .perfil-stat { background: #262626; }
+html.dark .pstat-num { color: var(--rose-deep); }
+html.dark .pstat-label { color: var(--text-light); }
+html.dark .perfil-header { background: var(--rose-pale); }
+
+/* ── LOGIN / REGISTRO ── */
+html.dark .form-panel { background: #1e1e1e; }
+html.dark .form-title { color: var(--text); }
+html.dark .field-label, html.dark .pg-field-label { color: var(--text-light); }
+html.dark .side-panel img { filter: brightness(0.4); }
+
+/* ── BUSCADOR ── */
+html.dark .search-hero { background: #201c20; border-bottom-color: var(--rose-mid); }
+html.dark .search-title { color: var(--text); }
+html.dark .search-box-wrap { background: #2a2a2a; border-color: var(--rose-mid); }
+html.dark .search-input { color: var(--text); background: transparent; }
+html.dark .search-icon { color: var(--text-light); }
+html.dark .pg-sch { border-color: var(--sand); color: var(--text-light); background: #2a2a2a; }
+html.dark .pg-sch.active { background: var(--rose-deep); color: #fff; border-color: var(--rose-deep); }
+html.dark .results-section-title { color: var(--text); border-bottom-color: var(--sand); }
+html.dark .result-card, html.dark .pg-result-card { background: #262626; }
+html.dark .result-card-name, html.dark .pg-result-name { color: var(--text); }
+
+/* ── CONFIRMACIÓN ── */
+html.dark .confirm-card, html.dark .pg-confirm-card { background: #262626; }
+html.dark .confirm-title { color: var(--text); }
+html.dark .confirm-order-label { color: var(--text-light); }
+html.dark .confirm-order-num { color: var(--rose-deep); }
+html.dark .confirm-item-name { color: var(--text); }
+html.dark .confirm-total span:first-child { color: var(--text); }
+html.dark .step-dot.empty { border-color: var(--sand); color: var(--text-light); background: transparent; }
+html.dark .step-connector { background: var(--sand); }
+
+/* ── NOSOTROS ── */
+html.dark .nos-historia { background: #1e1e1e; }
+html.dark .nos-body { color: var(--text-light); }
+html.dark .hito-year { color: var(--rose-deep); }
+html.dark .hito-desc { color: var(--text-light); }
+html.dark .nos-valores { background: #201c20; }
+html.dark .valor-card { background: #2a2a2a; }
+html.dark .valor-card h3 { color: var(--text); }
+html.dark .valor-card p { color: var(--text-light); }
+html.dark .nos-equipo { background: #1e1e1e; }
+html.dark .equipo-nombre { color: var(--text); }
+html.dark .equipo-rol { color: var(--rose-deep); }
+html.dark .equipo-desc { color: var(--text-light); }
+html.dark .equipo-img-wrap { border-color: var(--rose-pale); }
+html.dark .nos-galeria { background: #1a1a1a; }
+html.dark .galeria-overlay { background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%); }
+
+/* ── FOOTER — completamente legible ── */
+html.dark .site-footer {
+  background: #0f0f0f;
+  color: rgba(230,220,215,0.75);
+}
+html.dark .footer-inner { border-top: 1px solid rgba(200,150,160,0.12); }
+html.dark .footer-brand { color: var(--rose-mid); }
+html.dark .footer-brand img { opacity: 0.9; }
+html.dark .footer-desc { color: rgba(230,220,215,0.6); }
+html.dark .footer-col h4 {
+  color: rgba(230,220,215,0.95);
+  letter-spacing: 0.12em;
+}
+html.dark .footer-col a {
+  color: rgba(230,220,215,0.55);
+}
+html.dark .footer-col a:hover {
+  color: var(--rose-mid);
+}
+html.dark .footer-bottom {
+  background: rgba(0,0,0,0.4);
+  color: rgba(230,220,215,0.35);
+  border-top-color: rgba(200,150,160,0.08);
+}
+
+/* ── TOAST ── */
+html.dark .toast { background: #333; color: #eee; }
+
+/* ── BOTÓN TOGGLE ── */
+html.dark .dark-toggle { background: #2a2a2a; border-color: #444; box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+
+/* ── PÁGINAS VARIAS ── */
+html.dark .politicas-content { color: var(--text-light); }
+html.dark .pol-sidebar { border-color: var(--sand); }
+html.dark .pol-link { color: var(--text-light); }
+html.dark .pol-link.active { color: var(--rose-deep); background: var(--rose-pale); }
+html.dark .empty-title { color: var(--text); }
+html.dark .empty-sub { color: var(--text-light); }
+html.dark .section-title { color: var(--text); }
+
+@media (max-width: 640px) {
+  .dark-toggle { bottom: 1.2rem; right: 1.2rem; width: 40px; height: 40px; font-size: 1rem; }
+}
