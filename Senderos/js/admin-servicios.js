@@ -20,10 +20,10 @@ function cargarServicios() {
         servicios = data.servicios;
         renderTabla(servicios);
       } else {
-        showToast('❌ Error al cargar servicios');
+        showToast('<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Error al cargar servicios');
       }
     })
-    .catch(() => showToast('❌ Error de conexión con el servidor'));
+    .catch(() => showToast('<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Error de conexión con el servidor'));
 }
 
 function renderTabla(lista) {
@@ -35,12 +35,12 @@ function renderTabla(lista) {
       <tr>
         <td><strong>${s.nombre}</strong><br><span class="td-light">${desc}...</span></td>
         <td class="td-light">${s.categoria || ''}</td>
-        <td class="td-light">⏱ ${s.duracion} min</td>
+        <td class="td-light"><img src="../img/icons/tiempo.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">${s.duracion} min</td>
         <td><strong>$${Number(s.precio).toLocaleString()}</strong></td>
         <td>
           <div style="display:flex;gap:0.4rem">
-            <button class="btn-icon" onclick="abrirModalEditar(${s.id})">✏️</button>
-            <button class="btn-icon danger" onclick="abrirModalEliminar(${s.id})">🗑️</button>
+            <button class="btn-icon" onclick="abrirModalEditar(${s.id})"><img src="../img/icons/formulario.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem"></button>
+            <button class="btn-icon danger" onclick="abrirModalEliminar(${s.id})"><img src="../img/icons/basura.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></button>
           </div>
         </td>
       </tr>`;
@@ -118,12 +118,12 @@ function guardarServicio() {
   })
   .then(r => r.json())
   .then(res => {
-    if (!res.ok) { showToast('❌ ' + (res.error || 'Error al guardar')); return; }
-    showToast(editId ? '✅ Servicio actualizado' : '✅ Servicio creado');
+    if (!res.ok) { showToast('<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">' + (res.error || 'Error al guardar')); return; }
+    showToast(editId ? '<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Servicio actualizado' : '<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Servicio creado');
     cerrarModal('modalForm');
     cargarServicios();
   })
-  .catch(() => showToast('❌ Error de conexión con el servidor'));
+  .catch(() => showToast('<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Error de conexión con el servidor'));
 }
 
 function abrirModalEliminar(id) {
@@ -139,19 +139,19 @@ function confirmarEliminar() {
   })
   .then(r => r.json())
   .then(res => {
-    if (!res.ok) { showToast('❌ Error al eliminar'); return; }
+    if (!res.ok) { showToast('<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Error al eliminar'); return; }
     cerrarModal('modalEliminar');
-    showToast('🗑️ Servicio eliminado');
+    showToast('<img src="../img/icons/basura.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem">Servicio eliminado');
     cargarServicios();
   })
-  .catch(() => showToast('❌ Error de conexión con el servidor'));
+  .catch(() => showToast('<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Error de conexión con el servidor'));
 }
 
 function cerrarModal(id) { document.getElementById(id).classList.add('hidden'); }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
+  t.innerHTML = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 

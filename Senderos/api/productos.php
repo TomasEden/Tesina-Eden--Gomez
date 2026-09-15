@@ -13,9 +13,9 @@ if ($method === 'GET') {
 $data = json_decode(file_get_contents("php://input"), true);
 
 if ($method === 'POST') {
-    $stmt = $db->prepare("INSERT INTO productos (nombre, categoria, descripcion, precio, stock_cantidad, badge, imagen) VALUES (?,?,?,?,?,?,?)");
+    $stmt = $db->prepare("INSERT INTO productos (nombre, categoria, marca, descripcion, precio, stock_cantidad, badge, imagen) VALUES (?,?,?,?,?,?,?,?)");
     $stmt->execute([
-        $data['nombre'], $data['categoria'], $data['descripcion'],
+        $data['nombre'], $data['categoria'], $data['marca'] ?? null, $data['descripcion'],
         $data['precio'], $data['stock_cantidad'], $data['badge'], $data['imagen']
     ]);
     echo json_encode(["ok" => true, "id" => $db->lastInsertId()]);
@@ -23,9 +23,9 @@ if ($method === 'POST') {
 }
 
 if ($method === 'PUT') {
-    $stmt = $db->prepare("UPDATE productos SET nombre=?, categoria=?, descripcion=?, precio=?, stock_cantidad=?, badge=?, imagen=? WHERE id=?");
+    $stmt = $db->prepare("UPDATE productos SET nombre=?, categoria=?, marca=?, descripcion=?, precio=?, stock_cantidad=?, badge=?, imagen=? WHERE id=?");
     $stmt->execute([
-        $data['nombre'], $data['categoria'], $data['descripcion'],
+        $data['nombre'], $data['categoria'], $data['marca'] ?? null, $data['descripcion'],
         $data['precio'], $data['stock_cantidad'], $data['badge'], $data['imagen'], $data['id']
     ]);
     echo json_encode(["ok" => true]);

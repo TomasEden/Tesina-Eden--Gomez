@@ -1,250 +1,1069 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nosotros | Senderos — Spa en Córdoba</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../css/nosotros.css"/>
-  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
-  <meta name="description" content="Conocé la historia y el equipo detrás de Senderos, tu spa en Córdoba."/>
-  <meta property="og:title" content="Nosotros | Senderos"/>
-  <meta property="og:description" content="Conocé quiénes somos, qué nos mueve y por qué hacemos lo que hacemos."/>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Nosotros | Senderos — Spa</title>
+
+  <!-- FUENTES -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/nosotros.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/darkmode.css">
+
+  <!-- FAVICON -->
+  <link
+    rel="icon"
+    href="../img/favicon.svg"
+    type="image/svg+xml"
+  >
+
+  <!-- SEO -->
+  <meta
+    name="description"
+    content="Conocé la historia de Senderos y a Claudia Gomez, su propietaria."
+  >
+
+  <meta property="og:title" content="Nosotros | Senderos">
+
+  <meta
+    property="og:description"
+    content="Conocé la historia, filosofía y experiencia detrás de Senderos."
+  >
+
+  <!-- MODO OSCURO -->
+  <script src="../js/darkmode.js"></script>
+
 </head>
+
+
 <body>
 
-  <!-- NAVBAR -->
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════ -->
+
   <nav class="navbar" id="navbar">
+
+
+    <!-- LOGO -->
+
     <a href="index.html" class="nav-logo">
-      <img src="../img/icons/logo.png" alt="Senderos" width="26" height="26"> Senderos
+
+      <img
+        src="../img/icons/logo.png"
+        alt="Senderos"
+        width="26"
+        height="26"
+      >
+
+      Senderos
+
     </a>
+
+
+    <!-- MENÚ DESKTOP -->
+
     <ul class="nav-links">
-      <li><a href="index.html">Inicio</a></li>
-      <li><a href="servicios.html">Servicios</a></li>
-      <li><a href="turnos.html">Turnos</a></li>
-      <li><a href="productos.html">Productos</a></li>
-      <li><a href="nosotros.html" class="active">Nosotros</a></li>
+
+      <li>
+        <a href="index.html">
+          Inicio
+        </a>
+      </li>
+
+      <li>
+        <a href="servicios.html">
+          Servicios
+        </a>
+      </li>
+
+      <li>
+        <a href="productos.html">
+          Productos
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="nosotros.html"
+          class="active"
+        >
+          Nosotros
+        </a>
+      </li>
+
     </ul>
+
+
+    <!-- ═══════════════════════════════════════
+         ACCIONES DERECHA
+    ═══════════════════════════════════════ -->
+
     <div class="nav-right">
-      <a href="carrito.html" class="nav-cart">
-        <img src="../img/icons/carrito.png" alt="Carrito" width="22" height="22">
-        <span class="cart-badge" id="contador">0</span>
+
+
+      <!-- CARRITO -->
+
+      <a
+        href="carrito.html"
+        class="nav-cart"
+        aria-label="Mi carrito"
+        title="Mi carrito"
+        aria-label="Mi carrito"
+      >
+
+        <img
+          src="../img/icons/carrito+.svg"
+          alt="Carrito"
+          width="22"
+          height="22"
+        >
+
+        <span
+          class="cart-badge"
+          id="contador"
+        >
+          0
+        </span>
+
       </a>
-      <a href="buscar.html" class="nav-search" title="Buscar">
-        <img src="../img/icons/buscar.png" alt="Buscar" width="20" height="20">
+
+
+      <!-- BUSCAR -->
+
+      <a
+        href="buscar.html"
+        class="nav-search"
+        title="Buscar"
+        aria-label="Buscar"
+      >
+
+        <img
+          src="../img/icons/lupa.svg"
+          alt="Buscar"
+          width="20"
+          height="20"
+        >
+
       </a>
-      <a href="login.html" class="btn-login" id="btnSesion">Ingresar</a>
+
+
+      <!-- LOGIN -->
+
+      <a
+        href="login.html"
+        class="btn-login"
+        id="btnSesion"
+      >
+        Ingresar
+      </a>
+
     </div>
-    <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menú">
-      <span></span><span></span><span></span>
+
+
+    <!-- ═══════════════════════════════════════
+         HAMBURGUESA
+    ═══════════════════════════════════════ -->
+
+    <button
+      class="nav-hamburger"
+      id="navHamburger"
+      type="button"
+      onclick="toggleMenu()"
+      aria-label="Abrir menú"
+      aria-controls="navMobile"
+      aria-expanded="false"
+    >
+
+      <span></span>
+      <span></span>
+      <span></span>
+
     </button>
+
   </nav>
 
-  <!-- MENÚ MÓVIL -->
-  <div class="nav-mobile" id="navMobile">
-    <button class="nav-mobile-close" onclick="toggleMenu()" aria-label="Cerrar">✕</button>
+
+
+  <!-- ═══════════════════════════════════════
+       MENÚ MÓVIL
+  ═══════════════════════════════════════ -->
+
+  <div
+    class="nav-mobile"
+    id="navMobile"
+    aria-hidden="true"
+  >
+
+
+    <!-- CERRAR -->
+
+    <button
+      class="nav-mobile-close"
+      type="button"
+      onclick="toggleMenu()"
+      aria-label="Cerrar menú"
+    >
+      <img src="../img/icons/x.svg" alt="" width="12" height="12" style="vertical-align:middle;margin-right:0.3rem">
+    </button>
+
+
+    <!-- LINKS -->
+
     <nav class="nav-mobile-links">
-      <a href="index.html">Inicio</a>
-      <a href="servicios.html">Servicios</a>
-      <a href="turnos.html">Turnos</a>
-      <a href="productos.html">Productos</a>
-      <a href="nosotros.html" class="active">Nosotros</a>
-    </nav>
-    <div class="nav-mobile-bottom">
-      <a href="carrito.html" class="nav-mobile-cart">
-        <img src="../img/icons/carrito.png" alt="" width="18" height="18"> Mi carrito
+
+      <a href="index.html">
+        Inicio
       </a>
-      <a href="login.html" class="nav-mobile-login" id="btnSesionMobile">Ingresar</a>
+
+      <a href="servicios.html">
+        Servicios
+      </a>
+
+      <a href="productos.html">
+        Productos
+      </a>
+
+      <a
+        href="nosotros.html"
+        class="active"
+      >
+        Nosotros
+      </a>
+
+      <a href="buscar.html">
+        Buscar
+      </a>
+
+      <a href="carrito.html#metodos-pago">
+        Métodos de pago
+      </a>
+
+    </nav>
+
+
+    <!-- ═══════════════════════════════════════
+         PARTE INFERIOR
+    ═══════════════════════════════════════ -->
+
+    <div class="nav-mobile-bottom">
+
+
+      <!-- CARRITO -->
+
+      <a
+        href="carrito.html"
+        class="nav-mobile-cart"
+      >
+
+        <img
+          src="../img/icons/carrito+.svg"
+          alt=""
+          width="18"
+          height="18"
+        >
+
+        Mi carrito
+
+        <span
+          class="cart-badge"
+          id="contadorMobile"
+        >
+          0
+        </span>
+
+      </a>
+
+
+      <!-- LOGIN -->
+
+      <a
+        href="login.html"
+        class="nav-mobile-login"
+        id="btnSesionMobile"
+      >
+        Ingresar
+      </a>
+
     </div>
+
   </div>
 
-  <!-- HERO -->
+
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+
   <section class="nos-hero">
+
     <div class="nos-hero-img-wrap">
-      <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1400&q=80" alt="Senderos Spa" loading="lazy"/>
+
+      <img
+        src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1400&q=80"
+        alt="Espacio de bienestar de Senderos"
+      >
+
       <div class="nos-hero-overlay"></div>
+
     </div>
+
+
     <div class="nos-hero-content">
-      <p class="nos-hero-tag">— Quiénes somos</p>
-      <h1 class="nos-hero-title">Un lugar donde<br>el tiempo <em>se detiene</em></h1>
-      <p class="nos-hero-desc">Desde 2018, creamos espacios de bienestar auténtico en el corazón de Córdoba.</p>
+
+      <p class="nos-hero-tag">
+        — Quiénes somos
+      </p>
+
+      <h1 class="nos-hero-title">
+        Belleza, cuidado<br>
+        y <em>bienestar</em>
+      </h1>
+
+      <p class="nos-hero-desc">
+        Un espacio pensado para acompañarte en el cuidado de tu piel,
+        tu belleza y tu bienestar personal.
+      </p>
+
     </div>
+
   </section>
 
-  <!-- HISTORIA -->
+
+
+  <!-- ═══════════════════════════════════════
+       HISTORIA
+  ═══════════════════════════════════════ -->
+
   <section class="nos-historia reveal">
+
     <div class="nos-historia-inner">
+
       <div class="nos-historia-text">
-        <p class="section-tag">— Nuestra historia</p>
-        <h2 class="section-title">Nacimos de una<br><em>necesidad real</em></h2>
-        <p class="nos-body">Senderos nació en 2018 cuando Marcela, masajista con 15 años de experiencia, decidió que el bienestar no debía ser un lujo. Lo que empezó como un pequeño espacio de dos habitaciones hoy es un centro de bienestar completo con más de 500 clientas.</p>
-        <p class="nos-body">Cada tratamiento está diseñado con una filosofía simple: escuchar al cuerpo, respetar los tiempos y usar solo lo que la naturaleza ofrece.</p>
+
+        <p class="section-tag">
+          — Nuestros inicios
+        </p>
+
+        <h2 class="section-title">
+          Una pasión por la<br>
+          <em>belleza natural</em>
+        </h2>
+
+        <p class="nos-body">
+          Hace 10 años que trabajo en este rubro. La idea de crear
+          Senderos surgió de mi pasión por la belleza, el cuidado
+          personal y el deseo de ayudar a mejorar diferentes problemas
+          cutáneos.
+        </p>
+
+        <p class="nos-body">
+          Siempre me gustó la idea de resaltar la belleza natural de
+          cada mujer, acompañándola en su cuidado y bienestar.
+        </p>
+
+        <p class="nos-body">
+          Para poder ofrecer siempre la mejor atención, me mantengo
+          constantemente asesorada y actualizada sobre cada novedad
+          que surge en el área, buscando ser siempre la profesional
+          que mis clientes necesitan.
+        </p>
+
+        <p class="nos-body">
+          Trabajamos siempre con productos profesionales
+          <strong>CEC</strong>, seleccionados para brindar una atención
+          de calidad y acompañar cada tratamiento.
+        </p>
+
+
+        <!-- HITOS -->
+
         <div class="nos-hitos">
+
           <div class="nos-hito reveal-delay-1">
-            <div class="hito-year">2018</div>
-            <div class="hito-desc">Apertura del primer espacio</div>
+
+            <div class="hito-year">
+              10+
+            </div>
+
+            <div class="hito-desc">
+              Años de experiencia
+            </div>
+
           </div>
+
+
           <div class="nos-hito reveal-delay-2">
-            <div class="hito-year">2021</div>
-            <div class="hito-desc">Ampliación a 6 cabinas</div>
+
+            <div class="hito-year">
+              CEC
+            </div>
+
+            <div class="hito-desc">
+              Productos profesionales
+            </div>
+
           </div>
+
+
           <div class="nos-hito reveal-delay-3">
-            <div class="hito-year">2024</div>
-            <div class="hito-desc">500+ clientas felices</div>
+
+            <div class="hito-year">
+              100%
+            </div>
+
+            <div class="hito-desc">
+              Dedicación personalizada
+            </div>
+
           </div>
+
+
           <div class="nos-hito reveal-delay-4">
-            <div class="hito-year">2026</div>
-            <div class="hito-desc">Reservas 100% online</div>
+
+            <div class="hito-year">
+              <img src="../img/icons/corazon2.svg" alt="" width="18" height="18" style="vertical-align:middle;margin-right:0.3rem">
+            </div>
+
+            <div class="hito-desc">
+              Belleza natural
+            </div>
+
           </div>
+
         </div>
+
       </div>
+
+
       <div class="nos-historia-img reveal-right">
-        <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=700&q=80" alt="Historia Senderos" loading="lazy"/>
+
+        <img
+          src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=700&q=80"
+          alt="Tratamiento de belleza"
+          loading="lazy"
+        >
+
       </div>
+
     </div>
+
   </section>
 
-  <!-- VALORES -->
+
+
+  <!-- ═══════════════════════════════════════
+       FILOSOFÍA / VALORES
+  ═══════════════════════════════════════ -->
+
   <section class="nos-valores reveal">
-    <p class="section-tag center">— Lo que nos guía</p>
-    <h2 class="section-title center">Nuestros <em>valores</em></h2>
+
+    <p class="section-tag center">
+      — Nuestra filosofía
+    </p>
+
+    <h2 class="section-title center">
+      Lo que nos <em>define</em>
+    </h2>
+
+
     <div class="nos-valores-grid">
+
+
       <div class="valor-card reveal-delay-1">
-        <div class="valor-icon">🌿</div>
-        <h3>Natural</h3>
-        <p>Solo usamos productos con ingredientes de origen natural, libres de parabenos y sulfatos.</p>
+
+        <div class="valor-icon">
+          ✦
+        </div>
+
+        <h3>
+          Belleza natural
+        </h3>
+
+        <p>
+          Buscamos resaltar la belleza natural de cada persona,
+          respetando sus características y necesidades.
+        </p>
+
       </div>
+
+
       <div class="valor-card reveal-delay-2">
-        <div class="valor-icon">🤍</div>
-        <h3>Honesto</h3>
-        <p>Sin promesas imposibles. Te decimos lo que el tratamiento puede hacer por vos y lo que no.</p>
+
+        <div class="valor-icon">
+          <img src="../img/icons/corazon1.svg" alt="" width="18" height="18" style="vertical-align:middle;margin-right:0.3rem">
+        </div>
+
+        <h3>
+          Cuidado personal
+        </h3>
+
+        <p>
+          Entendemos el cuidado personal como un momento para
+          dedicarse tiempo, sentirse bien y cuidar la propia piel.
+        </p>
+
       </div>
+
+
       <div class="valor-card reveal-delay-3">
-        <div class="valor-icon">🌙</div>
-        <h3>Presente</h3>
-        <p>Cada sesión es única. Nuestro equipo se adapta a cómo estás ese día, no a un protocolo rígido.</p>
+
+        <div class="valor-icon">
+          ✧
+        </div>
+
+        <h3>
+          Profesionalismo
+        </h3>
+
+        <p>
+          Nos mantenemos en constante actualización para conocer
+          las novedades y ofrecer tratamientos acordes a cada necesidad.
+        </p>
+
       </div>
+
+
       <div class="valor-card reveal-delay-4">
-        <div class="valor-icon">♻️</div>
-        <h3>Consciente</h3>
-        <p>Packaging reciclado, productos cruelty-free y minimización de residuos en cada proceso.</p>
+
+        <div class="valor-icon">
+          ❋
+        </div>
+
+        <h3>
+          Calidad
+        </h3>
+
+        <p>
+          Trabajamos con productos profesionales CEC para acompañar
+          nuestros tratamientos y brindar una atención de calidad.
+        </p>
+
       </div>
+
     </div>
+
   </section>
 
-  <!-- EQUIPO -->
+
+
+  <!-- ═══════════════════════════════════════
+       PROPIETARIA
+  ═══════════════════════════════════════ -->
+
   <section class="nos-equipo">
-    <p class="section-tag center">— Las personas</p>
-    <h2 class="section-title center">Nuestro <em>equipo</em></h2>
+
+    <p class="section-tag center">
+      — Detrás de Senderos
+    </p>
+
+    <h2 class="section-title center">
+      Conocé a <em>Claudia</em>
+    </h2>
+
+
     <div class="nos-equipo-grid">
+
       <div class="equipo-card reveal">
+
         <div class="equipo-img-wrap">
-          <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80" alt="Marcela" loading="lazy"/>
+
+          <img
+            src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=500&q=80"
+            alt="Claudia Gomez"
+            loading="lazy"
+          >
+
         </div>
+
+
         <div class="equipo-info">
-          <h3 class="equipo-nombre">Marcela Torres</h3>
-          <p class="equipo-rol">Fundadora & Masajista Senior</p>
-          <p class="equipo-desc">15 años de experiencia en técnicas suecas, deportivas y piedras calientes.</p>
+
+          <h3 class="equipo-nombre">
+            Claudia Gomez
+          </h3>
+
+          <p class="equipo-rol">
+            Propietaria
+          </p>
+
+          <p class="equipo-desc">
+            Con 10 años de experiencia en el área de belleza y cuidado
+            personal, Claudia creó Senderos desde su pasión por resaltar
+            la belleza natural y acompañar a sus clientes en el cuidado
+            de su piel.
+          </p>
+
         </div>
+
       </div>
-      <div class="equipo-card reveal reveal-delay-1">
-        <div class="equipo-img-wrap">
-          <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400&q=80" alt="Valentina" loading="lazy"/>
-        </div>
-        <div class="equipo-info">
-          <h3 class="equipo-nombre">Valentina Ríos</h3>
-          <p class="equipo-rol">Especialista Facial</p>
-          <p class="equipo-desc">Cosmetóloga con formación en tratamientos anti-age y dermopigmentación.</p>
-        </div>
-      </div>
-      <div class="equipo-card reveal reveal-delay-2">
-        <div class="equipo-img-wrap">
-          <img src="https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=400&q=80" alt="Sofía" loading="lazy"/>
-        </div>
-        <div class="equipo-info">
-          <h3 class="equipo-nombre">Sofía Medina</h3>
-          <p class="equipo-rol">Terapeuta Corporal</p>
-          <p class="equipo-desc">Especialista en aromaterapia, reflexología y tratamientos con arcillas.</p>
-        </div>
-      </div>
+
     </div>
+
   </section>
 
-  <!-- GALERÍA -->
+
+
+  <!-- ═══════════════════════════════════════
+       GALERÍA
+  ═══════════════════════════════════════ -->
+
   <section class="nos-galeria reveal">
-    <p class="section-tag center">— El espacio</p>
-    <h2 class="section-title center">Nuestras <em>instalaciones</em></h2>
+
+    <p class="section-tag center">
+      — Nuestro espacio
+    </p>
+
+    <h2 class="section-title center">
+      Un lugar para <em>vos</em>
+    </h2>
+
+
     <div class="galeria-grid">
+
+
       <div class="galeria-item tall">
-        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=700&q=80" alt="Sala principal" loading="lazy"/>
-        <div class="galeria-overlay"><span>Sala principal</span></div>
-      </div>
-      <div class="galeria-item">
-        <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=500&q=80" alt="Cabina de masajes" loading="lazy"/>
-        <div class="galeria-overlay"><span>Cabinas de masaje</span></div>
-      </div>
-      <div class="galeria-item">
-        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=80" alt="Sala facial" loading="lazy"/>
-        <div class="galeria-overlay"><span>Sala facial</span></div>
-      </div>
-      <div class="galeria-item">
-        <img src="https://images.unsplash.com/photo-1610289982320-1a4c5b60f67c?w=500&q=80" alt="Jacuzzi" loading="lazy"/>
-        <div class="galeria-overlay"><span>Jacuzzi privado</span></div>
-      </div>
-      <div class="galeria-item">
-        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" alt="Productos" loading="lazy"/>
-        <div class="galeria-overlay"><span>Tienda de productos</span></div>
-      </div>
-    </div>
-  </section>
 
-  <!-- CTA -->
-  <section class="nos-cta reveal">
-    <div class="nos-cta-inner">
-      <h2 class="nos-cta-title">¿Lista para tu <em>primer turno?</em></h2>
-      <p class="nos-cta-desc">Reservá online en segundos. Sin esperas, sin llamadas.</p>
-      <div class="nos-cta-btns">
-        <a href="turnos.html" class="btn-primary">Reservar turno</a>
-        <a href="servicios.html" class="btn-outline">Ver servicios</a>
-      </div>
-    </div>
-  </section>
+        <img
+          src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=700&q=80"
+          alt="Espacio de Senderos"
+          loading="lazy"
+        >
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand-col">
-        <div class="footer-brand">
-          <img src="../img/icons/logo.png" alt="Senderos" width="26" height="26"> Senderos
+        <div class="galeria-overlay">
+
+          <span>
+            Nuestro espacio
+          </span>
+
         </div>
-        <p class="footer-desc">Tu espacio de bienestar y belleza.<br>Reservas online · Productos seleccionados · Atención personalizada.</p>
+
       </div>
-      <div class="footer-col">
-        <h4>Navegación</h4>
-        <a href="index.html">Inicio</a>
-        <a href="servicios.html">Servicios</a>
-        <a href="turnos.html">Turnos</a>
-        <a href="productos.html">Productos</a>
-        <a href="nosotros.html">Nosotros</a>
+
+
+      <div class="galeria-item">
+
+        <img
+          src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=500&q=80"
+          alt="Tratamiento corporal"
+          loading="lazy"
+        >
+
+        <div class="galeria-overlay">
+
+          <span>
+            Tratamientos corporales
+          </span>
+
+        </div>
+
       </div>
-      <div class="footer-col">
-        <h4>Mi cuenta</h4>
-        <a href="login.html">Iniciar sesión</a>
-        <a href="registro.html">Registrarse</a>
-        <a href="mis-turnos.html">Mis turnos & pedidos</a>
-        <a href="carrito.html">Carrito</a>
+
+
+      <div class="galeria-item">
+
+        <img
+          src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=80"
+          alt="Tratamiento facial"
+          loading="lazy"
+        >
+
+        <div class="galeria-overlay">
+
+          <span>
+            Tratamientos faciales
+          </span>
+
+        </div>
+
       </div>
-      <div class="footer-col">
-        <h4>Contacto</h4>
-        <a href="https://wa.me/5493510000000" target="_blank">WhatsApp</a>
-        <a href="#">Instagram</a>
-        <a href="mailto:contacto@senderos.com">contacto@senderos.com</a>
-        <a href="politicas.html">Políticas</a>
+
+
+      <div class="galeria-item">
+
+        <img
+          src="https://images.unsplash.com/photo-1610289982320-1a4c5b60f67c?w=500&q=80"
+          alt="Jacuzzi privado"
+          loading="lazy"
+        >
+
+        <div class="galeria-overlay">
+
+          <span>
+            Jacuzzi privado
+          </span>
+
+        </div>
+
       </div>
+
+
+      <div class="galeria-item">
+
+        <img
+          src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80"
+          alt="Productos profesionales"
+          loading="lazy"
+        >
+
+        <div class="galeria-overlay">
+
+          <span>
+            Productos profesionales
+          </span>
+
+        </div>
+
+      </div>
+
     </div>
-    <div class="footer-bottom">© 2026 Senderos · Todos los derechos reservados</div>
-  </footer>
+
+  </section>
+
+
+
+  <!-- ═══════════════════════════════════════
+       CTA
+  ═══════════════════════════════════════ -->
+
+  <section class="nos-cta reveal">
+
+    <div class="nos-cta-inner">
+
+      <h2 class="nos-cta-title">
+        ¿Querés regalarte un momento para <em>vos?</em>
+      </h2>
+
+      <p class="nos-cta-desc">
+        Conocé nuestros servicios y encontrá el tratamiento
+        ideal para tus necesidades.
+      </p>
+
+
+      <div class="nos-cta-btns">
+
+        <a
+          href="servicios.html"
+          class="btn-primary"
+        >
+          Ver servicios
+        </a>
+
+        <a
+          href="productos.html"
+          class="btn-outline"
+        >
+          Ver productos
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand-col">
+      <div class="footer-brand">
+        <img src="../img/icons/logo.png" alt="Senderos" width="26" height="26">
+        Senderos de Spa
+      </div>
+      <p class="footer-desc">
+        Bienestar y belleza en un espacio pensado para vos.<br>
+        General Roca 145.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Negocio</h4>
+      <span><img src="../img/icons/ubicacion.svg" alt="" width="14" height="14"> General Roca 145</span>
+      <a href="tel:+543571616113"><img src="../img/icons/telefono.svg" alt="" width="14" height="14"> 3571-616113</a>
+      <span><img src="../img/icons/tiempo.svg" alt="" width="14" height="14"> Lun. a sáb. · 8 a 12:30 y 16 a 20 hs</span>
+      <span><img src="../img/icons/advertencia.svg" alt="" width="14" height="14"> Domingos y feriados: cerrado</span>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="productos.html">Productos</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="buscar.html">Buscar</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Pagos y envíos</h4>
+      <span><img src="../img/icons/paquete.svg" alt="" width="14" height="14"> Envíos a todo el país</span>
+      <span><img src="../img/icons/bolsa.svg" alt="" width="14" height="14"> Efectivo</span>
+      <span><img src="../img/icons/transferencia.svg" alt="" width="14" height="14"> Transferencia</span>
+      <span><img src="../img/icons/tarjeta.svg" alt="" width="14" height="14"> Débito</span>
+    </div>
+
+    <div class="footer-col">
+      <h4>Redes y contacto</h4>
+      <a href="https://instagram.com/Senderos_de_spa" target="_blank" rel="noopener noreferrer"><img src="../img/icons/instagram.svg" alt="" width="14" height="14"> Senderos de Spa</a>
+      <a href="https://instagram.com/claudiamakeup" target="_blank" rel="noopener noreferrer"><img src="../img/icons/instagram.svg" alt="" width="14" height="14"> Claudia Makeup</a>
+      <a href="https://instagram.com/c.g.distribuidora" target="_blank" rel="noopener noreferrer"><img src="../img/icons/instagram.svg" alt="" width="14" height="14"> C.G. Distribuidora</a>
+      <a href="mailto:claudia.senderospa@gmail.com"><img src="../img/icons/correo2.svg" alt="" width="14" height="14"> claudia.senderospa@gmail.com</a>
+      <a href="https://wa.me/5493571616113" target="_blank" rel="noopener noreferrer"><img src="../img/icons/whatsapp.svg" alt="" width="14" height="14"> WhatsApp</a>
+      <a href="politicas.html">Políticas</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Senderos de Spa · Todos los derechos reservados</div>
+</footer>
+
+
+
+  <!-- ═══════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════ -->
 
   <script src="../js/sesion.js"></script>
+
+
+  <script>
+
+    /* ═══════════════════════════════════════
+       MENÚ HAMBURGUESA
+    ═══════════════════════════════════════ */
+
+    function toggleMenu() {
+
+      const menu =
+        document.getElementById('navMobile');
+
+      const hamburger =
+        document.getElementById('navHamburger');
+
+      if (!menu || !hamburger) return;
+
+      const isOpen =
+        menu.classList.toggle('open');
+
+      hamburger.classList.toggle(
+        'open',
+        isOpen
+      );
+
+      hamburger.setAttribute(
+        'aria-expanded',
+        isOpen ? 'true' : 'false'
+      );
+
+      menu.setAttribute(
+        'aria-hidden',
+        isOpen ? 'false' : 'true'
+      );
+
+      document.body.style.overflow =
+        isOpen ? 'hidden' : '';
+
+    }
+
+
+
+    /* ═══════════════════════════════════════
+       CERRAR MENÚ AL TOCAR UN LINK
+    ═══════════════════════════════════════ */
+
+    document
+      .querySelectorAll('.nav-mobile a')
+      .forEach(function(link) {
+
+        link.addEventListener(
+          'click',
+          function() {
+
+            const menu =
+              document.getElementById('navMobile');
+
+            const hamburger =
+              document.getElementById('navHamburger');
+
+            if (menu) {
+
+              menu.classList.remove('open');
+
+              menu.setAttribute(
+                'aria-hidden',
+                'true'
+              );
+
+            }
+
+            if (hamburger) {
+
+              hamburger.classList.remove('open');
+
+              hamburger.setAttribute(
+                'aria-expanded',
+                'false'
+              );
+
+            }
+
+            document.body.style.overflow = '';
+
+          }
+        );
+
+      });
+
+
+
+    /* ═══════════════════════════════════════
+       CONTADOR DEL CARRITO
+    ═══════════════════════════════════════ */
+
+    function actualizarContadorCarrito() {
+
+      let carrito = [];
+
+      try {
+
+        carrito =
+          JSON.parse(
+            localStorage.getItem('carrito')
+          ) || [];
+
+      } catch (error) {
+
+        carrito = [];
+
+      }
+
+      const total =
+        carrito.length;
+
+      const contador =
+        document.getElementById('contador');
+
+      const contadorMobile =
+        document.getElementById('contadorMobile');
+
+      if (contador) {
+        contador.textContent = total;
+      }
+
+      if (contadorMobile) {
+        contadorMobile.textContent = total;
+      }
+
+    }
+
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      actualizarContadorCarrito
+    );
+
+
+
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL
+    ═══════════════════════════════════════ */
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      function() {
+
+        const elementos =
+          document.querySelectorAll(
+            '.reveal, .reveal-right'
+          );
+
+        if (!('IntersectionObserver' in window)) {
+
+          elementos.forEach(function(elemento) {
+
+            elemento.classList.add('visible');
+
+          });
+
+          return;
+
+        }
+
+        const observer =
+          new IntersectionObserver(
+            function(entries) {
+
+              entries.forEach(function(entry) {
+
+                if (entry.isIntersecting) {
+
+                  entry.target.classList.add(
+                    'visible'
+                  );
+
+                  observer.unobserve(
+                    entry.target
+                  );
+
+                }
+
+              });
+
+            },
+            {
+              threshold: 0.12
+            }
+          );
+
+
+        elementos.forEach(function(elemento) {
+
+          observer.observe(elemento);
+
+        });
+
+      }
+    );
+
+
+
+    /* ═══════════════════════════════════════
+       NAVBAR AL HACER SCROLL
+    ═══════════════════════════════════════ */
+
+    window.addEventListener(
+      'scroll',
+      function() {
+
+        const navbar =
+          document.getElementById('navbar');
+
+        if (!navbar) return;
+
+        navbar.classList.toggle(
+          'scrolled',
+          window.scrollY > 20
+        );
+
+      }
+    );
+
+  </script>
+
+
+<script src="../js/iconos-adaptativos.js"></script>
 </body>
+
 </html>

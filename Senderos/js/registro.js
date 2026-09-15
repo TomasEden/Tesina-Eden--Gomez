@@ -11,10 +11,10 @@ function togglePassword(inputId, btn) {
   const input = document.getElementById(inputId);
   if (input.type === 'password') {
     input.type = 'text';
-    btn.textContent = '🙈';
+    btn.innerHTML = '<img src="../img/icons/nover.svg" alt="" width="14" height="14" style="vertical-align:middle;margin-right:0.3rem">';
   } else {
     input.type = 'password';
-    btn.textContent = '👁';
+    btn.innerHTML = '<img src="../img/icons/ver.svg" alt="" width="14" height="14" style="vertical-align:middle;margin-right:0.3rem">';
   }
 }
 
@@ -34,13 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (fuerte) {
         pwStrength.classList.add('strong');
-        pwStrength.textContent = '✅ Contraseña fuerte';
+        pwStrength.innerHTML = '<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Contraseña fuerte';
       } else if (media) {
         pwStrength.classList.add('medium');
-        pwStrength.textContent = '⚠️ Contraseña regular';
+        pwStrength.innerHTML = '<img src="../img/icons/advertencia.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Contraseña regular';
       } else {
         pwStrength.classList.add('weak');
-        pwStrength.textContent = '❌ Contraseña débil';
+        pwStrength.innerHTML = '<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Contraseña débil';
       }
     });
   }

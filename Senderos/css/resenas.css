@@ -124,3 +124,75 @@
   .resenas-lista { grid-template-columns: 1fr; }
   .resenas-header { flex-direction: column; align-items: flex-start; }
 }
+/* ══════════════════════════════════════════
+   MODAL DE VALIDACIÓN (mismo estilo que "iniciar sesión")
+   ══════════════════════════════════════════ */
+   .modal-validacion {
+    display: none;
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(69,99,77,0.45); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+  }
+  .modal-validacion.show { display: flex; }
+  
+  .modal-validacion-content {
+    background: var(--white); border-radius: 24px;
+    padding: 2.5rem 2rem; max-width: 380px; width: 90%;
+    text-align: center;
+    animation: fadeUpValidacion 0.3s ease forwards;
+    font-family: 'DM Sans', sans-serif;
+  }
+  
+  .modal-validacion-icon { font-size: 3rem; margin-bottom: 1rem; }
+  
+  .modal-validacion-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300; color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+  
+  .modal-validacion-message {
+    font-size: 0.85rem; color: var(--text-light);
+    line-height: 1.6; margin-bottom: 2rem;
+  }
+  
+  .modal-validacion-buttons {
+    display: flex; flex-direction: column; gap: 0.8rem;
+  }
+  
+  .modal-btn-validacion {
+    display: block; width: 100%; padding: 0.9rem;
+    border-radius: 50px; font-size: 0.88rem; font-weight: 500;
+    cursor: pointer; transition: all 0.25s; border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .modal-btn-validacion.primary {
+    background: var(--rose-deep); color: #fff;
+  }
+  .modal-btn-validacion.primary:hover {
+    background: #8d5560; transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(173,113,126,0.3);
+  }
+  .modal-btn-validacion.outline {
+    background: transparent; color: var(--rose-deep);
+    border: 1.5px solid var(--rose-deep);
+  }
+  .modal-btn-validacion.outline:hover { background: var(--rose-pale); }
+  .modal-btn-validacion.ghost {
+    background: none; color: var(--text-light);
+    font-size: 0.82rem; padding: 0.5rem;
+  }
+  .modal-btn-validacion.ghost:hover { color: var(--rose-deep); }
+  
+  @keyframes fadeUpValidacion {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* ── MODO OSCURO ── */
+  html.dark .modal-validacion-content { background: var(--white); }
+  html.dark .modal-validacion-title { color: var(--text); }
+  html.dark .modal-validacion-message { color: var(--text-light); }
+  html.dark .modal-btn-validacion.primary { color: #16211b; }
+  html.dark .modal-btn-validacion.outline { color: var(--rose-deep); border-color: var(--rose-deep); }
+  html.dark .modal-btn-validacion.outline:hover { background: var(--rose-pale); }

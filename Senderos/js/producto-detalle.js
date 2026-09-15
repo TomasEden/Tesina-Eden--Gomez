@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function showToast(msg) {
   var t = document.getElementById('toast');
-  t.textContent = msg;
+  t.innerHTML = msg;
   t.classList.add('show');
   setTimeout(function() { t.classList.remove('show'); }, 2500);
 }
@@ -53,10 +53,10 @@ function cargarProducto(id) {
 
   var stockEl = document.getElementById('detalleStock');
   if (p.stock && p.stockQty > 0) {
-    stockEl.textContent = '✅ ' + p.stockQty + ' disponibles';
+    stockEl.innerHTML = '<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">' + p.stockQty + ' disponibles';
     stockEl.className   = 'detalle-stock';
   } else {
-    stockEl.textContent = '❌ Sin stock';
+    stockEl.innerHTML = '<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Sin stock';
     stockEl.className   = 'detalle-stock sin-stock';
     var btnAgregar = document.getElementById('btnAgregar');
     if (btnAgregar) { btnAgregar.disabled = true; btnAgregar.textContent = 'Sin stock'; }
@@ -107,7 +107,7 @@ function actualizarBtnFav() {
   var btn = document.getElementById('btnFav');
   if (!btn || !productoActual) return;
   var esFav = favs.indexOf(productoActual.id) !== -1;
-  btn.textContent = esFav ? '❤️' : '🤍';
+  btn.innerHTML = esFav ? '<img src="../img/icons/corazon2.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem">' : '<img src="../img/icons/corazon1.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem">';
   btn.classList.toggle('activo', esFav);
 }
 

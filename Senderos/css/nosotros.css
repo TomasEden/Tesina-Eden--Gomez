@@ -327,3 +327,301 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   .footer-inner { grid-template-columns: 1fr; padding: 2.5rem 1.5rem; gap: 1.8rem; }
   .footer-bottom { padding: 1rem 1.5rem; }
 }
+
+/* ═══════════════════════════════════════
+   MODO OSCURO — NOSOTROS
+   ═══════════════════════════════════════ */
+
+   body.dark-mode {
+    background: #000000;
+    color: #ffffff;
+  }
+  
+  /* ── NAVBAR ── */
+  
+  body.dark-mode .navbar {
+    background: rgba(0, 0, 0, 0.94);
+    border-bottom-color: rgba(211, 161, 169, 0.15);
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+  }
+  
+  body.dark-mode .navbar.scrolled {
+    background: rgba(0, 0, 0, 0.98);
+  }
+  
+  body.dark-mode .nav-links a {
+    color: #999999;
+  }
+  
+  body.dark-mode .nav-links a:hover,
+  body.dark-mode .nav-links a.active {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .nav-logo {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .nav-cart,
+  body.dark-mode .nav-search {
+    color: #999999;
+  }
+  
+  body.dark-mode .nav-cart:hover,
+  body.dark-mode .nav-search:hover {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .cart-badge {
+    border-color: #000000;
+  }
+  
+  body.dark-mode .btn-login {
+    color: var(--rose);
+    border-color: var(--rose);
+  }
+  
+  body.dark-mode .btn-login:hover {
+    background: var(--rose);
+    color: #000000;
+  }
+  
+  body.dark-mode .nav-hamburger span {
+    background: var(--rose);
+  }
+  
+  
+  /* ── MENÚ MÓVIL ── */
+  
+  body.dark-mode .nav-mobile {
+    background: #000000;
+  }
+  
+  body.dark-mode .nav-mobile-close {
+    background: #151515;
+    color: var(--rose);
+  }
+  
+  body.dark-mode .nav-mobile-links a {
+    color: #ffffff;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  
+  body.dark-mode .nav-mobile-links a:hover,
+  body.dark-mode .nav-mobile-links a.active {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .nav-mobile-bottom {
+    border-top-color: rgba(255, 255, 255, 0.08);
+  }
+  
+  body.dark-mode .nav-mobile-cart {
+    color: #999999;
+  }
+  
+  body.dark-mode .nav-mobile-login {
+    background: var(--rose);
+    color: #000000;
+  }
+  
+  
+  /* ── TEXTOS GENERALES ── */
+  
+  body.dark-mode .section-title {
+    color: #ffffff;
+  }
+  
+  body.dark-mode .section-title em {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .section-tag {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .section-tag::before {
+    background: var(--rose);
+  }
+  
+  
+  /* ── HISTORIA ── */
+  
+  body.dark-mode .nos-historia {
+    background: #000000;
+  }
+  
+  body.dark-mode .nos-body {
+    color: #999999;
+  }
+  
+  body.dark-mode .nos-hitos {
+    border-top-color: #222222;
+  }
+  
+  body.dark-mode .hito-year {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .hito-desc {
+    color: #888888;
+  }
+  
+  body.dark-mode .nos-historia-img {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  }
+  
+  
+  /* ── VALORES ── */
+  
+  body.dark-mode .nos-valores {
+    background: #000000;
+  }
+  
+  body.dark-mode .valor-card {
+    background: #111111;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  body.dark-mode .valor-card:hover {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+  }
+  
+  body.dark-mode .valor-card h3 {
+    color: #ffffff;
+  }
+  
+  body.dark-mode .valor-card p {
+    color: #999999;
+  }
+  
+  body.dark-mode .valor-icon {
+    color: var(--rose);
+  }
+  
+  
+  /* ── EQUIPO ── */
+  
+  body.dark-mode .nos-equipo {
+    background: #000000;
+  }
+  
+  body.dark-mode .equipo-img-wrap {
+    border-color: #151515;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.7);
+  }
+  
+  body.dark-mode .equipo-nombre {
+    color: #ffffff;
+  }
+  
+  body.dark-mode .equipo-rol {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .equipo-desc {
+    color: #999999;
+  }
+  
+  
+  /* ── GALERÍA ── */
+  
+  body.dark-mode .nos-galeria {
+    background: #000000;
+  }
+  
+  
+  /* ── CTA ── */
+  
+  body.dark-mode .nos-cta {
+    background: #000000;
+  }
+  
+  body.dark-mode .nos-cta-title {
+    color: #ffffff;
+  }
+  
+  body.dark-mode .nos-cta-title em {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .nos-cta-desc {
+    color: #888888;
+  }
+  
+  body.dark-mode .btn-primary {
+    background: var(--rose);
+    color: #000000;
+  }
+  
+  body.dark-mode .btn-primary:hover {
+    background: var(--rose-deep);
+    color: #ffffff;
+  }
+  
+  body.dark-mode .btn-outline {
+    color: var(--rose);
+    border-color: var(--rose);
+  }
+  
+  body.dark-mode .btn-outline:hover {
+    background: var(--rose);
+    color: #000000;
+  }
+  
+  
+  /* ── FOOTER ── */
+  
+  body.dark-mode .site-footer {
+    background: #000000;
+    color: #888888;
+  }
+  
+  body.dark-mode .footer-brand {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .footer-col h4 {
+    color: #ffffff;
+  }
+  
+  body.dark-mode .footer-col a {
+    color: #777777;
+  }
+  
+  body.dark-mode .footer-col a:hover {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .footer-bottom {
+    background: #000000;
+    color: #555555;
+    border-top-color: #151515;
+  }
+  
+  
+  /* ── HERO ── */
+  
+  /*
+     El hero mantiene su fotografía.
+     Solamente oscurecemos más la imagen
+     cuando se activa el modo oscuro.
+  */
+  
+  body.dark-mode .nos-hero-overlay {
+    background:
+      linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.55) 55%,
+        rgba(0, 0, 0, 0.2) 100%
+      );
+  }
+  
+  body.dark-mode .nos-hero-tag {
+    color: var(--rose);
+  }
+  
+  body.dark-mode .nos-hero-title em {
+    color: var(--rose);
+  }

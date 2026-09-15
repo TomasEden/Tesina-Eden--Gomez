@@ -40,7 +40,7 @@ function actualizarNavbar() {
 
   if (sesion) {
     // Mostrar nombre + dropdown con opciones
-    btnEl.textContent = `🌸 ${sesion.nombre}`;
+    btnEl.innerHTML = `<img src="../img/icons/spa.svg" alt="" width="14" height="14" style="vertical-align:middle;margin-right:0.35rem"> ${sesion.nombre}`;
     btnEl.href        = 'mis-turnos.html';
     btnEl.style.cssText = 'position:relative';
 
@@ -62,14 +62,14 @@ function actualizarNavbar() {
           <div style="font-size:0.72rem;color:#7a9080">${sesion.email || ''}</div>
         </div>
         <a href="mis-turnos.html" style="display:flex;align-items:center;gap:0.6rem;padding:0.6rem 1rem;border-radius:8px;text-decoration:none;font-size:0.83rem;color:#45634D;transition:background 0.15s" onmouseover="this.style.background='#faf0f2'" onmouseout="this.style.background='transparent'">
-          📅 Mis turnos & pedidos
+          Mis turnos & pedidos
         </a>
         <a href="carrito.html" style="display:flex;align-items:center;gap:0.6rem;padding:0.6rem 1rem;border-radius:8px;text-decoration:none;font-size:0.83rem;color:#45634D;transition:background 0.15s" onmouseover="this.style.background='#faf0f2'" onmouseout="this.style.background='transparent'">
-          🛒 Mi carrito
+          Mi carrito
         </a>
         <div style="height:1px;background:#faf0f2;margin:0.3rem 0.5rem"></div>
         <button onclick="cerrarSesionCliente()" style="display:flex;align-items:center;gap:0.6rem;padding:0.6rem 1rem;border-radius:8px;font-size:0.83rem;color:#AD717E;background:none;border:none;cursor:pointer;width:100%;text-align:left;transition:background 0.15s" onmouseover="this.style.background='#faf0f2'" onmouseout="this.style.background='transparent'">
-          🚪 Cerrar sesión
+          Cerrar sesión
         </button>
       `;
       btnEl.parentElement.style.position = 'relative';
@@ -121,7 +121,7 @@ function requireSesion(accion) {
         animation:fadeUpSesion 0.3s ease forwards;
         font-family:'DM Sans',sans-serif;
       ">
-        <div style="font-size:3rem;margin-bottom:1rem">🔒</div>
+        <div style="margin-bottom:1rem"><img src="../img/icons/candado.svg" alt="" width="42" height="42"></div>
         <h2 style="
           font-family:'Cormorant Garamond',serif;
           font-size:1.8rem;font-weight:300;color:#45634D;margin-bottom:0.6rem
@@ -275,4 +275,141 @@ window.addEventListener('beforeunload', function() {
   if (sessionStorage.getItem('tempSession') === '1') {
     localStorage.removeItem('sesion');
   }
+});
+
+// Alias de compatibilidad (algunos JS llaman actualizarContador en vez de actualizarNavbar)
+function actualizarContador() {
+  actualizarNavbar();
+}
+
+/* ══════════════════════════════════════════════════════════
+   ICONOS ADAPTATIVOS
+   Convierte automáticamente cualquier <img src=".../icons/xxx.svg">
+   (excepto logo.png) en un <span class="icon-mask"> que toma su
+   color desde CSS (darkmode.css), así se adapta solo entre modo
+   claro/oscuro y según la sección donde esté.
+   Corre en la carga inicial Y cada vez que se agrega contenido
+   dinámico (fetch de servicios/productos, carrito, admin, etc.)
+   ══════════════════════════════════════════════════════════ */
+(function () {
+  function convertirIcono(img) {
+    if (!img || img.dataset.iconDone) return;
+    const src = img.getAttribute('src') || '';
+    if (!src.includes('/icons/')) return;
+    if (src.includes('logo.png')) return; // el logo se mantiene como <img> real
+
+    const width   = img.getAttribute('width')  || '18';
+    const height  = img.getAttribute('height') || '18';
+    const alt     = img.getAttribute('alt') || '';
+    const extraCl = img.className || '';
+    const style   = img.getAttribute('style') || '';
+
+    const span = document.createElement('span');
+    span.className = 'icon-mask ' + extraCl;
+    span.style.cssText = style;
+    span.style.width  = width + 'px';
+    span.style.height = height + 'px';
+    span.style.webkitMaskImage = `url(${src})`;
+    span.style.maskImage = `url(${src})`;
+    if (alt) {
+      span.setAttribute('role', 'img');
+      span.setAttribute('aria-label', alt);
+    }
+    span.dataset.iconDone = '1';
+    img.replaceWith(span);
+  }
+
+  function convertirTodos(root) {
+    root.querySelectorAll('img[src*="/icons/"]').forEach(convertirIcono);
+  }
+
+  function init() {
+    // Se mantienen los SVG originales para conservar sus líneas y detalles.
+
+    // Observamos cambios en el DOM para convertir íconos agregados
+    // dinámicamente (fetch de servicios, carrito, panel admin, etc.)
+    const observer = new MutationObserver((mutations) => {
+      let hayNuevos = false;
+      mutations.forEach(m => {
+        m.addedNodes.forEach(node => {
+          if (node.nodeType !== 1) return;
+          if (node.tagName === 'IMG' && node.src && node.src.includes('/icons/')) hayNuevos = true;
+          if (node.querySelector && node.querySelector('img[src*="/icons/"]')) hayNuevos = true;
+        });
+      });
+      // Los iconos dinámicos se mantienen como SVG para no convertirlos en siluetas.
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/* ══════════════════════════════════════════════════════════
+   MODAL DE VALIDACIÓN — reemplaza los alert() del navegador
+   para mensajes de validación (no errores de servidor/conexión,
+   esos siguen mostrándose vía showToast en cada página).
+   ══════════════════════════════════════════════════════════ */
+function mostrarModalValidacion({ titulo, mensaje, icono = 'advertencia.svg', botones = [] }) {
+  let modal = document.getElementById('modalValidacion');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'modalValidacion';
+    modal.className = 'modal-validacion';
+    modal.innerHTML = `
+      <div class="modal-validacion-content">
+        <div class="modal-validacion-icon" id="modalIcon"></div>
+        <h3 class="modal-validacion-title" id="modalTitle"></h3>
+        <p class="modal-validacion-message" id="modalMessage"></p>
+        <div class="modal-validacion-buttons" id="modalButtons"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) cerrarModalValidacion();
+    });
+  }
+
+  const iconEl = document.getElementById('modalIcon');
+  iconEl.innerHTML = `<img src="../img/icons/${icono}" alt="" width="40" height="40">`;
+
+  document.getElementById('modalTitle').textContent = titulo;
+  document.getElementById('modalMessage').textContent = mensaje;
+
+  const buttonsContainer = document.getElementById('modalButtons');
+  buttonsContainer.innerHTML = '';
+
+  if (botones.length === 0) {
+    botones = [{ texto: 'Aceptar', clase: 'primary', accion: cerrarModalValidacion }];
+  }
+
+  botones.forEach(btn => {
+    const button = document.createElement('button');
+    button.className = `modal-btn-validacion ${btn.clase || 'primary'}`;
+    button.textContent = btn.texto;
+    button.addEventListener('click', () => {
+      if (btn.accion) btn.accion();
+      else cerrarModalValidacion();
+    });
+    buttonsContainer.appendChild(button);
+  });
+
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarModalValidacion() {
+  const modal = document.getElementById('modalValidacion');
+  if (modal) {
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') cerrarModalValidacion();
 });

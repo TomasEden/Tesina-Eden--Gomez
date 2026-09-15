@@ -7,7 +7,7 @@ function togglePw() {
   const input = document.getElementById('password');
   const btn   = document.querySelector('.toggle-pw');
   input.type  = input.type === 'password' ? 'text' : 'password';
-  btn.textContent = input.type === 'password' ? '👁' : '🙈';
+  btn.innerHTML = input.type === 'password' ? '<img src="../img/icons/ver.svg" alt="" width="14" height="14" style="vertical-align:middle;margin-right:0.3rem">' : '<img src="../img/icons/nover.svg" alt="" width="14" height="14" style="vertical-align:middle;margin-right:0.3rem">';
 }
 
 function setLoading(v) {

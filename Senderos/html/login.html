@@ -15,6 +15,7 @@
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Ingresar | Senderos"/>
   <meta name="twitter:description" content="Ingresá a tu cuenta en Senderos para gestionar tus turnos y pedidos."/>
+  <link rel="stylesheet" href="../css/darkmode.css"/>
 </head>
 <body>
 
@@ -27,15 +28,15 @@
       <p class="side-desc">Iniciá sesión para gestionar tus turnos, ver tus reservas y acceder a ofertas exclusivas.</p>
       <div class="side-features">
         <div class="feature-item">
-          <span class="feature-icon"><img src="../img/icons/calendario.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
+          <span class="feature-icon"><img src="../img/icons/calendario.svg" alt="" width="20" height="20" style="vertical-align:middle"></span>
           <span>Tus turnos en un solo lugar</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon"><img src="../img/icons/carrito.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
+          <span class="feature-icon"><img src="../img/icons/carrito+.svg" alt="" width="20" height="20" style="vertical-align:middle"></span>
           <span>Tu carrito guardado</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon"><img src="../img/icons/regalo.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
+          <span class="feature-icon"><img src="../img/icons/regalo.svg" alt="" width="20" height="20" style="vertical-align:middle"></span>
           <span>Ofertas exclusivas para miembros</span>
         </div>
       </div>
@@ -58,7 +59,7 @@
         <div class="field-group">
           <label for="email">Email</label>
           <div class="input-icon-wrap">
-            <span class="input-icon"><img src="../img/icons/email.png" alt="" width="16" height="16" style="vertical-align:middle"></span>
+            <span class="input-icon"><img src="../img/icons/correo.svg" alt="" width="16" height="16" style="vertical-align:middle"></span>
             <input type="email" id="email" placeholder="tu@email.com" autocomplete="email"/>
           </div>
           <span class="field-error" id="err-email"></span>
@@ -70,9 +71,9 @@
             <a href="#" class="forgot-link" onclick="olvidoPassword(event)">¿Olvidaste tu contraseña?</a>
           </label>
           <div class="input-icon-wrap">
-            <span class="input-icon"><img src="../img/icons/candado.png" alt="" width="16" height="16" style="vertical-align:middle"></span>
+            <span class="input-icon"><img src="../img/icons/candado.svg" alt="" width="16" height="16" style="vertical-align:middle"></span>
             <input type="password" id="password" placeholder="Tu contraseña" autocomplete="current-password"/>
-            <button class="toggle-pw" type="button" onclick="togglePassword()"><img src="../img/icons/ver.png" alt="" width="16" height="16" style="vertical-align:middle"></button>
+            <button class="toggle-pw" type="button" onclick="togglePassword()"><img src="../img/icons/ver.svg" alt="" width="16" height="16" style="vertical-align:middle"></button>
           </div>
           <span class="field-error" id="err-password"></span>
         </div>
@@ -92,7 +93,7 @@
         <a href="registro.html" class="btn-outline">Crear cuenta nueva</a>
 
         <a href="admin-login.html" class="btn-admin">
-          <img src="../img/icons/admin.png" alt="" width="16" height="16" style="vertical-align:middle"> ¿Sos admin? Ingresá aquí
+          <img src="../img/icons/admin.svg" alt="" width="16" height="16" style="vertical-align:middle"> ¿Sos admin? Ingresá aquí
         </a>
 
         <!-- Demo hint -->
@@ -104,5 +105,7 @@
 
   <script src="../js/sesion.js"></script>
   <script src="../js/login.js"></script>
+  <script src="../js/darkmode.js"></script>
+<script src="../js/iconos-adaptativos.js"></script>
 </body>
 </html>

@@ -4,25 +4,92 @@
    ═══════════════════════════════════════ */
 
 (function () {
-  // Aplicar modo guardado ANTES de que cargue el CSS para evitar flash
+
+  /* ─────────────────────────────────────
+     APLICAR MODO GUARDADO
+     ───────────────────────────────────── */
+
   const saved = localStorage.getItem('darkMode');
-  if (saved === 'on') document.documentElement.classList.add('dark');
+
+  if (saved === 'on') {
+    document.documentElement.classList.add('dark');
+  }
+
+
+  /* ─────────────────────────────────────
+     CREAR BOTÓN
+     ───────────────────────────────────── */
 
   document.addEventListener('DOMContentLoaded', function () {
-    // Crear el botón flotante de toggle
+
     const btn = document.createElement('button');
+
     btn.id = 'darkToggle';
     btn.className = 'dark-toggle';
-    btn.setAttribute('aria-label', 'Cambiar modo oscuro');
-    btn.innerHTML = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
-    btn.onclick = toggleDark;
+    btn.type = 'button';
+
+    btn.setAttribute('aria-label', 'Cambiar modo de color');
+    btn.setAttribute('title', 'Cambiar modo de color');
+
+    actualizarIcono(btn);
+
+    btn.addEventListener('click', toggleDark);
+
     document.body.appendChild(btn);
+
   });
 
+
+  /* ─────────────────────────────────────
+     CAMBIAR MODO
+     ───────────────────────────────────── */
+
   function toggleDark() {
-    const isDark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem('darkMode', isDark ? 'on' : 'off');
-    const btn = document.getElementById('darkToggle');
-    if (btn) btn.innerHTML = isDark ? '☀️' : '🌙';
+
+    const isDark =
+      document.documentElement.classList.toggle('dark');
+
+    localStorage.setItem(
+      'darkMode',
+      isDark ? 'on' : 'off'
+    );
+
+    const btn =
+      document.getElementById('darkToggle');
+
+    if (btn) {
+      actualizarIcono(btn);
+    }
+
   }
+
+
+  /* ─────────────────────────────────────
+     ACTUALIZAR ICONO
+     ───────────────────────────────────── */
+
+  function actualizarIcono(btn) {
+
+    const isDark =
+      document.documentElement.classList.contains('dark');
+
+    const icono = isDark ? 'sol.svg' : 'luna.svg';
+
+    btn.innerHTML =
+      '<img src="../img/icons/' + icono + '" alt="" width="18" height="18">';
+
+  }
+
 })();
+
+// Navegación robusta del carrito: el enlace sigue funcionando de forma nativa,
+// y este fallback cubre casos en los que otro elemento/estilo intercepta el click.
+document.addEventListener('click', function (e) {
+  var cart = e.target.closest && e.target.closest('a.nav-cart, a.nav-mobile-cart');
+  if (!cart) return;
+  var href = cart.getAttribute('href');
+  if (href && href.indexOf('carrito.html') !== -1) {
+    e.preventDefault();
+    window.location.href = href;
+  }
+});

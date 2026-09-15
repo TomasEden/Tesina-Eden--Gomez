@@ -133,48 +133,69 @@
    }
    
    function enviarResena(servicioId, containerId) {
-     const starsEl = document.getElementById('starsResena_' + servicioId);
-     const textEl  = document.getElementById('textoResena_' + servicioId);
-   
-     const estrellas = parseInt(starsEl?.dataset.val || '0');
-     const texto     = textEl?.value.trim();
-   
-     if (!estrellas) { alert('Seleccioná una calificación'); return; }
-     if (!texto || texto.length < 10) { alert('Escribí al menos 10 caracteres'); return; }
-   
-     fetch(API_RESENAS, {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({
-         servicio_slug: servicioId,
-         estrellas,
-         texto
-       })
-     })
-     .then(r => r.json())
-     .then(res => {
-       if (!res.ok) {
-         showToast('❌ ' + (res.error || 'Error al publicar la reseña'));
-         return;
-       }
-       showToast('¡Reseña publicada! Gracias por tu opinión.');
-       renderSeccionResenas(servicioId, containerId);
-     })
-     .catch(() => showToast('❌ Error de conexión con el servidor'));
-   }
-   
-   function verMasResenas(servicioId) {
-     const lista  = getResenasPorServicio(servicioId);
-     const listEl = document.getElementById('listaResenas_' + servicioId);
-     if (listEl) listEl.innerHTML = lista.map(renderResenaCard).join('');
-     const btnVer = listEl?.nextElementSibling;
-     if (btnVer) btnVer.remove();
-   }
+    const starsEl = document.getElementById('starsResena_' + servicioId);
+    const textEl  = document.getElementById('textoResena_' + servicioId);
+  
+    const estrellas = parseInt(starsEl?.dataset.val || '0');
+    const texto     = textEl?.value.trim();
+  
+    if (!estrellas) {
+      mostrarModalValidacion({
+        icono: 'advertencia.svg',
+        titulo: 'Falta la calificación',
+        mensaje: 'Seleccioná al menos una estrella antes de publicar tu reseña.',
+        botones: [{ texto: 'Entendido', clase: 'primary' }]
+      });
+      return;
+    }
+  
+    if (!texto || texto.length < 10) {
+      mostrarModalValidacion({
+        icono: 'formulario.svg',
+        titulo: 'Reseña muy corta',
+        mensaje: 'Escribí al menos 10 caracteres para contarnos tu experiencia.',
+        botones: [{ texto: 'Entendido', clase: 'primary' }]
+      });
+      return;
+    }
+  
+    fetch(API_RESENAS, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        servicio_slug: servicioId,
+        estrellas,
+        texto
+      })
+    })
+    .then(r => r.json())
+    .then(res => {
+      if (!res.ok) {
+        mostrarModalValidacion({
+          icono: 'x.svg',
+          titulo: 'No se pudo publicar',
+          mensaje: res.error || 'Ocurrió un error al enviar tu reseña. Intentá de nuevo.',
+          botones: [{ texto: 'Entendido', clase: 'primary' }]
+        });
+        return;
+      }
+      showToast('¡Reseña publicada! Gracias por tu opinión.');
+      renderSeccionResenas(servicioId, containerId);
+    })
+    .catch(() => {
+      mostrarModalValidacion({
+        icono: 'x.svg',
+        titulo: 'Error de conexión',
+        mensaje: 'No pudimos conectar con el servidor. Revisá tu conexión e intentá de nuevo.',
+        botones: [{ texto: 'Entendido', clase: 'primary' }]
+      });
+    });
+  }
    
    function showToast(msg) {
      const t = document.getElementById('toast');
      if (!t) return;
-     t.textContent = msg;
+     t.innerHTML = msg;
      t.classList.add('show');
      setTimeout(() => t.classList.remove('show'), 3000);
    }

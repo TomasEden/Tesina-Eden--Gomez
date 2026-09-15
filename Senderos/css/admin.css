@@ -431,3 +431,74 @@ tbody td {
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
 }
+
+
+/* ═════════════════════════════════════════════════════════════
+   CORRECCIONES DE TEMA E ICONOGRAFÍA — ADMIN
+   ═════════════════════════════════════════════════════════════ */
+.admin-sidebar .sidebar-icon img,
+.admin-sidebar .sidebar-logo img {
+  filter: brightness(0) invert(1);
+}
+.stat-card-icon img,
+.btn-icon img,
+.modal-confirm-icon img,
+.btn-primary img,
+.btn-outline img,
+.btn-ghost img {
+  filter: brightness(0) saturate(100%);
+}
+.stat-card-icon.rose img { filter: brightness(0) saturate(100%) invert(48%) sepia(16%) saturate(1000%) hue-rotate(300deg) brightness(90%); }
+.stat-card-icon.green img { filter: brightness(0) saturate(100%) invert(35%) sepia(15%) saturate(700%) hue-rotate(80deg) brightness(90%); }
+.stat-card-icon.orange img { filter: brightness(0) saturate(100%) invert(55%) sepia(80%) saturate(900%) hue-rotate(355deg) brightness(90%); }
+.stat-card-icon.blue img { filter: brightness(0) saturate(100%) invert(43%) sepia(40%) saturate(800%) hue-rotate(180deg) brightness(90%); }
+
+html.dark .admin-main {
+  background: #1A1A1A;
+  color: #E8E0DA;
+}
+html.dark .admin-topbar,
+html.dark .stat-card,
+html.dark .table-card,
+html.dark .modal {
+  background: #242424;
+  border-color: #383838;
+}
+html.dark .topbar-title,
+html.dark .table-title,
+html.dark .stat-card-num,
+html.dark tbody td {
+  color: #E8E0DA;
+}
+html.dark thead th {
+  background: #2A2025;
+  color: #9A9A8A;
+}
+html.dark tbody tr { border-bottom-color: #303030; }
+html.dark tbody tr:hover { background: #2A2025; }
+html.dark .field-group input,
+html.dark .field-group select,
+html.dark .field-group textarea,
+html.dark .filter-select {
+  background: #1A1A1A;
+  color: #E8E0DA;
+  border-color: #444;
+}
+html.dark .field-group label { color: #BDB5AF; }
+html.dark .sidebar-avatar {
+  background: #C28A93;
+  color: #1A1A1A;
+  box-shadow: 0 0 0 2px #3A3A3A;
+}
+html.dark .btn-icon {
+  background: #242424;
+  border-color: #444;
+  color: #E8E0DA;
+}
+html.dark .btn-icon:hover { background: #2A2025; }
+html.dark .modal-confirm-desc,
+html.dark .td-light,
+html.dark .stat-card-label,
+html.dark .topbar-date { color: #9A9A8A; }
+html.dark .sidebar-icon img,
+html.dark .sidebar-logo img { filter: brightness(0) invert(1); }

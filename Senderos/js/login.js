@@ -8,10 +8,10 @@ function togglePassword() {
   const btn   = document.querySelector('.toggle-pw');
   if (input.type === 'password') {
     input.type = 'text';
-    btn.textContent = '🙈';
+    btn.innerHTML = '<img src="../img/icons/nover.svg" alt="" width="14" height="14" style="vertical-align:middle;margin-right:0.3rem">';
   } else {
     input.type = 'password';
-    btn.textContent = '👁';
+    btn.innerHTML = '<img src="../img/icons/ver.svg" alt="" width="14" height="14" style="vertical-align:middle;margin-right:0.3rem">';
   }
 }
 
@@ -47,7 +47,12 @@ function olvidoPassword(e) {
     return;
   }
   // En una app real aquí iría la llamada al backend
-  alert(`📧 Si el email "${email}" está registrado, recibirás un enlace para recuperar tu contraseña.`);
+  mostrarModalValidacion({
+    icono: 'correo.svg',
+    titulo: 'Revisá tu email',
+    mensaje: `Si el email "${email}" está registrado, vas a recibir un enlace para recuperar tu contraseña.`,
+    botones: [{ texto: 'Entendido', clase: 'primary' }]
+  });
 }
 
 // ── Iniciar sesión ──────────────────────────────────────────────────────────
@@ -157,7 +162,7 @@ function iniciarSesion() {
 function mostrarDemoHint(usuario) {
   const hint = document.getElementById('demoHint');
   if (!usuario) {
-    hint.textContent = '💡 No hay ninguna cuenta creada aún. Podés registrarte primero.';
+    hint.textContent = 'No hay ninguna cuenta creada aún. Podés registrarte primero.';
     hint.classList.remove('hidden');
   }
 }

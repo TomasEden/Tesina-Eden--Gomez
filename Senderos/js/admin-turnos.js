@@ -15,22 +15,13 @@ let turnos      = [];
 let turnoActivo = null;
 let eliminarId  = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('topbarDate').textContent =
-    new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
-
-  const guardados = (JSON.parse(localStorage.getItem('turnos')) || []).map((t, i) => ({
-    id: i + 1,
-    cliente: 'Cliente web',
-    servicio: t.servicio || t.nombre,
-    fecha: t.fecha ? new Date(t.fecha).toLocaleDateString('es-AR') : '—',
-    horario: t.horario || '—',
-    precio: t.precio || 0,
-    estado: t.estado || 'pendiente'
-  }));
-  turnos = [...guardados, ...DEMO];
-  renderStats();
-  renderTabla(turnos);
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('topbarDate').textContent = new Date().toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});
+  try {
+    const r=await fetch('../api/turnos.php'); const data=await r.json();
+    if(data.ok){ turnos=(data.turnos||[]).map(t=>({id:Number(t.id),cliente:t.cliente||'Cliente web',servicio:t.servicios||'Servicio',fecha:t.fecha,horario:String(t.horario||'').slice(0,5),precio:Number(t.precio_total||0),estado:t.estado||'pendiente',telefono:t.telefono||''})); renderStats();renderTabla(turnos); }
+    else throw new Error();
+  } catch(e) { turnos=[];renderStats();renderTabla(turnos);showToast('No se pudieron cargar los turnos desde la base de datos.'); }
 });
 
 function renderStats() {
@@ -40,10 +31,10 @@ function renderStats() {
   const cancelados = turnos.filter(t => t.estado === 'cancelado').length;
 
   const stats = [
-    { icon: '📋', label: 'Total turnos',  value: total,       color: 'rose'   },
-    { icon: '⏳', label: 'Pendientes',    value: pendientes,  color: 'orange' },
-    { icon: '✅', label: 'Confirmados',   value: confirmados, color: 'green'  },
-    { icon: '❌', label: 'Cancelados',    value: cancelados,  color: 'blue'   },
+    { icon: '<img src="../img/icons/formulario.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem">', label: 'Total turnos',  value: total,       color: 'rose'   },
+    { icon: '<img src="../img/icons/tiempo.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">', label: 'Pendientes',    value: pendientes,  color: 'orange' },
+    { icon: '<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">', label: 'Confirmados',   value: confirmados, color: 'green'  },
+    { icon: '<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">', label: 'Cancelados',    value: cancelados,  color: 'blue'   },
   ];
   const grid = document.getElementById('statsGrid');
   grid.innerHTML = '';
@@ -76,8 +67,8 @@ function renderTabla(lista) {
         <td><span class="badge badge-${t.estado}">${t.estado}</span></td>
         <td>
           <div style="display:flex;gap:0.4rem">
-            <button class="btn-icon" title="Cambiar estado" onclick="abrirModalEstado(${t.id})">✏️</button>
-            <button class="btn-icon danger" title="Eliminar" onclick="abrirModalEliminar(${t.id})">🗑️</button>
+            <button class="btn-icon" title="Cambiar estado" onclick="abrirModalEstado(${t.id})"><img src="../img/icons/formulario.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem"></button>
+            <button class="btn-icon danger" title="Eliminar" onclick="abrirModalEliminar(${t.id})"><img src="../img/icons/basura.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></button>
           </div>
         </td>
       </tr>`;
@@ -108,11 +99,12 @@ function guardarEstado() {
   if (!turnoActivo) return;
   const nuevoEstado = document.getElementById('nuevoEstado').value;
   const estadoAnterior = turnoActivo.estado;
-  turnoActivo.estado = nuevoEstado;
+  fetch('../api/turnos.php',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:turnoActivo.id,estado:nuevoEstado})}).then(r=>r.json()).then(res=>{ if(!res.ok) throw new Error(); turnoActivo.estado=nuevoEstado; cerrarModal('modalEstado'); renderTabla(turnos); renderStats(); showToast('Estado actualizado'); }).catch(()=>showToast('No se pudo actualizar el turno.'));
+  return;
   cerrarModal('modalEstado');
   renderTabla(turnos);
   renderStats();
-  showToast('✅ Estado actualizado');
+  showToast('<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Estado actualizado');
 
   // Si se confirmó el turno, ofrecer notificar al cliente por WhatsApp
   if (nuevoEstado === 'confirmado' && estadoAnterior !== 'confirmado') {
@@ -120,12 +112,18 @@ function guardarEstado() {
     const fecha = turnoActivo.fecha instanceof Date
       ? turnoActivo.fecha.toLocaleDateString('es-AR')
       : turnoActivo.fecha;
-    const msg = `Hola! 🌸 Tu turno de ${turnoActivo.servicio} del ${fecha} a las ${turnoActivo.horario} hs está CONFIRMADO. ¡Te esperamos!`;
+    const msg = `Hola! Tu turno de ${turnoActivo.servicio} del ${fecha} a las ${turnoActivo.horario} hs está CONFIRMADO. ¡Te esperamos!`;
     const waUrl = `https://wa.me/${tel}?text=${encodeURIComponent(msg)}`;
 
-    if (confirm('¿Notificar al cliente por WhatsApp que su turno está confirmado?')) {
-      window.open(waUrl, '_blank');
-    }
+    mostrarModalValidacion({
+      icono: 'whatsapp.svg',
+      titulo: '¿Notificar al cliente?',
+      mensaje: 'Podés avisarle por WhatsApp que su turno está confirmado.',
+      botones: [
+        { texto: 'Sí, notificar', clase: 'primary', accion: () => { window.open(waUrl, '_blank'); cerrarModalValidacion(); } },
+        { texto: 'No, gracias', clase: 'outline' }
+      ]
+    });
   }
 }
 
@@ -135,11 +133,7 @@ function abrirModalEliminar(id) {
 }
 
 function confirmarEliminar() {
-  turnos = turnos.filter(t => t.id !== eliminarId);
-  cerrarModal('modalEliminar');
-  filtrar();
-  renderStats();
-  showToast('🗑️ Turno eliminado');
+  fetch('../api/turnos.php',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:eliminarId,estado:'cancelado'})}).then(r=>r.json()).then(res=>{if(!res.ok)throw new Error();turnos=turnos.map(t=>t.id===eliminarId?{...t,estado:'cancelado'}:t);cerrarModal('modalEliminar');filtrar();renderStats();showToast('Turno cancelado');}).catch(()=>showToast('No se pudo cancelar el turno.'));
 }
 
 function cerrarModal(id) {
@@ -148,7 +142,7 @@ function cerrarModal(id) {
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
+  t.innerHTML = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 

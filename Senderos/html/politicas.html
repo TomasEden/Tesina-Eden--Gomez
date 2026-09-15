@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Políticas & Términos — SPA M</title>
+  <title>Políticas & Términos — Senderos</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../css/politicas.css"/>
   <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" href="../css/darkmode.css"/>
 </head>
 <body>
 
     <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
     <a href="index.html" class="nav-logo">
-      <img src="../img/icons/logo.png" alt="SPA M" width="26" height="26"> SPA M
+      <img src="../img/icons/logo.png" alt="Senderos" width="26" height="26"> Senderos
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Inicio</a></li>
@@ -22,12 +23,12 @@
       <li><a href="productos.html">Productos</a></li>
     </ul>
     <div class="nav-right">
-      <a href="carrito.html" class="nav-cart">
-        <img src="../img/icons/carrito.png" alt="Carrito" width="22" height="22">
+      <a href="carrito.html" class="nav-cart" aria-label="Mi carrito">
+        <img src="../img/icons/carrito+.svg" alt="Carrito" width="22" height="22">
         <span class="cart-badge" id="contador">0</span>
       </a>
       <a href="buscar.html" class="nav-search" title="Buscar">
-        <img src="../img/icons/buscar.png" alt="Buscar" width="20" height="20">
+        <img src="../img/icons/lupa.svg" alt="Buscar" width="20" height="20">
       </a>
       <a href="login.html" class="btn-login" id="btnSesion">Ingresar</a>
     </div>
@@ -38,7 +39,7 @@
 
   <!-- MENÚ MÓVIL -->
   <div class="nav-mobile" id="navMobile">
-    <button class="nav-mobile-close" onclick="toggleMenu()" aria-label="Cerrar">✕</button>
+    <button class="nav-mobile-close" onclick="toggleMenu()" aria-label="Cerrar"><img src="../img/icons/x.svg" alt="" width="12" height="12" style="vertical-align:middle;margin-right:0.3rem"></button>
     <nav class="nav-mobile-links">
       <a href="index.html">Inicio</a>
       <a href="servicios.html">Servicios</a>
@@ -47,7 +48,7 @@
     </nav>
     <div class="nav-mobile-bottom">
       <a href="carrito.html" class="nav-mobile-cart">
-        <img src="../img/icons/carrito.png" alt="" width="18" height="18"> Mi carrito
+        <img src="../img/icons/carrito+.svg" alt="" width="18" height="18"> Mi carrito
       </a>
       <a href="login.html" class="nav-mobile-login" id="btnSesionMobile">Ingresar</a>
     </div>
@@ -65,11 +66,11 @@
 
     <aside class="pol-sidebar">
       <nav class="pol-nav">
-        <a href="#privacidad"  class="pol-link active" onclick="activarLink(this)"><img src="../img/icons/candado.png" alt="" width="16" height="16" style="vertical-align:middle"> Política de Privacidad</a>
-        <a href="#terminos"    class="pol-link"         onclick="activarLink(this)"><img src="../img/icons/lista.png" alt="" width="16" height="16" style="vertical-align:middle"> Términos y Condiciones</a>
-        <a href="#cookies"     class="pol-link"         onclick="activarLink(this)"><img src="../img/icons/cookies.png" alt="" width="16" height="16" style="vertical-align:middle"> Cookies</a>
-        <a href="#cancelacion" class="pol-link"         onclick="activarLink(this)"><img src="../img/icons/cancelar.png" alt="" width="16" height="16" style="vertical-align:middle"> Política de Cancelación</a>
-        <a href="#contacto"    class="pol-link"         onclick="activarLink(this)"><img src="../img/icons/correo.png" alt="" width="16" height="16" style="vertical-align:middle"> Contacto Legal</a>
+        <a href="#privacidad"  class="pol-link active" onclick="activarLink(this)"><img src="../img/icons/candado.svg" alt="" width="16" height="16" style="vertical-align:middle"> Política de Privacidad</a>
+        <a href="#terminos"    class="pol-link"         onclick="activarLink(this)"><img src="../img/icons/formulario.svg" alt="" width="16" height="16" style="vertical-align:middle"> Términos y Condiciones</a>
+        <a href="#cookies"     class="pol-link"         onclick="activarLink(this)"><img src="../img/icons/cookie.svg" alt="" width="16" height="16" style="vertical-align:middle"> Cookies</a>
+        <a href="#cancelacion" class="pol-link"         onclick="activarLink(this)"><img src="../img/icons/cerrar.svg" alt="" width="16" height="16" style="vertical-align:middle"> Política de Cancelación</a>
+        <a href="#contacto"    class="pol-link"         onclick="activarLink(this)"><img src="../img/icons/correo.svg" alt="" width="16" height="16" style="vertical-align:middle"> Contacto Legal</a>
       </nav>
     </aside>
 
@@ -77,9 +78,9 @@
 
       <!-- PRIVACIDAD -->
       <section class="pol-section" id="privacidad">
-        <div class="pol-section-icon"><img src="../img/icons/candado.png" alt="" width="32" height="32" style="vertical-align:middle"></div>
+        <div class="pol-section-icon"><img src="../img/icons/candado.svg" alt="" width="32" height="32" style="vertical-align:middle"></div>
         <h2>Política de Privacidad</h2>
-        <p class="pol-lead">En SPA M nos comprometemos a proteger tu información personal. Esta política explica qué datos recopilamos, cómo los usamos y cómo los protegemos.</p>
+        <p class="pol-lead">En Senderos nos comprometemos a proteger tu información personal. Esta política explica qué datos recopilamos, cómo los usamos y cómo los protegemos.</p>
 
         <h3>1. Información que recopilamos</h3>
         <p>Al registrarte o usar nuestros servicios, podemos recopilar:</p>
@@ -115,30 +116,31 @@
 
       <!-- TÉRMINOS -->
       <section class="pol-section" id="terminos">
-        <div class="pol-section-icon"><img src="../img/icons/lista.png" alt="" width="32" height="32" style="vertical-align:middle"></div>
+        <div class="pol-section-icon"><img src="../img/icons/formulario.svg" alt="" width="32" height="32" style="vertical-align:middle"></div>
         <h2>Términos y Condiciones</h2>
-        <p class="pol-lead">Al usar SPA M aceptás los siguientes términos. Por favor leelos atentamente.</p>
+        <p class="pol-lead">Al usar Senderos aceptás los siguientes términos. Por favor leelos atentamente.</p>
 
         <h3>1. Uso del servicio</h3>
-        <p>SPA M es una plataforma de reservas y venta de productos de bienestar. Al registrarte, aceptás usar el sitio de forma responsable y veraz.</p>
+        <p>Senderos es una plataforma de reservas y venta de productos de bienestar. Al registrarte, aceptás usar el sitio de forma responsable y veraz.</p>
 
         <h3>2. Reservas de turnos</h3>
         <ul>
           <li>Las reservas están sujetas a disponibilidad horaria.</li>
           <li>Al confirmar un turno te comprometés a asistir o cancelar con al menos 24 horas de anticipación.</li>
-          <li>SPA M se reserva el derecho de cancelar o reprogramar turnos por causas de fuerza mayor.</li>
+          <li>Senderos se reserva el derecho de cancelar o reprogramar turnos por causas de fuerza mayor.</li>
           <li>La confirmación del turno se realiza vía WhatsApp.</li>
         </ul>
 
         <h3>3. Productos</h3>
         <ul>
-          <li>Los precios están expresados en pesos argentinos e incluyen IVA.</li>
-          <li>El stock se actualiza en tiempo real. SPA M no garantiza disponibilidad permanente.</li>
-          <li>Los pedidos pueden retirarse en el local o consultarse envío según disponibilidad.</li>
+          <li>Los precios están expresados en pesos argentinos.</li>
+          <li>El stock se actualiza en tiempo real. Senderos no garantiza disponibilidad permanente.</li>
+          <li>Aceptamos efectivo, transferencia bancaria y débito.</li>
+          <li>Hacemos envíos a todo el país. Los pedidos también pueden retirarse en el local.</li>
         </ul>
 
         <h3>4. Responsabilidad</h3>
-        <p>SPA M no se responsabiliza por el uso indebido de la plataforma ni por daños indirectos derivados del uso del sitio.</p>
+        <p>Senderos no se responsabiliza por el uso indebido de la plataforma ni por daños indirectos derivados del uso del sitio.</p>
 
         <h3>5. Modificaciones</h3>
         <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios serán notificados a través del sitio web.</p>
@@ -148,7 +150,7 @@
 
       <!-- COOKIES -->
       <section class="pol-section" id="cookies">
-        <div class="pol-section-icon"><img src="../img/icons/cookies.png" alt="" width="32" height="32" style="vertical-align:middle"></div>
+        <div class="pol-section-icon"><img src="../img/icons/cookie.svg" alt="" width="32" height="32" style="vertical-align:middle"></div>
         <h2>Política de Cookies</h2>
         <p class="pol-lead">Este sitio utiliza almacenamiento local del navegador (localStorage y sessionStorage) para mejorar tu experiencia.</p>
 
@@ -164,7 +166,7 @@
         <p>Estos datos se almacenan únicamente en tu dispositivo y no se transmiten a servidores externos. Podés borrarlos en cualquier momento desde la configuración de tu navegador.</p>
 
         <div class="pol-highlight">
-          <img src="../img/icons/cookies.png" alt="" width="14" height="14" style="vertical-align:middle"> No usamos cookies de terceros ni de seguimiento publicitario.
+          <img src="../img/icons/cookie.svg" alt="" width="14" height="14" style="vertical-align:middle"> No usamos cookies de terceros ni de seguimiento publicitario.
         </div>
       </section>
 
@@ -172,7 +174,7 @@
 
       <!-- CANCELACIÓN -->
       <section class="pol-section" id="cancelacion">
-        <div class="pol-section-icon"><img src="../img/icons/cancelar.png" alt="" width="32" height="32" style="vertical-align:middle"></div>
+        <div class="pol-section-icon"><img src="../img/icons/cerrar.svg" alt="" width="32" height="32" style="vertical-align:middle"></div>
         <h2>Política de Cancelación</h2>
         <p class="pol-lead">Entendemos que los planes cambian. Estas son nuestras condiciones de cancelación.</p>
 
@@ -198,37 +200,37 @@
 
       <!-- CONTACTO LEGAL -->
       <section class="pol-section" id="contacto">
-        <div class="pol-section-icon"><img src="../img/icons/correo.png" alt="" width="32" height="32" style="vertical-align:middle"></div>
+        <div class="pol-section-icon"><img src="../img/icons/correo.svg" alt="" width="32" height="32" style="vertical-align:middle"></div>
         <h2>Contacto Legal</h2>
         <p class="pol-lead">Para consultas legales, ejercicio de derechos o reclamos podés contactarnos por:</p>
 
         <div class="pol-contact-grid">
           <div class="pol-contact-item">
-            <span class="pol-contact-icon"><img src="../img/icons/email.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
+            <span class="pol-contact-icon"><img src="../img/icons/correo.svg" alt="" width="20" height="20" style="vertical-align:middle"></span>
             <div>
               <strong>Email</strong>
-              <a href="/cdn-cgi/l/email-protection#600c0507010c201310010d4e030f0d">contacto@spam.com</a>
+              <a href="mailto:claudia.senderospa@gmail.com">claudia.senderospa@gmail.com</a>
             </div>
           </div>
           <div class="pol-contact-item">
-            <span class="pol-contact-icon"><img src="../img/icons/whatsapp.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
+            <span class="pol-contact-icon"><img src="../img/icons/whatsapp.svg" alt="" width="20" height="20" style="vertical-align:middle"></span>
             <div>
               <strong>WhatsApp</strong>
-              <a href="https://wa.me/5493510000000" target="_blank">+54 9 351 000-0000</a>
+              <a href="https://wa.me/5493571616113" target="_blank">3571-616113</a>
             </div>
           </div>
           <div class="pol-contact-item">
-            <span class="pol-contact-icon"><img src="../img/icons/ubicacion.png" alt="" width="20" height="20" style="vertical-align:middle"></span>
+            <span class="pol-contact-icon"><img src="../img/icons/ubicacion.svg" alt="" width="20" height="20" style="vertical-align:middle"></span>
             <div>
               <strong>Dirección</strong>
-              <span>Av. Siempreviva 742, Córdoba, Argentina</span>
+              <span>General Roca 145</span>
             </div>
           </div>
           <div class="pol-contact-item">
-            <span class="pol-contact-icon">⏰</span>
+            <span class="pol-contact-icon"><img src="../img/icons/tiempo.svg" alt="" width="20" height="20" style="vertical-align:middle"></span>
             <div>
               <strong>Horario de atención</strong>
-              <span>Lunes a Sábado · 9:00 a 20:00 hs</span>
+              <span>Lunes a sábado · 8 a 12:30 y 16 a 20 hs</span>
             </div>
           </div>
         </div>
@@ -243,15 +245,16 @@
 
   <!-- FOOTER -->
   <footer class="pol-footer">
-    <div class="pol-footer-inner">
-      <span>© 2026 SPA M · Todos los derechos reservados</span>
-      <div class="pol-footer-links">
-        <a href="index.html">Inicio</a>
-        <a href="politicas.html">Políticas</a>
-        <a href="https://wa.me/5493510000000" target="_blank">WhatsApp</a>
-      </div>
+  <div class="pol-footer-inner">
+    <span>© 2026 Senderos de Spa · General Roca 145 · 3571-616113</span>
+    <div class="pol-footer-links">
+      <a href="index.html">Inicio</a>
+      <a href="politicas.html">Políticas</a>
+      <a href="https://wa.me/5493571616113" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      <a href="mailto:claudia.senderospa@gmail.com">Email</a>
     </div>
-  </footer>
+  </div>
+</footer>
 
   <script src="../js/sesion.js"></script>
   <script>
@@ -273,3 +276,18 @@
       secciones.forEach(sec => {
         const top = sec.getBoundingClientRect().top;
         if (top < 200) {
+          const id = sec.getAttribute('id');
+          const link = document.querySelector(`.pol-link[href="#${id}"]`);
+          if (link) {
+            document.querySelectorAll('.pol-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+          }
+        }
+      });
+    });
+  </script>
+  <script src="../js/darkmode.js"></script>
+
+<script src="../js/iconos-adaptativos.js"></script>
+</body>
+</html>

@@ -61,10 +61,10 @@ function renderStats() {
   const sinStock = productos.filter(p => !p.stock || (p.stockQty ?? 99) === 0).length;
 
   const stats = [
-    { icon: '📅', label: 'Turnos totales',     value: turnos.length,                   trend: `${pendientes} pendientes`, color: 'rose'   },
-    { icon: '💰', label: 'Ingresos estimados', value: `$${totalIngresos.toLocaleString()}`, trend: `${confirmados.length} confirmados`, color: 'green'  },
-    { icon: '🛍️', label: 'Productos activos',  value: productos.length || 9,           trend: sinStock > 0 ? `${sinStock} sin stock` : 'Todo en stock', color: 'orange' },
-    { icon: '📦', label: 'Pedidos recibidos',  value: pedidos.length,                  trend: 'Historial', color: 'blue' },
+    { icon: '<img src="../img/icons/calendario.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">', label: 'Turnos totales',     value: turnos.length,                   trend: `${pendientes} pendientes`, color: 'rose'   },
+    { icon: '<img src="../img/icons/tarjeta.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem">', label: 'Ingresos estimados', value: `$${totalIngresos.toLocaleString()}`, trend: `${confirmados.length} confirmados`, color: 'green'  },
+    { icon: '<img src="../img/icons/bolsa.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem">', label: 'Productos activos',  value: productos.length || 9,           trend: sinStock > 0 ? `${sinStock} sin stock` : 'Todo en stock', color: 'orange' },
+    { icon: '<img src="../img/icons/caja.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem">', label: 'Pedidos recibidos',  value: pedidos.length,                  trend: 'Historial', color: 'blue' },
   ];
 
   const grid = document.getElementById('statsGrid');
@@ -150,7 +150,7 @@ function renderActividadReciente() {
     const fecha = new Date(p.fecha).toLocaleDateString('es-AR', { day: 'numeric', month: 'short' });
     container.innerHTML += `
       <div class="top-servicio-item">
-        <span class="top-rank">🛍️</span>
+        <span class="top-rank"><img src="../img/icons/bolsa.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></span>
         <span class="top-servicio-name">${p.cliente || 'Cliente'} · ${fecha}</span>
         <span class="top-servicio-count">$${(p.total || 0).toLocaleString()}</span>
       </div>`;

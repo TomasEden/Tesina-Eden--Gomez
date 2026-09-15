@@ -135,8 +135,8 @@ function renderTabla(lista) {
         <td><span style="font-size:0.78rem;color:#9a9a8e">${fecha}</span></td>
         <td>
           <div style="display:flex;gap:0.4rem">
-            <button class="table-action-btn" onclick="verCliente(${c.id})" title="Ver detalle">👁</button>
-            <a class="table-action-btn" href="https://wa.me/549${(c.telefono||'').replace(/\D/g,'')}?text=${encodeURIComponent('Hola ' + c.nombre + ', te contactamos desde Senderos.')}" target="_blank" title="WhatsApp" style="text-decoration:none">💬</a>
+            <button class="table-action-btn" onclick="verCliente(${c.id})" title="Ver detalle"><img src="../img/icons/ver.svg" alt="" width="14" height="14" style="vertical-align:middle;margin-right:0.3rem"></button>
+            <a class="table-action-btn" href="https://wa.me/549${(c.telefono||'').replace(/\D/g,'')}?text=${encodeURIComponent('Hola ' + c.nombre + ', te contactamos desde Senderos.')}" target="_blank" title="WhatsApp" style="text-decoration:none"><img src="../img/icons/whatsapp.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></a>
           </div>
         </td>
       </tr>`;
@@ -229,11 +229,11 @@ function verCliente(id) {
     <div style="display:flex;gap:0.8rem;margin-top:1.5rem">
       <a href="https://wa.me/549${(c.telefono||'').replace(/\D/g,'')}?text=${encodeURIComponent('Hola ' + c.nombre + ', te contactamos desde Senderos.')}" target="_blank"
          style="flex:1;background:#25d366;color:#fff;text-align:center;padding:0.7rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500">
-        💬 WhatsApp
+        <img src="../img/icons/whatsapp.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem">WhatsApp
       </a>
       <a href="mailto:${c.email||''}"
          style="flex:1;background:#faf0f2;color:#AD717E;text-align:center;padding:0.7rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;border:1px solid #F3CFD4">
-        ✉️ Email
+        <img src="../img/icons/correo.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Email
       </a>
     </div>`;
 
@@ -276,5 +276,5 @@ function exportarCSV() {
   URL.revokeObjectURL(url);
 
   const t = document.getElementById('toast');
-  if (t) { t.textContent = '✅ CSV exportado'; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
+  if (t) { t.innerHTML = '<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">CSV exportado'; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
 }

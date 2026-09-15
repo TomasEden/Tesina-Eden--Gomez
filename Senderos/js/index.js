@@ -19,7 +19,7 @@ window.addEventListener('scroll', function() {
 
 function showToast(msg) {
   var t = document.getElementById('toast');
-  t.textContent = msg;
+  t.innerHTML = msg;
   t.classList.add('show');
   setTimeout(function() { t.classList.remove('show'); }, 2500);
 }
@@ -27,24 +27,36 @@ function showToast(msg) {
 function renderServicios() {
   var grid = document.getElementById('serviciosGrid');
   if (!grid) return;
+
   grid.innerHTML = '';
+
   SERVICIOS_DESTACADOS.forEach(function(s) {
     var card = document.createElement('div');
     card.className = 'service-card';
+
     card.innerHTML =
-      '<img class="service-img" src="' + s.img + '" alt="' + s.nombre + '"/>' +
+      '<img class="service-img" src="' + s.img + '" alt="' + s.nombre + '" loading="lazy"/>' +
       '<div class="service-body">' +
         '<div class="service-meta">' +
-          '<span class="service-duration">&#9203; ' + s.duracion + '</span>' +
+          '<span class="service-duration"><img src="../img/icons/tiempo.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">' + s.duracion + '</span>' +
           (function() {
-          var oferta = (typeof getOfertaParaItem === 'function') ? getOfertaParaItem(s.nombre, 'servicio') : null;
-          return '<span class="service-price">' + (oferta ? getPrecioHTML(s.precio, oferta) : '$' + s.precio.toLocaleString()) + '</span>';
-        })() +
+            var oferta = (typeof getOfertaParaItem === 'function')
+              ? getOfertaParaItem(s.nombre, 'servicio')
+              : null;
+
+            return '<span class="service-price">' +
+              (oferta
+                ? getPrecioHTML(s.precio, oferta)
+                : '$' + s.precio.toLocaleString()
+              ) +
+              '</span>';
+          })() +
         '</div>' +
         '<h3 class="service-name">' + s.nombre + '</h3>' +
         '<p class="service-desc">' + s.descripcion + '</p>' +
-        '<a href="turnos.html?servicio=' + encodeURIComponent(s.nombre) + '" class="btn-reservar">Reservar turno</a>' +
+        '<a href="servicios.html" class="btn-reservar">Ver servicio</a>' +
       '</div>';
+
     grid.appendChild(card);
   });
 }
@@ -100,5 +112,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // Actualizar ticker con ofertas activas del admin
   if (typeof actualizarTickerOfertas === 'function') {
     actualizarTickerOfertas();
+  }
+});
+
+// Navegación robusta del carrito: el enlace sigue funcionando de forma nativa,
+// y este fallback cubre casos en los que otro elemento/estilo intercepta el click.
+document.addEventListener('click', function (e) {
+  var cart = e.target.closest && e.target.closest('a.nav-cart, a.nav-mobile-cart');
+  if (!cart) return;
+  var href = cart.getAttribute('href');
+  if (href && href.indexOf('carrito.html') !== -1) {
+    e.preventDefault();
+    window.location.href = href;
   }
 });

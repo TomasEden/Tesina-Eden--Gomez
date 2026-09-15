@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function showToast(msg) {
   var t = document.getElementById('toast');
-  t.textContent = msg;
+  t.innerHTML = msg;
   t.classList.add('show');
   setTimeout(function() { t.classList.remove('show'); }, 2500);
 }
@@ -45,10 +45,10 @@ function cargarTurnos() {
         renderTurnos();
         actualizarBadges();
       } else {
-        showToast('❌ Error al cargar turnos');
+        showToast('No pudimos mostrar tus turnos en este momento.');
       }
     })
-    .catch(function() { showToast('❌ Error de conexión con el servidor'); });
+    .catch(function() { showToast('<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Error de conexión con el servidor'); });
 }
 
 // ── CARGAR PEDIDOS DESDE LA API ───────────────────────────────────────────────
@@ -61,10 +61,10 @@ function cargarPedidos() {
         renderPedidos();
         actualizarBadges();
       } else {
-        showToast('❌ Error al cargar pedidos');
+        showToast('No pudimos mostrar tus pedidos en este momento.');
       }
     })
-    .catch(function() { showToast('❌ Error de conexión con el servidor'); });
+    .catch(function() { showToast('<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Error de conexión con el servidor'); });
 }
 
 function actualizarBadges() {
@@ -102,7 +102,7 @@ function renderTurnos() {
     var mes        = fecha.toLocaleDateString('es-AR', { month:'short' }).replace('.','');
     var fechaLarga = fecha.toLocaleDateString('es-AR', { weekday:'long', day:'numeric', month:'long' });
     var esPasado   = fecha < new Date(new Date().toDateString());
-    var tel        = '5493510000000';
+    var tel        = '5493571616113';
     var nombreServ = t.servicios || 'Servicio';
     var msg        = 'Hola! Quiero consultar sobre mi turno:\n\n' + nombreServ + '\n' + fechaLarga + ' a las ' + t.horario + ' hs';
     var waLink     = 'https://wa.me/' + tel + '?text=' + encodeURIComponent(msg);
@@ -150,12 +150,12 @@ function confirmarCancelar() {
   })
   .then(function(r) { return r.json(); })
   .then(function(res) {
-    if (!res.ok) { showToast('❌ Error al cancelar'); return; }
+    if (!res.ok) { showToast('No se pudo completar la cancelación. Intentá nuevamente.'); return; }
     cerrarModal();
     showToast('Turno cancelado');
     cargarTurnos();
   })
-  .catch(function() { showToast('❌ Error de conexión con el servidor'); });
+  .catch(function() { showToast('<img src="../img/icons/x.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Error de conexión con el servidor'); });
 }
 
 function cerrarModal() {
@@ -192,7 +192,7 @@ function renderPedidos() {
     var labels = { pendiente:'Pendiente', listo:'Listo para retirar', entregado:'Entregado' };
     var estadoLabel = labels[p.estado] || p.estado;
 
-    var tel = '5493510000000';
+    var tel = '5493571616113';
     var itemsTxt = items.map(function(i) { return '- ' + i.nombre + ' x' + (i.cantidad||1); }).join('\n');
     var msg = 'Hola! Quiero consultar el estado de mi pedido #' + String(p.id).padStart(6,'0') + ':\n\n' + itemsTxt + '\n\nTotal: $' + Number(p.total).toLocaleString();
     var waLink = 'https://wa.me/' + tel + '?text=' + encodeURIComponent(msg);

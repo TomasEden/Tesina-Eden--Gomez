@@ -1,147 +1,100 @@
 /* ═══════════════════════════════════════
-   Senderos — productos.js
+   Senderos — productos.js (conectado a la API)
+   Catálogo + panel lateral de detalle + filtro de marca
    ═══════════════════════════════════════ */
 
-// ── Catálogo completo de productos ─────────────────────────────────────────
-const PRODUCTOS = [
-  {
-    id: 1,
-    nombre: 'Crema Hidratante',
-    categoria: 'Facial',
-    desc: 'Hidratación profunda para piel seca. Fórmula enriquecida con ácido hialurónico.',
-    precio: 500,
-    stock: true,
-    badge: 'nuevo',
-    badgeText: 'Nuevo',
-    img: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&q=80'
-  },
-  {
-    id: 2,
-    nombre: 'Aceite de Lavanda',
-    categoria: 'Facial',
-    desc: 'Aceite esencial para piel mixta. Equilibra y calma la piel sensible.',
-    precio: 500,
-    stock: true,
-    badge: null,
-    img: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&q=80'
-  },
-  {
-    id: 3,
-    nombre: 'Sérum de Crecimiento',
-    categoria: 'Capilar',
-    desc: 'Estimula el crecimiento del cabello. Con biotina y extractos naturales.',
-    precio: 500,
-    stock: false,
-    badge: null,
-    img: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80'
-  },
-  {
-    id: 4,
-    nombre: 'Kit Capilar',
-    categoria: 'Capilar',
-    desc: 'Shampoo + acondicionador + mascarilla. Cuidado completo para tu cabello.',
-    precio: 800,
-    stock: true,
-    badge: 'oferta',
-    badgeText: 'Oferta',
-    img: 'https://images.unsplash.com/photo-1598454444936-cf0b6f87f2b0?w=500&q=80'
-  },
-  {
-    id: 5,
-    nombre: 'Aceite de Coco',
-    categoria: 'Corporal',
-    desc: 'Aceite 100% natural para hidratación corporal y capilar.',
-    precio: 600,
-    stock: true,
-    badge: null,
-    img: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=500&q=80'
-  },
-  {
-    id: 6,
-    nombre: 'Bálsamo Natural',
-    categoria: 'Corporal',
-    desc: 'Hidratación intensa con manteca de karité y aceite de argán.',
-    precio: 450,
-    stock: true,
-    badge: null,
-    img: 'https://images.unsplash.com/photo-1585386959984-a41552231658?w=500&q=80'
-  },
-  {
-    id: 7,
-    nombre: 'Mascarilla Facial',
-    categoria: 'Facial',
-    desc: 'Mascarilla purificante de arcilla blanca. Para todo tipo de piel.',
-    precio: 650,
-    stock: true,
-    badge: 'nuevo',
-    badgeText: 'Nuevo',
-    img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=80'
-  },
-  {
-    id: 8,
-    nombre: 'Contorno de Ojos',
-    categoria: 'Facial',
-    desc: 'Reduce ojeras y bolsas. Con vitamina C y péptidos activos.',
-    precio: 900,
-    stock: false,
-    badge: null,
-    img: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=500&q=80'
-  },
-  {
-    id: 9,
-    nombre: 'Exfoliante Corporal',
-    categoria: 'Corporal',
-    desc: 'Exfoliante con azúcar y aceites naturales. Piel suave y renovada.',
-    precio: 550,
-    stock: true,
-    badge: null,
-    img: 'https://images.unsplash.com/photo-1610289982320-1a4c5b60f67c?w=500&q=80'
-  }
-];
+const API_PRODUCTOS = '../api/productos.php';
 
-// ── Estado de filtros ───────────────────────────────────────────────────────
-let filtroCategoria = 'todas';
+// ── Estado ───────────────────────────────────────────────────────────────────
+let PRODUCTOS        = [];   // se llena desde la API
+let filtroCategoria  = 'todas';
+let marcaActiva      = 'todas';
+let productoActivo   = null;
+let cantidadPanel    = 1;
+let favsGuardados    = JSON.parse(localStorage.getItem('favs') || '[]');
 
 // ── INIT ────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   actualizarNavbar();
-
-  // Recuperar item pendiente si el usuario acaba de hacer login
-  if (localStorage.getItem('processPendingCart') === '1' && getSesion()) {
-    localStorage.removeItem('processPendingCart');
-    const pendingStr = localStorage.getItem('pendingCartItem');
-    if (pendingStr) {
-      try {
-        const pending = JSON.parse(pendingStr);
-        localStorage.removeItem('pendingCartItem');
-        setTimeout(function() {
-          const prod = PRODUCTOS.find(function(p) { return p.id === pending.id; });
-          if (prod && prod.stock) {
-            const c = JSON.parse(localStorage.getItem('carrito') || '[]');
-            c.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio,
-                     tipo: 'producto', img: prod.img, categoria: prod.categoria || '' });
-            localStorage.setItem('carrito', JSON.stringify(c));
-            actualizarContador();
-            filtrarProductos();
-            showToast('\uD83D\uDED2 ' + prod.nombre + ' agregado al carrito');
-          }
-        }, 400);
-      } catch(e) {}
-    }
-  }
-  renderCategorias();
-  filtrarProductos();
+  cargarProductos();
 
   window.addEventListener('scroll', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
   });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') cerrarPanel();
+  });
 });
 
+// ── CARGAR DESDE LA API ────────────────────────────────────────────────────
+function cargarProductos() {
+  fetch(API_PRODUCTOS)
+    .then(r => r.json())
+    .then(data => {
+      if (!data.ok) { showToast('No pudimos mostrar los productos en este momento.'); return; }
+      PRODUCTOS = data.productos.map(normalizarProducto);
+
+      // Recuperar item pendiente si el usuario acaba de hacer login
+      if (localStorage.getItem('processPendingCart') === '1' && getSesion()) {
+        localStorage.removeItem('processPendingCart');
+        const pendingStr = localStorage.getItem('pendingCartItem');
+        if (pendingStr) {
+          try {
+            const pending = JSON.parse(pendingStr);
+            localStorage.removeItem('pendingCartItem');
+            setTimeout(function() {
+              const prod = PRODUCTOS.find(function(p) { return p.id === pending.id; });
+              if (prod && prod.stock) {
+                const c = JSON.parse(localStorage.getItem('carrito') || '[]');
+                c.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio,
+                         tipo: 'producto', img: prod.img, categoria: prod.categoria || '' });
+                localStorage.setItem('carrito', JSON.stringify(c));
+                actualizarContador();
+                filtrarProductos();
+                showToast(prod.nombre + ' agregado al carrito');
+              }
+            }, 400);
+          } catch(e) {}
+        }
+      }
+
+      renderCategorias();
+      const maxPrecio = Math.max(1500, ...PRODUCTOS.map(p => p.precio || 0));
+      const range = document.getElementById('rangePrecio');
+      if (range) {
+        range.max = Math.ceil(maxPrecio / 500) * 500;
+        range.value = range.max;
+      }
+      const rangeValor = document.getElementById('rangeValor');
+      if (rangeValor && range) rangeValor.textContent = `$${Number(range.value).toLocaleString('es-AR')}`;
+      filtrarProductos();
+    })
+    .catch(() => showToast('Error de conexión con el servidor'));
+}
+
+// Adapta los campos de la BD al formato que usa el resto del archivo
+function normalizarProducto(p) {
+  const badgeText = p.badge === 'nuevo' ? 'Nuevo' : p.badge === 'oferta' ? 'Oferta' : '';
+  return {
+    id:         p.id,
+    nombre:     p.nombre,
+    categoria:  p.categoria || 'General',
+    marca:      p.marca || '',
+    desc:       p.descripcion || '',
+    precio:     Number(p.precio),
+    stockQty:   Number(p.stock_cantidad) || 0,
+    stock:      Number(p.stock_cantidad) > 0,
+    badge:      p.badge || null,
+    badgeText:  badgeText,
+    img:        p.imagen || 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80'
+  };
+}
 
 // ── Toast ───────────────────────────────────────────────────────────────────
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
+  t.innerHTML = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
@@ -150,6 +103,7 @@ function showToast(msg) {
 function renderCategorias() {
   const categorias = ['todas', ...new Set(PRODUCTOS.map(p => p.categoria))];
   const container  = document.getElementById('filterCategorias');
+  container.innerHTML = '';
 
   categorias.forEach(cat => {
     const btn = document.createElement('button');
@@ -158,12 +112,20 @@ function renderCategorias() {
     btn.dataset.cat = cat;
     btn.addEventListener('click', () => {
       filtroCategoria = cat;
-      document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+      container.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       filtrarProductos();
     });
     container.appendChild(btn);
   });
+}
+
+// ── Filtro de marca (Selecta / Jules / Natacha Nina) ─────────────────────────
+function filtrarPorMarca(marca, btn) {
+  marcaActiva = marca;
+  document.querySelectorAll('#filterMarcas .filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filtrarProductos();
 }
 
 // ── Filtrar y ordenar productos ─────────────────────────────────────────────
@@ -176,12 +138,12 @@ function filtrarProductos() {
 
   let resultado = PRODUCTOS.filter(p => {
     if (filtroCategoria !== 'todas' && p.categoria !== filtroCategoria) return false;
+    if (marcaActiva !== 'todas' && p.marca !== marcaActiva) return false;
     if (p.precio > precioMax) return false;
     if (soloStock && !p.stock) return false;
     return true;
   });
 
-  // Ordenar
   if (orden === 'precio-asc')  resultado.sort((a, b) => a.precio - b.precio);
   if (orden === 'precio-desc') resultado.sort((a, b) => b.precio - a.precio);
   if (orden === 'nombre')      resultado.sort((a, b) => a.nombre.localeCompare(b.nombre));
@@ -191,14 +153,6 @@ function filtrarProductos() {
 
 // ── Render grilla ───────────────────────────────────────────────────────────
 function renderProductos(lista) {
-  // Sincronizar stockQty desde admin si hay cambios guardados
-  const adminProds = JSON.parse(localStorage.getItem('adminProductos'));
-  if (adminProds) {
-    lista = lista.map(p => {
-      const admin = adminProds.find(a => a.id === p.id);
-      return admin ? { ...p, stockQty: admin.stockQty, stock: admin.stock } : p;
-    });
-  }
   const grid  = document.getElementById('productsGrid');
   const empty = document.getElementById('emptyState');
   const count = document.getElementById('catalogCount');
@@ -216,44 +170,193 @@ function renderProductos(lista) {
 
   lista.forEach((p, i) => {
     const card = document.createElement('div');
-    card.className = 'product-card' + (!p.stock ? ' sin-stock' : '');
+    card.className = 'product-card reveal' + (!p.stock ? ' sin-stock' : '');
     card.style.animationDelay = `${i * 0.06}s`;
 
-    const qty = p.stockQty ?? (p.stock ? 99 : 0);
     let badgeHTML = '';
-    if (!p.stock || qty === 0) {
+    if (!p.stock) {
       badgeHTML = `<span class="product-badge sin-stock-badge">Sin stock</span>`;
     } else if (p.badge) {
       badgeHTML = `<span class="product-badge ${p.badge}">${p.badgeText}</span>`;
     }
 
     const btnHTML = p.stock
-      ? `<button class="btn-add" onclick="agregarAlCarrito(${p.id})">+ Carrito</button>`
+      ? `<button class="btn-add" onclick="event.stopPropagation();agregarAlCarrito(${p.id})">+ Carrito</button>`
       : `<button class="btn-add disabled" disabled>Sin stock</button>`;
 
     card.innerHTML = `
-      <a href="producto-detalle.html?id=${p.id}" class="product-img-wrap" style="display:block;text-decoration:none">
+      <div class="product-img-wrap" onclick="abrirPanel(${p.id})">
         <img class="product-img" src="${p.img}" alt="${p.nombre}"/>
         ${badgeHTML}
-      </a>
+      </div>
       <div class="product-body">
-        <p class="product-cat">${p.categoria}</p>
-        <h3 class="product-name"><a href="producto-detalle.html?id=${p.id}" style="text-decoration:none;color:inherit">${p.nombre}</a></h3>
+        <p class="product-cat">${p.marca ? p.marca + ' · ' : ''}${p.categoria}</p>
+        <h3 class="product-name" onclick="abrirPanel(${p.id})">${p.nombre}</h3>
         <p class="product-desc">${p.desc}</p>
         <div class="product-footer">
-          <span class="product-price">$${p.precio.toLocaleString()}</span>
-          ${btnHTML}
+          <div>
+            <span class="product-price">$${p.precio.toLocaleString('es-AR')}</span>
+          </div>
+          <div class="product-actions">
+            <button class="btn-ver-producto" onclick="event.stopPropagation();abrirPanel(${p.id})">Ver detalle</button>
+            ${btnHTML}
+          </div>
         </div>
       </div>`;
 
     grid.appendChild(card);
   });
+
+  if (typeof IntersectionObserver !== 'undefined') {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    grid.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  } else {
+    grid.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
 }
 
-// ── Agregar al carrito ──────────────────────────────────────────────────────
+// ── PANEL LATERAL DE DETALLE ─────────────────────────────────────────────────
+function abrirPanel(id) {
+  const p = PRODUCTOS.find(x => x.id === id);
+  if (!p) return;
+  productoActivo = p;
+  cantidadPanel = 1;
+
+  const panel   = document.getElementById('srvPanel');
+  const overlay = document.getElementById('srvOverlay');
+  if (!panel) return;
+
+  const liked = favsGuardados.includes(p.id);
+  const stockTexto = p.stock
+    ? `${p.stockQty} disponible${p.stockQty !== 1 ? 's' : ''}`
+    : 'Sin stock';
+
+  panel.innerHTML = `
+    <div class="panel-img-wrap">
+      <img src="${p.img}" alt="${p.nombre}" loading="lazy"/>
+      <div class="panel-img-overlay"></div>
+      <button class="panel-close" onclick="cerrarPanel()" aria-label="Cerrar">
+        <img src="../img/icons/x.svg" alt="" width="13" height="13">
+      </button>
+      <div class="panel-img-info">
+        <span class="service-cat">${p.marca ? p.marca + ' · ' : ''}${p.categoria}</span>
+        <h2 class="panel-nombre">${p.nombre}</h2>
+      </div>
+      ${p.badge ? `<span class="service-badge ${p.badge}">${p.badgeText}</span>` : ''}
+    </div>
+
+    <div class="panel-body">
+
+      <div class="panel-precio-bar">
+        <div>
+          <div class="panel-precio">$${p.precio.toLocaleString('es-AR')}</div>
+          <div class="panel-precio-sub">${stockTexto}</div>
+        </div>
+        <button class="btn-favorito-panel ${liked ? 'activo' : ''}" onclick="toggleFavPanel(${p.id}, this)" aria-label="Favorito">
+          <img src="../img/icons/${liked ? 'corazon2' : 'corazon1'}.svg" alt="" width="18" height="18">
+        </button>
+      </div>
+
+      <p class="panel-desc">${p.desc || 'Sin descripción disponible.'}</p>
+
+      <div class="panel-qty-row">
+        <span class="panel-qty-label">Cantidad</span>
+        <div class="panel-qty-controls">
+          <button class="qty-btn" onclick="cambiarQtyPanel(-1)">−</button>
+          <span class="qty-num" id="panelQtyNum">1</span>
+          <button class="qty-btn" onclick="cambiarQtyPanel(1)">+</button>
+        </div>
+      </div>
+
+      <button class="btn-reservar-panel" id="btnAgregarPanel" ${!p.stock ? 'disabled' : ''} onclick="agregarAlCarritoPanel(${p.id})">
+        ${p.stock ? 'Agregar al carrito' : 'Sin stock'}
+      </button>
+
+      <div class="panel-sugeridos">
+        <h4 class="panel-section-title">También podría interesarte</h4>
+        <div class="sugeridos-lista">
+          ${PRODUCTOS.filter(x => x.id !== id && x.categoria === p.categoria).slice(0,2).map(x => `
+            <div class="sugerido-item" onclick="abrirPanel(${x.id})">
+              <img src="${x.img}" alt="${x.nombre}" loading="lazy"/>
+              <div>
+                <div class="sugerido-nombre">${x.nombre}</div>
+                <div class="sugerido-precio">$${x.precio.toLocaleString('es-AR')}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+    </div>`;
+
+  panel.classList.add('open');
+  overlay.classList.add('show');
+  document.body.classList.add('panel-open');
+}
+
+function cerrarPanel() {
+  document.getElementById('srvPanel')?.classList.remove('open');
+  document.getElementById('srvOverlay')?.classList.remove('show');
+  document.body.classList.remove('panel-open');
+  productoActivo = null;
+}
+
+function cambiarQtyPanel(delta) {
+  if (!productoActivo) return;
+  const max = productoActivo.stockQty || 99;
+  cantidadPanel = Math.max(1, Math.min(max, cantidadPanel + delta));
+  const el = document.getElementById('panelQtyNum');
+  if (el) el.textContent = cantidadPanel;
+}
+
+function toggleFavPanel(id, btn) {
+  const idx = favsGuardados.indexOf(id);
+  if (idx === -1) {
+    favsGuardados.push(id);
+    btn.classList.add('activo');
+    btn.innerHTML = '<img src="../img/icons/corazon2.svg" alt="" width="18" height="18">';
+  } else {
+    favsGuardados.splice(idx, 1);
+    btn.classList.remove('activo');
+    btn.innerHTML = '<img src="../img/icons/corazon1.svg" alt="" width="18" height="18">';
+  }
+  localStorage.setItem('favs', JSON.stringify(favsGuardados));
+}
+
+function agregarAlCarritoPanel(id) {
+  if (!requireSesion('agregar productos al carrito')) return;
+  const producto = PRODUCTOS.find(p => p.id === id);
+  if (!producto || !producto.stock) return;
+
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  for (let i = 0; i < cantidadPanel; i++) {
+    carrito.push({
+      id:        producto.id,
+      nombre:    producto.nombre,
+      precio:    producto.precio,
+      tipo:      'producto',
+      img:       producto.img,
+      categoria: producto.categoria || ''
+    });
+  }
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+  actualizarContador();
+  showToast(cantidadPanel + 'x ' + producto.nombre + ' agregado al carrito');
+
+  const btn = document.getElementById('btnAgregarPanel');
+  if (btn) {
+    btn.innerHTML = '<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Agregado';
+    btn.style.background = '#5c9e6e';
+    setTimeout(() => {
+      btn.textContent = 'Agregar al carrito';
+      btn.style.background = '';
+    }, 2000);
+  }
+}
+
+// ── Agregar al carrito directo desde la tarjeta ─────────────────────────────
 function agregarAlCarrito(id) {
-  // Guardar item pendiente ANTES de verificar sesion
-  // Si el usuario no tiene sesion y el modal lo redirige al login, el item se recupera al volver
   localStorage.setItem('pendingCartItem', JSON.stringify({ id: id, tipo: 'producto' }));
   if (!requireSesion("agregar productos al carrito")) return;
   localStorage.removeItem('pendingCartItem');
@@ -272,18 +375,23 @@ function agregarAlCarrito(id) {
   localStorage.setItem('carrito', JSON.stringify(carrito));
   actualizarContador();
   filtrarProductos();
-  showToast('\uD83D\uDED2 ' + producto.nombre + ' agregado al carrito');
+  showToast(producto.nombre + ' agregado al carrito');
 }
 
 // ── Reset filtros ───────────────────────────────────────────────────────────
 function resetFiltros() {
   filtroCategoria = 'todas';
-  document.getElementById('rangePrecio').value = 1500;
-  document.getElementById('rangeValor').textContent = '$1500';
+  marcaActiva = 'todas';
+  const rangePrecio = document.getElementById('rangePrecio');
+  if (rangePrecio) rangePrecio.value = rangePrecio.max;
+  document.getElementById('rangeValor').textContent = `$${Number(rangePrecio?.value || 0).toLocaleString('es-AR')}`;
   document.getElementById('soloStock').checked = false;
   document.getElementById('sortSelect').value = 'default';
-  document.querySelectorAll('.filter-chip').forEach(b => {
+  document.querySelectorAll('#filterCategorias .filter-chip').forEach(b => {
     b.classList.toggle('active', b.dataset.cat === 'todas');
+  });
+  document.querySelectorAll('#filterMarcas .filter-chip').forEach(b => {
+    b.classList.toggle('active', b.dataset.marca === 'todas');
   });
   filtrarProductos();
 }

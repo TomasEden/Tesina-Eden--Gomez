@@ -3,24 +3,25 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Turnos — Admin SPA M</title>
+  <title>Turnos — Admin Senderos</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../css/admin.css"/>
+  <link rel="stylesheet" href="../css/darkmode.css"/>
 </head>
 <body>
 
   <aside class="admin-sidebar">
-    <a href="admin-dashboard.html" class="sidebar-logo">🌸 SPA M <span>Panel Admin</span></a>
+    <a href="admin-dashboard.html" class="sidebar-logo"><img src="../img/icons/logo.png" alt="" width="22" height="22" style="vertical-align:middle;margin-right:0.4rem">Senderos <span>Panel Admin</span></a>
     <nav class="sidebar-nav">
       <span class="sidebar-section">Principal</span>
-      <a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon">📊</span> Dashboard</a>
+      <a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/grafico.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></span> Dashboard</a>
       <span class="sidebar-section">Gestión</span>
-      <a href="admin-turnos.html"    class="sidebar-link active"><span class="sidebar-icon">📅</span> Turnos</a>
-      <a href="admin-servicios.html" class="sidebar-link"><span class="sidebar-icon">💆</span> Servicios</a>
-      <a href="admin-productos.html" class="sidebar-link"><span class="sidebar-icon">🛍️</span> Productos</a>
-      <a href="admin-ofertas.html" class="sidebar-link"><span class="sidebar-icon">🏷️</span> Ofertas</a>
+      <a href="admin-turnos.html"    class="sidebar-link active"><span class="sidebar-icon"><img src="../img/icons/calendario.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem"></span> Turnos</a>
+      <a href="admin-servicios.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/servicio.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></span> Servicios</a>
+      <a href="admin-productos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/bolsa.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></span> Productos</a>
+      <a href="admin-ofertas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/oferta.svg" alt="" width="14" height="14" style="vertical-align:middle;margin-right:0.3rem"></span> Ofertas</a>
       <span class="sidebar-section">Sitio</span>
-      <a href="index.html" class="sidebar-link"><span class="sidebar-icon">🌐</span> Ver sitio</a>
+      <a href="index.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/web.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></span> Ver sitio</a>
     </nav>
     <div class="sidebar-footer">
       <div class="sidebar-user">
@@ -103,7 +104,7 @@
   <!-- MODAL CONFIRMAR ELIMINAR -->
   <div class="modal-overlay hidden" id="modalEliminar">
     <div class="modal modal-confirm">
-      <div class="modal-confirm-icon">🗑️</div>
+      <div class="modal-confirm-icon"><img src="../img/icons/basura.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></div>
       <h2 class="modal-confirm-title">¿Eliminar turno?</h2>
       <p class="modal-confirm-desc">Esta acción no se puede deshacer.</p>
       <div class="modal-confirm-actions">
@@ -115,5 +116,6 @@
 
   <div class="toast" id="toast"></div>
   <script src="../js/admin-turnos.js"></script>
+<script src="../js/iconos-adaptativos.js"></script>
 </body>
 </html>

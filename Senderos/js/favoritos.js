@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function showToast(msg) {
   var t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
+  t.innerHTML = msg; t.classList.add('show');
   setTimeout(function() { t.classList.remove('show'); }, 2500);
 }
 
@@ -54,7 +54,7 @@ function renderFavoritos() {
           '<div style="display:flex;gap:0.4rem">' +
             btnHTML +
             '<button class="btn-add" style="background:var(--sand);color:var(--text-light)" onclick="quitarFav(' + p.id + ')" title="Quitar de favoritos">' +
-              '<img src="../img/icons/favorito-on.png" alt="" width="14" height="14"/>' +
+              '<img src="../img/icons/corazon2.svg" alt="" width="14" height="14"/>' +
             '</button>' +
           '</div>' +
         '</div>' +

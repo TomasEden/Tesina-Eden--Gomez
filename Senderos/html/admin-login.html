@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin — 🌸 SPA M</title>
+  <title>Admin — Senderos</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../css/admin-login.css"/>
+  <link rel="stylesheet" href="../css/darkmode.css"/>
 </head>
 <body>
 
   <aside class="side-panel">
-    <a href="index.html" class="side-logo">🌸 SPA M</a>
+    <a href="index.html" class="side-logo"><img src="../img/icons/logo.png" alt="Senderos" width="24" height="24" style="vertical-align:middle;margin-right:0.4rem">Senderos</a>
     <div class="side-content">
       <p class="side-tag">Panel de administración</p>
       <h2 class="side-title">Gestión<br><em>centralizada</em></h2>
       <p class="side-desc">Administrá turnos, servicios, productos y estadísticas desde un solo lugar.</p>
       <div class="side-features">
-        <div class="feature-item"><span class="feature-icon">📊</span><span>Dashboard con estadísticas</span></div>
-        <div class="feature-item"><span class="feature-icon">📅</span><span>Gestión de turnos en tiempo real</span></div>
-        <div class="feature-item"><span class="feature-icon">🛍️</span><span>CRUD de productos y servicios</span></div>
+        <div class="feature-item"><span class="feature-icon"><img src="../img/icons/grafico.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></span><span>Dashboard con estadísticas</span></div>
+        <div class="feature-item"><span class="feature-icon"><img src="../img/icons/calendario.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem"></span><span>Gestión de turnos en tiempo real</span></div>
+        <div class="feature-item"><span class="feature-icon"><img src="../img/icons/bolsa.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></span><span>CRUD de productos y servicios</span></div>
       </div>
     </div>
     <img class="side-img" src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&q=80" alt="SPA"/>
@@ -28,7 +29,7 @@
   <main class="form-panel">
     <div class="form-container">
       <div class="form-header">
-        <div class="admin-badge">🔐 Acceso restringido</div>
+        <div class="admin-badge"><img src="../img/icons/candado.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem">Acceso restringido</div>
         <h1 class="form-title">Panel Admin</h1>
         <p class="form-subtitle">Solo para administradores autorizados.</p>
       </div>
@@ -36,7 +37,7 @@
       <div class="field-group">
         <label>Usuario admin</label>
         <div class="input-icon-wrap">
-          <span class="input-icon">👤</span>
+          <span class="input-icon"><img src="../img/icons/usuario.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></span>
           <input type="text" id="usuario" placeholder="admin" autocomplete="username"/>
         </div>
         <span class="field-error" id="err-usuario"></span>
@@ -45,9 +46,9 @@
       <div class="field-group">
         <label>Contraseña</label>
         <div class="input-icon-wrap">
-          <span class="input-icon">🔒</span>
+          <span class="input-icon"><img src="../img/icons/candado.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></span>
           <input type="password" id="password" placeholder="••••••••"/>
-          <button class="toggle-pw" type="button" onclick="togglePw()">👁</button>
+          <button class="toggle-pw" type="button" onclick="togglePw()"><img src="../img/icons/ver.svg" alt="" width="14" height="14" style="vertical-align:middle;margin-right:0.3rem"></button>
         </div>
         <span class="field-error" id="err-password"></span>
       </div>
@@ -57,11 +58,12 @@
         <span id="btnLoader" class="btn-loader hidden"></span>
       </button>
 
-      <p class="hint">💡 Demo: usuario <strong>admin</strong> / contraseña <strong>admin123</strong></p>
+      <p class="hint">Demo: usuario <strong>admin</strong> / contraseña <strong>admin123</strong></p>
       <a href="index.html" class="back-link">← Volver al sitio</a>
     </div>
   </main>
 
   <script src="../js/admin-login.js"></script>
+<script src="../js/iconos-adaptativos.js"></script>
 </body>
 </html>
