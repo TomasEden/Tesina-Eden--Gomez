@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Productos — Admin Senderos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/admin.css"/>
+  <link rel="stylesheet" href="../css/darkmode.css"/>
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
+</head>
+<body>
+  <button class="admin-menu-toggle" id="adminMenuToggle" type="button" aria-label="Abrir menú de administración" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="admin-menu-backdrop" id="adminMenuBackdrop"></div>
+
+  <aside class="admin-sidebar">
+    <a href="admin-dashboard.html" class="sidebar-logo"><img src="../img/icons/logo.png" alt="" width="22" height="22" style="vertical-align:middle;margin-right:0.4rem">Senderos <span>Panel Admin</span></a>
+    <nav class="sidebar-nav"><span class="sidebar-section">Principal</span><a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/grafico.svg" alt="" width="15" height="15"></span> Dashboard</a><span class="sidebar-section">Gesti�n</span><a href="admin-turnos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/calendario.svg" alt="" width="13" height="13"></span> Turnos</a><a href="admin-pedidos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/caja.svg" alt="" width="15" height="15"></span> Pedidos</a><a href="admin-clientes.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/usuario.svg" alt="" width="15" height="15"></span> Clientes</a><a href="admin-servicios.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/servicio.svg" alt="" width="15" height="15"></span> Servicios</a><a href="admin-productos.html" class="sidebar-link active"><span class="sidebar-icon"><img src="../img/icons/bolsa.svg" alt="" width="15" height="15"></span> Productos</a><a href="admin-ofertas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/oferta.svg" alt="" width="14" height="14"></span> Ofertas</a><a href="admin-resenas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/ver.svg" alt="" width="15" height="15"></span> Reseñas</a><span class="sidebar-section">Sitio</span><a href="index.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/web.svg" alt="" width="15" height="15"></span> Ver sitio</a></nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">A</div>
+        <div><div class="sidebar-user-name">Administrador</div><div class="sidebar-user-role">Admin</div></div>
+      </div>
+      <button class="sidebar-logout" id="btnAdminLogout">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1 class="topbar-title">Gestión de Productos</h1>
+      <div class="topbar-right">
+        <button class="btn-primary" onclick="abrirModalNuevo()">+ Nuevo producto</button>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <div class="table-card">
+        <div class="table-header">
+          <h3 class="table-title">Catálogo de productos</h3>
+          <div class="table-actions">
+            <div class="search-input-wrap">
+              <input type="text" id="searchInput" placeholder="Buscar..." oninput="filtrar()"/>
+            </div>
+            <select class="filter-select" id="filterMarca" onchange="filtrar()">
+              <option value="todas">Todas las marcas</option>
+              <option value="Selecta">Selecta</option>
+              <option value="Jules">Jules</option>
+              <option value="Natacha Nina">Natacha Nina</option>
+            </select>
+            <select class="filter-select" id="filterCat" onchange="filtrar()">
+              <option value="todas">Todas las categorías</option>
+              <option value="Facial">Facial</option>
+              <option value="Capilar">Capilar</option>
+              <option value="Corporal">Corporal</option>
+            </select>
+            <select class="filter-select" id="filterStock" onchange="filtrar()">
+              <option value="todos">Todo el stock</option>
+              <option value="con">Con stock</option>
+              <option value="sin">Sin stock</option>
+            </select>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Marca</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="productosBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL FORM -->
+  <div class="modal-overlay hidden" id="modalForm">
+    <div class="modal">
+      <h2 class="modal-title" id="modalFormTitle">Nuevo producto</h2>
+      <input type="hidden" id="editId"/>
+      <div class="form-grid form-grid-2">
+        <div class="field-group" style="grid-column:1/-1">
+          <label>Nombre del producto</label>
+          <input type="text" id="fNombre" placeholder="Ej: Crema Hidratante"/>
+          <span class="field-error" id="err-nombre"></span>
+        </div>
+        <div class="field-group">
+          <label>Marca</label>
+          <input type="text" id="fMarca" placeholder="Ej: Selecta" list="datalistMarcas" autocomplete="off"/>
+          <datalist id="datalistMarcas"></datalist>
+        </div>
+        <div class="field-group">
+          <label>Categoría</label>
+          <input type="text" id="fCategoria" placeholder="Ej: Facial" list="datalistCategoriasProd" autocomplete="off"/>
+          <datalist id="datalistCategoriasProd"></datalist>
+        </div>
+        <div class="field-group">
+          <label>Precio ($)</label>
+          <input type="number" id="fPrecio" placeholder="500"/>
+          <span class="field-error" id="err-precio"></span>
+        </div>
+        <div class="field-group">
+          <label>Cantidad en stock</label>
+          <input type="number" id="fStock" placeholder="0" min="0"/>
+          <span style="font-size:0.72rem;color:var(--text-light)">Poné 0 para marcar sin stock automáticamente</span>
+        </div>
+        <div class="field-group">
+          <label>Badge</label>
+          <select id="fBadge">
+            <option value="">Sin badge</option>
+            <option value="nuevo">Nuevo</option>
+            <option value="oferta">Oferta</option>
+          </select>
+        </div>
+        <div class="field-group" style="grid-column:1/-1">
+          <label>URL de imagen</label>
+          <input type="text" id="fImg" placeholder="https://..."/>
+        </div>
+        <div class="field-group" style="grid-column:1/-1">
+          <label>Descripción</label>
+          <textarea id="fDesc" placeholder="Descripción del producto..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" onclick="cerrarModal('modalForm')">Cancelar</button>
+        <button class="btn-primary" onclick="guardarProducto()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ELIMINAR -->
+  <div class="modal-overlay hidden" id="modalEliminar">
+    <div class="modal modal-confirm">
+      <div class="modal-confirm-icon"><img src="../img/icons/basura.svg" alt="" width="30" height="30"></div>
+      <h2 class="modal-confirm-title">¿Eliminar producto?</h2>
+      <p class="modal-confirm-desc">Esta acción no se puede deshacer.</p>
+      <div class="modal-confirm-actions">
+        <button class="btn-ghost" onclick="cerrarModal('modalEliminar')">Cancelar</button>
+        <button class="btn-danger" onclick="confirmarEliminar()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="../js/admin-productos.js"></script>
+  <script src="../js/darkmode.js"></script>
+  <script src="../js/admin-shell.js"></script>
+<script src="../js/iconos-adaptativos.js"></script>
+</body>
+</html>

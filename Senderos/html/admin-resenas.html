@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reseñas — Admin Senderos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/admin.css"/>
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" href="../css/darkmode.css"/>
+</head>
+<body>
+  <button class="admin-menu-toggle" id="adminMenuToggle" type="button" aria-label="Abrir menú de administración" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="admin-menu-backdrop" id="adminMenuBackdrop"></div>
+
+  <aside class="admin-sidebar">
+    <a href="admin-dashboard.html" class="sidebar-logo">
+      <img src="../img/icons/logo.png" alt="Senderos" width="28" height="28" style="vertical-align:middle;margin-right:0.4rem"> Senderos <span>Panel Admin</span>
+    </a>
+    <nav class="sidebar-nav"><span class="sidebar-section">Principal</span><a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/grafico.svg" alt="" width="15" height="15"></span> Dashboard</a><span class="sidebar-section">Gestión</span><a href="admin-turnos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/calendario.svg" alt="" width="13" height="13"></span> Turnos</a><a href="admin-pedidos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/caja.svg" alt="" width="15" height="15"></span> Pedidos</a><a href="admin-clientes.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/usuario.svg" alt="" width="15" height="15"></span> Clientes</a><a href="admin-servicios.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/servicio.svg" alt="" width="15" height="15"></span> Servicios</a><a href="admin-productos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/bolsa.svg" alt="" width="15" height="15"></span> Productos</a><a href="admin-ofertas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/oferta.svg" alt="" width="14" height="14"></span> Ofertas</a><a href="admin-resenas.html" class="sidebar-link active"><span class="sidebar-icon"><img src="../img/icons/ver.svg" alt="" width="15" height="15"></span> Reseñas</a><span class="sidebar-section">Sitio</span><a href="index.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/web.svg" alt="" width="15" height="15"></span> Ver sitio</a></nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">A</div>
+        <div><div class="sidebar-user-name">Administrador</div><div class="sidebar-user-role">Admin</div></div>
+      </div>
+      <button class="sidebar-logout" id="btnAdminLogout">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div class="topbar-left">
+        <h1 class="topbar-title">Reseñas</h1>
+        <p class="topbar-sub">Opiniones de servicios y productos</p>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <input type="text" id="buscarResena" placeholder="Buscar..." autocomplete="off"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <div class="clientes-stats" id="resenasStats"></div>
+
+      <div class="clientes-filtros" id="filtrosResenas">
+        <button class="cfiltro active" data-filtro="todas" type="button">Todas</button>
+        <button class="cfiltro" data-filtro="servicios" type="button">Servicios</button>
+        <button class="cfiltro" data-filtro="productos" type="button">Productos</button>
+      </div>
+
+      <div class="table-card">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Ítem</th>
+              <th>Cliente</th>
+              <th>Estrellas</th>
+              <th>Reseña</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyResenas"></tbody>
+        </table>
+        <div class="table-empty hidden" id="tablaVaciaResenas">
+          <p>No hay reseñas para mostrar.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../js/admin-resenas.js"></script>
+  <script src="../js/darkmode.js"></script>
+  <script src="../js/admin-shell.js"></script>
+  <script src="../js/iconos-adaptativos.js"></script>
+</body>
+</html>

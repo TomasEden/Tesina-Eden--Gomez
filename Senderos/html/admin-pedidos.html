@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Pedidos — Admin Senderos</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/admin.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/admin-dashboard.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/darkmode.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<button
+  class="admin-menu-toggle"
+  id="adminMenuToggle"
+  type="button"
+  aria-label="Abrir menú"
+>
+
+  <span></span>
+  <span></span>
+  <span></span>
+
+</button>
+
+
+<div
+  class="admin-menu-backdrop"
+  id="adminMenuBackdrop"
+></div>
+
+
+<aside class="admin-sidebar">
+
+  <a
+    href="admin-dashboard.html"
+    class="sidebar-logo"
+  >
+
+    <img
+      src="../img/icons/logo.png"
+      alt=""
+      width="22"
+      height="22"
+    >
+
+    Senderos
+
+    <span>
+      Panel Admin
+    </span>
+
+  </a>
+
+
+  <nav class="sidebar-nav"><span class="sidebar-section">Principal</span><a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/grafico.svg" alt="" width="15" height="15"></span> Dashboard</a><span class="sidebar-section">Gesti�n</span><a href="admin-turnos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/calendario.svg" alt="" width="13" height="13"></span> Turnos</a><a href="admin-pedidos.html" class="sidebar-link active"><span class="sidebar-icon"><img src="../img/icons/caja.svg" alt="" width="15" height="15"></span> Pedidos</a><a href="admin-clientes.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/usuario.svg" alt="" width="15" height="15"></span> Clientes</a><a href="admin-servicios.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/servicio.svg" alt="" width="15" height="15"></span> Servicios</a><a href="admin-productos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/bolsa.svg" alt="" width="15" height="15"></span> Productos</a><a href="admin-ofertas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/oferta.svg" alt="" width="14" height="14"></span> Ofertas</a><a href="admin-resenas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/ver.svg" alt="" width="15" height="15"></span> Reseñas</a><span class="sidebar-section">Sitio</span><a href="index.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/web.svg" alt="" width="15" height="15"></span> Ver sitio</a></nav>
+
+
+  <div class="sidebar-footer">
+
+    <div class="sidebar-user">
+
+      <div class="sidebar-avatar">
+        A
+      </div>
+
+      <div>
+
+        <div class="sidebar-user-name">
+          Administrador
+        </div>
+
+        <div class="sidebar-user-role">
+          Administrador
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="sidebar-logout"
+      type="button"
+      id="btnAdminLogout"
+    >
+      Cerrar sesión
+    </button>
+
+  </div>
+
+</aside>
+
+
+<main class="admin-main">
+
+
+  <div class="admin-topbar">
+
+    <h1 class="topbar-title">
+      Pedidos
+    </h1>
+
+
+    <div class="topbar-right">
+
+      <span
+        class="topbar-date"
+        id="topbarDate"
+      ></span>
+
+    </div>
+
+  </div>
+
+
+  <div class="admin-content">
+
+
+    <div
+      class="stats-grid"
+      id="statsGrid"
+    ></div>
+
+
+    <div class="table-card">
+
+
+      <div class="table-header">
+
+        <h3 class="table-title">
+          Pedidos registrados
+        </h3>
+
+
+        <div
+          style="
+            display:flex;
+            gap:.6rem;
+            flex-wrap:wrap
+          "
+        >
+
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Buscar pedido..."
+            class="admin-search"
+            oninput="filtrarPedidos()"
+          >
+
+
+          <select
+            id="filterEstado"
+            class="admin-select"
+            onchange="filtrarPedidos()"
+          >
+
+            <option value="todos">
+              Todos
+            </option>
+
+            <option value="pendiente">
+              Pendientes
+            </option>
+
+            <option value="confirmado">
+              Confirmados
+            </option>
+
+            <option value="preparado">
+              Preparados
+            </option>
+
+            <option value="enviado">
+              Enviados
+            </option>
+
+            <option value="entregado">
+              Entregados
+            </option>
+
+            <option value="cancelado">
+              Cancelados
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="table-scroll"
+      >
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Nº
+              </th>
+
+              <th>
+                Cliente
+              </th>
+
+              <th>
+                Productos
+              </th>
+
+              <th>
+                Total
+              </th>
+
+              <th>
+                Fecha
+              </th>
+
+              <th>
+                Estado
+              </th>
+
+              <th>
+                Acciones
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody
+            id="pedidosBody"
+          ></tbody>
+
+        </table>
+
+      </div>
+
+
+      <div
+        id="tableEmpty"
+        class="table-empty hidden"
+      >
+
+        No hay pedidos para mostrar.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<!-- =======================================================
+     MODAL DETALLE
+     ======================================================= -->
+
+<div
+  id="modalPedido"
+  class="modal-overlay hidden"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h3>
+        Detalle del pedido
+      </h3>
+
+
+      <button
+        type="button"
+        class="modal-close"
+        onclick="cerrarModal('modalPedido')"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="modal-body">
+
+
+      <p>
+        <strong>
+          Cliente:
+        </strong>
+
+        <span id="detalleCliente">
+        </span>
+      </p>
+
+
+      <p>
+        <strong>
+          Email:
+        </strong>
+
+        <span id="detalleEmail">
+        </span>
+      </p>
+
+
+      <p>
+        <strong>
+          Teléfono:
+        </strong>
+
+        <span id="detalleTelefono">
+        </span>
+      </p>
+
+
+      <p>
+        <strong>
+          Fecha:
+        </strong>
+
+        <span id="detalleFecha">
+        </span>
+      </p>
+
+
+      <p>
+        <strong>
+          Método de pago:
+        </strong>
+
+        <span id="detalleMetodo">
+        </span>
+      </p>
+
+
+      <p>
+        <strong>
+          Entrega:
+        </strong>
+
+        <span id="detalleEntrega">
+        </span>
+      </p>
+
+
+      <p>
+        <strong>
+          Dirección:
+        </strong>
+
+        <span id="detalleDireccion">
+        </span>
+      </p>
+
+
+      <p>
+        <strong>
+          Envío:
+        </strong>
+
+        <span id="detalleEnvio">
+        </span>
+      </p>
+
+
+      <div
+        id="detalleItems"
+        style="margin-top:1rem"
+      ></div>
+
+
+      <p
+        style="
+          display:flex;
+          justify-content:space-between;
+          margin-top:1rem
+        "
+      >
+
+        <strong>
+          Total
+        </strong>
+
+        <strong id="detalleTotal">
+          $0
+        </strong>
+
+      </p>
+
+    </div>
+
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="btn-ghost"
+        onclick="cerrarModal('modalPedido')"
+      >
+        Cerrar
+      </button>
+
+
+      <a
+        id="btnAvisarWhatsApp"
+        class="btn-primary"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="text-decoration:none"
+      >
+        Avisar por WhatsApp
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =======================================================
+     MODAL ESTADO
+     ======================================================= -->
+
+<div
+  id="modalEstadoPedido"
+  class="modal-overlay hidden"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h3>
+        Cambiar estado
+      </h3>
+
+
+      <button
+        type="button"
+        class="modal-close"
+        onclick="cerrarModal('modalEstadoPedido')"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <p
+        id="estadoPedidoInfo"
+        class="td-light"
+      ></p>
+
+
+      <label
+        for="nuevoEstadoPedido"
+      >
+        Estado
+      </label>
+
+
+      <select
+        id="nuevoEstadoPedido"
+        class="admin-select"
+        style="width:100%;margin-top:.5rem"
+      >
+
+        <option value="pendiente">
+          Pendiente
+        </option>
+
+        <option value="confirmado">
+          Confirmado
+        </option>
+
+        <option value="preparado">
+          Preparado
+        </option>
+
+        <option value="enviado">
+          Enviado
+        </option>
+
+        <option value="entregado">
+          Entregado
+        </option>
+
+        <option value="cancelado">
+          Cancelado
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="btn-ghost"
+        onclick="cerrarModal('modalEstadoPedido')"
+      >
+        Cancelar
+      </button>
+
+
+      <button
+        type="button"
+        class="btn-primary"
+        onclick="guardarEstadoPedido()"
+      >
+        Guardar
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+<script src="../js/admin-pedidos.js"></script>
+  <script src="../js/darkmode.js"></script>
+  <script src="../js/admin-shell.js"></script>
+
+<script src="../js/iconos-adaptativos.js"></script>
+</body>
+</html>

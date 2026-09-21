@@ -1,0 +1,41 @@
+/* Senderos — footer institucional */
+.site-footer .footer-inner {
+  grid-template-columns: 1.35fr 1.2fr 1fr 1.2fr 1.45fr;
+}
+.site-footer .footer-col > span,
+.site-footer .footer-col > a {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+.site-footer .footer-col > span {
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--text-light);
+  margin-bottom: 0.55rem;
+}
+.site-footer .footer-col > span .icon-mask,
+.site-footer .footer-col > a .icon-mask {
+  width: 14px !important;
+  height: 14px !important;
+  margin-top: 0.1rem;
+  background-color: var(--rose-deep);
+}
+@media (max-width: 1000px) {
+  .site-footer .footer-inner { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 700px) {
+  .site-footer .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .site-footer .footer-inner { grid-template-columns: 1fr; }
+}
+
+.site-footer .footer-col > span img,
+.site-footer .footer-col > a img {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  object-fit: contain;
+  margin-top: 0.1rem;
+}

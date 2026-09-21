@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Productos — Senderos</title>
+<meta content="Conocé los productos disponibles en Senderos." name="description"/>
+<link href="../img/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+
+
+
+
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/productos.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<body class="page-productos" data-pagina="productos">
+<!-- NAVBAR -->
+
+<!-- MENÚ MÓVIL -->
+
+<main>
+<!-- HERO -->
+<section class="page-hero img-slot">
+<img alt="" class="page-hero-img" onerror="this.remove()" src="../img/productos-hero.jpg"/>
+<div class="page-hero-content">
+<p class="section-tag">
+          Tienda
+        </p>
+<h1 class="page-title">
+          Nuestros
+          <em>productos</em>
+</h1>
+<p class="page-desc">
+          Descubrí los productos disponibles en Senderos.
+        </p>
+</div>
+</section>
+<!-- CATÁLOGO -->
+<section class="products-section">
+<div class="section-header">
+<div>
+<p class="section-tag">
+            Elegí tus favoritos
+          </p>
+<h2 class="section-title">
+            Productos
+          </h2>
+</div>
+<p aria-live="polite" class="products-count" id="productsCount"></p>
+</div>
+<!-- FILTROS -->
+<div class="product-filters" id="productFilters">
+<div class="product-filter-group product-filter-search">
+<label for="filtroTexto">
+            Buscar
+          </label>
+<input type="search" id="filtroTexto" placeholder="Nombre, marca..." autocomplete="off"/>
+</div>
+<div class="product-filter-group">
+<label for="filtroCategoria">
+            Categoría
+          </label>
+<select id="filtroCategoria">
+<option value="">
+              Todas
+            </option>
+</select>
+</div>
+<div class="product-filter-group">
+<label for="filtroMarca">
+            Marca
+          </label>
+<select id="filtroMarca">
+<option value="">
+              Todas
+            </option>
+</select>
+</div>
+<div class="product-filter-group">
+<label for="filtroPrecio">
+            Precio hasta <span id="filtroPrecioValor"></span>
+          </label>
+<input type="range" id="filtroPrecio" min="0" max="100000" step="1000" value="100000"/>
+</div>
+<div class="product-filter-group">
+<label for="filtroOrden">
+            Ordenar
+          </label>
+<select id="filtroOrden">
+<option value="">
+              Recomendados
+            </option>
+<option value="nombre">
+              Nombre
+            </option>
+<option value="precio-asc">
+              Precio: menor a mayor
+            </option>
+<option value="precio-desc">
+              Precio: mayor a menor
+            </option>
+</select>
+</div>
+<div class="product-filter-checks">
+<label class="check-pill">
+<input type="checkbox" id="filtroStock"/>
+<span>Solo con stock</span>
+</label>
+<label class="check-pill">
+<input type="checkbox" id="filtroOferta"/>
+<span>Solo ofertas</span>
+</label>
+<button class="btn-ghost btn-chico" id="btnLimpiarFiltros" type="button">
+            Limpiar
+          </button>
+</div>
+</div>
+<!-- GRILLA -->
+<div class="products-grid" id="productsGrid">
+<div class="skel"></div>
+<div class="skel"></div>
+<div class="skel"></div>
+<div class="skel"></div>
+</div>
+</section>
+<!-- PANEL DE PRODUCTO -->
+<aside aria-hidden="true" aria-label="Detalle del producto" aria-modal="true" class="product-panel" id="productPanel" role="dialog">
+<div class="product-panel-inner">
+<button aria-label="Cerrar detalle" class="product-panel-close" id="productPanelClose" type="button">
+<img alt="" height="14" src="../img/icons/x.svg" width="14"/>
+</button>
+<div class="product-panel-image img-slot" id="panelProductoImagen"></div>
+<div class="product-panel-body">
+<div class="product-panel-heading">
+<div>
+<span class="product-panel-brand" id="panelProductoMarca"></span>
+<span class="product-panel-category" id="panelProductoCategoria"></span>
+</div>
+</div>
+<h2 class="product-panel-name" id="panelProductoNombre"></h2>
+<div class="product-panel-price" id="panelProductoPrecio"></div>
+<p class="product-panel-stock" id="panelProductoStock"></p>
+<div class="product-panel-divider"></div>
+<p class="product-panel-description" id="panelProductoDescripcion"></p>
+<button class="btn-primary product-panel-add" id="panelProductoAgregar" type="button">
+            Agregar al carrito
+          </button>
+</div>
+</div>
+</aside>
+<!-- BACKDROP -->
+<div aria-hidden="true" class="product-panel-backdrop" id="productPanelBackdrop"></div>
+</main>
+<!-- FOOTER -->
+
+
+
+
+
+
+
+
+
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/ofertas.js"></script><script src="../js/productos.js"></script><script src="../js/resenas-productos.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+</html>

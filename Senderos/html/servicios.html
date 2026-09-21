@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Servicios — Senderos</title>
+<meta content="Reservá tu turno online en Senderos, tu espacio de bienestar en Córdoba." name="description"/>
+<link href="../img/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+
+
+
+
+
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/servicios.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<body class="page-servicios" data-pagina="servicios">
+
+
+<main>
+<section class="page-hero img-slot">
+<img alt="" class="page-hero-img" onerror="this.remove()" src="../img/servicios-hero.jpg"/>
+<div class="page-hero-content">
+<p class="section-tag">
+          Bienestar
+        </p>
+<h1>
+          Nuestros
+          <em>servicios</em>
+</h1>
+<p>
+          Elegí el tratamiento que más te guste
+          y reservá tu momento.
+        </p>
+</div>
+</section>
+<section class="services-section">
+<div class="section-header">
+<div>
+<p class="section-tag">
+            Encontrá tu momento
+          </p>
+<h2 class="section-title">
+            Servicios
+          </h2>
+</div>
+</div>
+<div aria-label="Filtrar servicios por categoría" class="category-bar" id="categoryBar"></div>
+<div class="services-grid" id="servicesGrid">
+<div class="skel"></div>
+<div class="skel"></div>
+<div class="skel"></div>
+<div class="skel"></div>
+<div class="skel"></div>
+<div class="skel"></div>
+</div>
+<div class="empty-state hidden" id="emptyState">
+<p>
+          No encontramos servicios en esta categoría.
+        </p>
+</div>
+</section>
+<aside aria-hidden="true" aria-label="Detalle del servicio" aria-modal="true" class="srv-panel" id="srvPanel" role="dialog"></aside>
+<div aria-hidden="true" class="srv-panel-backdrop" id="srvPanelBackdrop"></div>
+<section class="reviews-section">
+<div class="section-header">
+<div>
+<p class="section-tag">
+            Experiencias
+          </p>
+<h2 class="section-title">
+            Lo que dicen de nosotros
+          </h2>
+</div>
+</div>
+<div class="reviews-services" id="reviewsServices"></div>
+</section>
+<section class="cta-section img-slot">
+<img alt="" class="cta-img" onerror="this.remove()" src="../img/cta-servicios.jpg"/>
+<div class="cta-content">
+<p class="section-tag">
+          Tu momento
+        </p>
+<h2>
+          Elegí tu servicio
+          y disfrutá.
+        </h2>
+<p>
+          Reservá desde tu carrito
+          cuando estés lista.
+        </p>
+<a class="btn-primary" href="carrito.html">
+          Ir al carrito
+        </a>
+</div>
+</section>
+</main>
+
+
+
+
+
+
+
+
+
+
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/ofertas.js"></script><script src="../js/resenas.js"></script><script src="../js/servicios.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+</html>

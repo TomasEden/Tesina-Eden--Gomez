@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registro | Senderos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+
+
+
+
+<link href="../img/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+<meta content="Creá tu cuenta en Senderos y accedé a tus turnos y beneficios." name="description"/>
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/registro.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<body data-pagina="registro">
+<main class="registro-page">
+<aside class="side-panel">
+<a class="side-logo" href="index.html">
+<img alt="Senderos" height="26" src="../img/icons/logo.png" width="26"/>
+<span>Senderos</span>
+</a>
+<div class="side-content">
+<p class="side-tag">
+          Únete a nosotras
+        </p>
+<h1 class="side-title">
+          Tu bienestar
+          <br/>
+          empieza
+          <br/>
+<em>hoy</em>
+</h1>
+<p class="side-desc">
+          Reservá turnos, seguí tus citas
+          y accedé a ofertas exclusivas
+          para miembros.
+        </p>
+<div class="side-features">
+<div class="feature-item">
+<span class="feature-icon">
+<img alt="" height="15" src="../img/icons/calendario.svg" width="15"/>
+</span>
+<span>Reservas online 24/7</span>
+</div>
+<div class="feature-item">
+<span class="feature-icon">
+<img alt="" height="15" src="../img/icons/whatsapp.svg" width="15"/>
+</span>
+<span>Confirmación por WhatsApp</span>
+</div>
+<div class="feature-item">
+<span class="feature-icon">
+<img alt="" height="15" src="../img/icons/regalo.svg" width="15"/>
+</span>
+<span>Ofertas exclusivas para miembros</span>
+</div>
+</div>
+</div>
+<img alt="Espacio de bienestar" class="side-img" loading="lazy" src="../img/placeholder.svg"/>
+<div aria-hidden="true" class="side-overlay"></div>
+</aside>
+<section class="form-panel">
+<div class="form-container">
+<div class="form-header">
+<p class="section-tag">
+            Mi cuenta
+          </p>
+<h2 class="form-title">
+            Crear cuenta
+          </h2>
+<p class="form-subtitle">
+            ¿Ya tenés cuenta?
+            <a href="login.html">
+              Iniciá sesión
+            </a>
+</p>
+</div>
+<div class="form-body" id="formRegistro">
+<!-- PASO 1 -->
+<section class="step" id="step1">
+<p class="step-label">
+              Paso 1 de 2 — Datos personales
+            </p>
+<div aria-hidden="true" class="progress-bar">
+<div class="progress-fill" style="width: 50%"></div>
+</div>
+<div class="field-row">
+<div class="field-group">
+<label for="nombre">
+                  Nombre
+                </label>
+<input autocomplete="given-name" id="nombre" name="nombre" placeholder="Tu nombre" type="text"/>
+<span aria-live="polite" class="field-error" id="err-nombre" role="alert"></span>
+</div>
+<div class="field-group">
+<label for="apellido">
+                  Apellido
+                </label>
+<input autocomplete="family-name" id="apellido" name="apellido" placeholder="Tu apellido" type="text"/>
+<span aria-live="polite" class="field-error" id="err-apellido" role="alert"></span>
+</div>
+</div>
+<div class="field-group">
+<label for="telefono">
+                Teléfono / WhatsApp
+              </label>
+<div class="input-icon-wrap">
+<span class="input-icon">
+<img alt="" height="14" src="../img/icons/telefono.svg" width="14"/>
+</span>
+<input autocomplete="tel" id="telefono" name="telefono" placeholder="3571-616113" type="tel"/>
+</div>
+<span aria-live="polite" class="field-error" id="err-telefono" role="alert"></span>
+</div>
+<div class="field-group">
+<label>
+                Fecha de nacimiento
+              </label>
+<div class="nacimiento-grid">
+<div class="input-icon-wrap">
+<select id="nacDia" aria-label="Día de nacimiento">
+<option value="">Día</option>
+</select>
+</div>
+<div class="input-icon-wrap">
+<select id="nacMes" aria-label="Mes de nacimiento">
+<option value="">Mes</option>
+</select>
+</div>
+<div class="input-icon-wrap">
+<select id="nacAnio" aria-label="Año de nacimiento">
+<option value="">Año</option>
+</select>
+</div>
+</div>
+<input type="hidden" id="nacimiento" name="nacimiento"/>
+<span aria-live="polite" class="field-error" id="err-nacimiento" role="alert"></span>
+</div>
+<button class="btn-primary" id="btnPaso2" type="button">
+              Continuar →
+            </button>
+</section>
+<!-- PASO 2 -->
+<section class="step hidden" id="step2">
+<p class="step-label">
+              Paso 2 de 2 — Datos de acceso
+            </p>
+<div aria-hidden="true" class="progress-bar">
+<div class="progress-fill" style="width: 100%"></div>
+</div>
+<div class="field-group">
+<label for="email">
+                Email
+              </label>
+<div class="input-icon-wrap">
+<span class="input-icon">
+<img alt="" height="14" src="../img/icons/correo.svg" width="14"/>
+</span>
+<input autocomplete="email" id="email" name="email" placeholder="tu@email.com" type="email"/>
+</div>
+<span aria-live="polite" class="field-error" id="err-email" role="alert"></span>
+</div>
+<div class="field-group">
+<label for="password">
+                Contraseña
+              </label>
+<div class="input-icon-wrap">
+<span class="input-icon">
+<img alt="" height="15" src="../img/icons/candado.svg" width="15"/>
+</span>
+<input autocomplete="new-password" id="password" name="password" placeholder="Mínimo 6 caracteres" type="password"/>
+<button aria-label="Mostrar contraseña" aria-pressed="false" class="toggle-pw" data-toggle-pw="password" type="button">
+<img alt="" height="14" src="../img/icons/ver.svg" width="14"/>
+</button>
+</div>
+<span aria-live="polite" class="field-error" id="err-password" role="alert"></span>
+<div aria-live="polite" class="pw-strength" id="pwStrength"></div>
+</div>
+<div class="field-group">
+<label for="confirmar">
+                Confirmar contraseña
+              </label>
+<div class="input-icon-wrap">
+<span class="input-icon">
+<img alt="" height="15" src="../img/icons/candado.svg" width="15"/>
+</span>
+<input autocomplete="new-password" id="confirmar" name="confirmar" placeholder="Repetí tu contraseña" type="password"/>
+<button aria-label="Mostrar contraseña" aria-pressed="false" class="toggle-pw" data-toggle-pw="confirmar" type="button">
+<img alt="" height="14" src="../img/icons/ver.svg" width="14"/>
+</button>
+</div>
+<span aria-live="polite" class="field-error" id="err-confirmar" role="alert"></span>
+</div>
+<div class="field-check">
+<input id="terminos" name="terminos" type="checkbox"/>
+<label for="terminos">
+                Acepto los
+                <a href="politicas.html#terminos" rel="noopener" target="_blank">
+                  términos y condiciones
+                </a>
+</label>
+</div>
+<span aria-live="polite" class="field-error terms-error" id="err-terminos" role="alert"></span>
+<div class="btn-row">
+<button class="btn-outline" id="btnVolver1" type="button">
+                ← Volver
+              </button>
+<button class="btn-primary" id="btnRegistrar" type="button">
+                Crear cuenta
+              </button>
+</div>
+</section>
+<!-- ÉXITO -->
+<section aria-live="polite" class="step hidden" id="stepExito">
+<div class="exito-wrap">
+<div class="exito-icon">
+<img alt="" height="44" src="../img/icons/spa.svg" width="44"/>
+</div>
+<h2 class="exito-title">
+                ¡Bienvenido!
+              </h2>
+<p class="exito-desc">
+                Tu cuenta fue creada con éxito.
+                <br/>
+                Redirigiendo al inicio de sesión...
+              </p>
+<div aria-hidden="true" class="exito-loader"></div>
+</div>
+</section>
+</div>
+</div>
+</section>
+</main>
+
+
+
+
+
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/registro.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+</html>

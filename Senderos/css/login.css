@@ -1,0 +1,577 @@
+/* ═══════════════════════════════════════
+   Senderos — login.css
+   Estilos exclusivos de la pantalla de login
+   ═══════════════════════════════════════ */
+
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.82fr);
+  background: var(--cream);
+}
+
+
+/* ─────────────────────────────────────
+   PANEL VISUAL
+   ───────────────────────────────────── */
+
+.login-side {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.5rem clamp(2rem, 5vw, 5rem);
+  isolation: isolate;
+  background: var(--text);
+}
+
+.side-img {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.side-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(
+      160deg,
+      rgba(173, 113, 126, 0.88) 0%,
+      rgba(69, 99, 77, 0.92) 100%
+    );
+}
+
+.side-logo {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: fit-content;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.side-logo img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.side-content {
+  position: relative;
+  z-index: 2;
+  max-width: 470px;
+  margin: auto 0;
+  padding: 4rem 0;
+}
+
+.side-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+
+  margin: 0 0 1.2rem;
+
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f3cfd4;
+}
+
+.side-tag::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: #f3cfd4;
+}
+
+.side-title {
+  margin: 0 0 1.2rem;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3rem, 5vw, 5.3rem);
+  font-weight: 300;
+  line-height: 0.98;
+  color: var(--white);
+}
+
+.side-title em {
+  font-style: italic;
+  color: #f3cfd4;
+}
+
+.side-desc {
+  max-width: 380px;
+  margin: 0;
+
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+
+/* ─────────────────────────────────────
+   FORMULARIO
+   ───────────────────────────────────── */
+
+.login-form-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 3rem clamp(1.5rem, 5vw, 5rem);
+
+  background: var(--cream);
+}
+
+.login-form-wrap {
+  width: 100%;
+  max-width: 430px;
+  animation: fadeUp 0.5s ease both;
+}
+
+.mobile-logo {
+  display: none;
+}
+
+.form-header {
+  margin-bottom: 2.3rem;
+}
+
+.form-header .section-tag {
+  margin-bottom: 0.7rem;
+}
+
+.form-header h2 {
+  margin: 0 0 0.45rem;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--text);
+}
+
+.form-header > p:last-child {
+  margin: 0;
+
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--text-light);
+}
+
+
+/* ─────────────────────────────────────
+   CAMPOS
+   ───────────────────────────────────── */
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group > label,
+.label-row label {
+  display: block;
+
+  margin-bottom: 0.45rem;
+
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  margin-bottom: 0.45rem;
+}
+
+.label-row label {
+  margin-bottom: 0;
+}
+
+.label-row a {
+  font-size: 0.72rem;
+  color: var(--rose-deep);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.label-row a:hover {
+  opacity: 0.72;
+}
+
+.form-group input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.8rem 1rem;
+
+  border: 1.5px solid var(--sand);
+  border-radius: 11px;
+
+  background: var(--white);
+  color: var(--text);
+
+  font: inherit;
+  font-size: 0.88rem;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: var(--text-light);
+  opacity: 0.7;
+}
+
+.form-group input:focus {
+  border-color: var(--rose-deep);
+  box-shadow: 0 0 0 3px rgba(173, 113, 126, 0.1);
+}
+
+.form-group input.error {
+  border-color: var(--error);
+}
+
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap input {
+  padding-right: 3rem;
+}
+
+.toggle-pw {
+  position: absolute;
+  top: 50%;
+  right: 0.9rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.toggle-pw img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  opacity: 0.7;
+}
+
+.toggle-pw:hover img {
+  opacity: 1;
+}
+
+.field-error {
+  display: block;
+  min-height: 1rem;
+  margin-top: 0.35rem;
+
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--error);
+}
+
+
+/* ─────────────────────────────────────
+   RECORDAR
+   ───────────────────────────────────── */
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+
+  margin: 0.1rem 0 1.35rem;
+
+  font-size: 0.78rem;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.check-row input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+
+  accent-color: var(--rose-deep);
+  cursor: pointer;
+}
+
+
+/* ─────────────────────────────────────
+   BOTÓN
+   ───────────────────────────────────── */
+
+.login-submit {
+  width: 100%;
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.login-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-loader {
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: var(--white);
+  border-radius: 50%;
+
+  animation: spin 0.7s linear infinite;
+}
+
+.btn-loader.hidden {
+  display: none;
+}
+
+
+/* ─────────────────────────────────────
+   DIVISOR
+   ───────────────────────────────────── */
+
+.form-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  margin: 1.5rem 0;
+
+  color: var(--text-light);
+  font-size: 0.72rem;
+}
+
+.form-divider::before,
+.form-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--sand);
+}
+
+.form-divider span {
+  flex: 0 0 auto;
+}
+
+
+/* ─────────────────────────────────────
+   REGISTRO / VOLVER
+   ───────────────────────────────────── */
+
+.register-link {
+  margin: 0;
+
+  text-align: center;
+
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-light);
+}
+
+.register-link a {
+  color: var(--rose-deep);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+.back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+
+  width: fit-content;
+  margin: 1.5rem auto 0;
+
+  color: var(--text-light);
+  font-size: 0.74rem;
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.back-link img {
+  opacity: 0.65;
+}
+
+.back-link:hover {
+  color: var(--text);
+  transform: translateX(-2px);
+}
+
+
+/* ─────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────── */
+
+@media (max-width: 900px) {
+
+  .login-page {
+    grid-template-columns: minmax(0, 0.85fr) minmax(380px, 1fr);
+  }
+
+  .login-side {
+    padding: 2rem;
+  }
+
+  .side-title {
+    font-size: clamp(2.7rem, 6vw, 4.3rem);
+  }
+
+  .login-form-section {
+    padding: 2.5rem 2rem;
+  }
+}
+
+
+@media (max-width: 760px) {
+
+  .login-page {
+    display: block;
+    min-height: 100vh;
+  }
+
+  .login-side {
+    display: none;
+  }
+
+  .login-form-section {
+    min-height: 100vh;
+    padding: 2rem 1.2rem 3rem;
+  }
+
+  .login-form-wrap {
+    max-width: 430px;
+  }
+
+  .mobile-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    width: fit-content;
+    margin: 0 auto 3rem;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .mobile-logo img {
+    width: 27px;
+    height: 27px;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+
+  .form-header {
+    margin-bottom: 2rem;
+  }
+
+  .form-header h2 {
+    font-size: 2.6rem;
+  }
+}
+
+
+@media (max-width: 420px) {
+
+  .login-form-section {
+    padding: 1.5rem 1rem 2.5rem;
+  }
+
+  .mobile-logo {
+    margin-bottom: 2.5rem;
+  }
+
+  .form-header h2 {
+    font-size: 2.35rem;
+  }
+
+  .label-row {
+    align-items: flex-start;
+  }
+
+  .label-row a {
+    text-align: right;
+  }
+
+  .check-row {
+    font-size: 0.74rem;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+  .login-form-wrap {
+    animation: none;
+  }
+
+  .toggle-pw,
+  .back-link {
+    transition: none;
+  }
+}
+.pw-strength { min-height: 1.2rem; font-size: .75rem; color: var(--text-light); }
+.pw-strength.weak { color: var(--error); }
+.pw-strength.medium { color: var(--warning); }
+.pw-strength.strong { color: var(--success); }
+.field-error { min-height: 1rem; font-size: .72rem; color: var(--error); }
+.toggle-pw { background: none; border: none; cursor: pointer; color: var(--text-light); padding: .3rem; }
+@media (max-width: 900px) { .login-page { grid-template-columns: 1fr; } .login-side { display: none; } }

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>¡Pedido confirmado! — Senderos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+
+
+
+
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/confirmacion.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<body data-pagina="confirmacion">
+
+
+<main class="confirm-main">
+<div class="confirm-icon-wrap">
+<svg aria-hidden="true" class="confirm-circle" viewbox="0 0 80 80">
+<circle class="circle-bg" cx="40" cy="40" r="36"></circle>
+<circle class="circle-fill" cx="40" cy="40" r="36"></circle>
+<polyline class="check-mark" points="24,40 35,51 56,29"></polyline>
+</svg>
+</div>
+<h1 class="confirm-title">
+      ¡Pedido <em>confirmado!</em>
+</h1>
+<p class="confirm-subtitle">
+      Tu pedido fue registrado correctamente.
+    </p>
+<section aria-label="Resumen del pedido" class="confirm-card">
+<div class="confirm-card-header">
+<span class="confirm-order-label">
+          Número de pedido
+        </span>
+<span class="confirm-order-num" id="confirmOrderNum">
+          —
+        </span>
+</div>
+<div class="confirm-items" id="confirmItems">
+</div>
+<div class="confirm-detalle" id="confirmDetalle"></div>
+<div class="confirm-divider"></div>
+<div class="confirm-totals" id="confirmTotals">
+</div>
+</section>
+<section aria-label="Estado del pedido" class="confirm-steps">
+<div class="confirm-step">
+<div class="cstep-num">
+          1
+        </div>
+<div class="cstep-text">
+<strong>Recibimos tu pedido</strong>
+<span>Lo estamos preparando</span>
+</div>
+</div>
+<div class="confirm-step-line"></div>
+<div class="confirm-step">
+<div class="cstep-num pending">
+          2
+        </div>
+<div class="cstep-text">
+<strong>Listo para retirar</strong>
+<span>Te avisamos por WhatsApp</span>
+</div>
+</div>
+<div class="confirm-step-line"></div>
+<div class="confirm-step">
+<div class="cstep-num pending">
+          3
+        </div>
+<div class="cstep-text">
+<strong>Entregado</strong>
+<span>En el spa o a domicilio</span>
+</div>
+</div>
+</section>
+<div class="confirm-actions">
+<a class="btn-primary" href="mis-turnos.html">
+        Ver mis pedidos
+      </a>
+<a class="btn-outline" href="productos.html">
+        Seguir comprando
+      </a>
+</div>
+<div class="confirm-wa" id="confirmWa">
+<img alt="" height="20" src="../img/icons/whatsapp.svg" width="20"/>
+<span>
+        ¿Querés que te avisemos cuando esté listo?
+      </span>
+<a class="btn-wa" href="#" id="btnWaConfirm" rel="noopener noreferrer" target="_blank">
+        Avisar por WhatsApp
+      </a>
+</div>
+</main>
+
+
+
+
+
+
+
+
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/confirmacion.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+</html>

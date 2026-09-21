@@ -1,0 +1,73 @@
+/* SPA M — admin-ofertas.css (complementa admin.css) */
+
+.dias-grid {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.3rem;
+}
+.dia-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid var(--sand); background: var(--white);
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em;
+  cursor: pointer; transition: all 0.2s; color: var(--text-light);
+  display: flex; align-items: center; justify-content: center;
+}
+.dia-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); }
+.dia-btn.active {
+  background: var(--rose-deep); color: #fff; border-color: var(--rose-deep);
+}
+
+.color-opts {
+  display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.3rem;
+}
+.color-opt {
+  width: 32px; height: 32px; border-radius: 50%;
+  cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
+}
+.color-opt:hover, .color-opt.active { border-color: var(--text); transform: scale(1.15); }
+
+/* Preview ticker */
+.preview-ticker {
+  background: var(--rose-deep); padding: 1rem 2rem;
+  border-radius: 12px; overflow: hidden;
+  display: flex; gap: 2rem; white-space: nowrap;
+}
+.preview-ticker-item {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-style: italic;
+  color: rgba(255,255,255,0.9);
+  display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0;
+}
+.preview-dot { width: 5px; height: 5px; border-radius: 50%; background: #F3CFD4; }
+
+/* Badge de oferta en tabla */
+.oferta-badge {
+  display: inline-block; padding: 0.2rem 0.7rem;
+  border-radius: 50px; font-size: 0.72rem; font-weight: 700;
+  color: #fff; letter-spacing: 0.04em;
+}
+.dias-display {
+  display: flex; gap: 0.2rem; flex-wrap: wrap;
+}
+.dia-tag {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--rose-pale); color: var(--rose-deep);
+  font-size: 0.62rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Toggle activo/pausado */
+.toggle-estado {
+  display: flex; align-items: center; gap: 0.5rem;
+  cursor: pointer;
+}
+.toggle-track {
+  width: 36px; height: 20px; border-radius: 50px;
+  background: var(--sand); position: relative; transition: background 0.25s;
+}
+.toggle-track.on { background: var(--rose-deep); }
+.toggle-thumb {
+  position: absolute; top: 3px; left: 3px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; transition: transform 0.25s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle-track.on .toggle-thumb { transform: translateX(16px); }
