@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Admin — Senderos</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/admin-login.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/darkmode.css"
+  >
+
+</head>
+
+
+<body>
+
+
+  <aside class="side-panel">
+
+    <a
+      href="index.html"
+      class="side-logo"
+    >
+
+      <img
+        src="../img/icons/logo.png"
+        alt="Senderos"
+        width="24"
+        height="24"
+      >
+
+      Senderos
+
+    </a>
+
+
+    <div class="side-content">
+
+      <p class="side-tag">
+        Panel de administración
+      </p>
+
+      <h2 class="side-title">
+        Gestión<br>
+        <em>centralizada</em>
+      </h2>
+
+      <p class="side-desc">
+        Administrá turnos, servicios, productos, ofertas y estadísticas
+        desde un solo lugar.
+      </p>
+
+
+      <div class="side-features">
+
+        <div class="feature-item">
+
+          <span class="feature-icon">
+
+            <img
+              src="../img/icons/grafico.svg"
+              alt=""
+              width="15"
+              height="15"
+            >
+
+          </span>
+
+          <span>
+            Dashboard con estadísticas
+          </span>
+
+        </div>
+
+
+        <div class="feature-item">
+
+          <span class="feature-icon">
+
+            <img
+              src="../img/icons/calendario.svg"
+              alt=""
+              width="13"
+              height="13"
+            >
+
+          </span>
+
+          <span>
+            Gestión de turnos en tiempo real
+          </span>
+
+        </div>
+
+
+        <div class="feature-item">
+
+          <span class="feature-icon">
+
+            <img
+              src="../img/icons/bolsa.svg"
+              alt=""
+              width="15"
+              height="15"
+            >
+
+          </span>
+
+          <span>
+            CRUD de productos y servicios
+          </span>
+
+        </div>
+
+
+        <div class="feature-item">
+
+          <span class="feature-icon">
+
+            <img
+              src="../img/icons/oferta.svg"
+              alt=""
+              width="15"
+              height="15"
+            >
+
+          </span>
+
+          <span>
+            Gestión de ofertas
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <img
+      class="side-img"
+      src="../img/placeholder.svg"
+      alt="SPA"
+    >
+
+    <div class="side-overlay"></div>
+
+  </aside>
+
+
+  <main class="form-panel">
+
+    <div class="form-container">
+
+
+      <div class="form-header">
+
+        <div class="admin-badge">
+
+          <img
+            src="../img/icons/candado.svg"
+            alt=""
+            width="15"
+            height="15"
+          >
+
+          Acceso restringido
+
+        </div>
+
+
+        <h1 class="form-title">
+          Panel Admin
+        </h1>
+
+
+        <p class="form-subtitle">
+          Solo para administradores autorizados.
+        </p>
+
+      </div>
+
+
+      <!-- EMAIL -->
+
+      <div class="field-group">
+
+        <label for="usuario">
+          Email administrador
+        </label>
+
+
+        <div class="input-icon-wrap">
+
+          <span class="input-icon">
+
+            <img
+              src="../img/icons/usuario.svg"
+              alt=""
+              width="15"
+              height="15"
+            >
+
+          </span>
+
+
+          <input
+            type="email"
+            id="usuario"
+            placeholder="admin@senderos.com"
+            autocomplete="username"
+          >
+
+        </div>
+
+
+        <span
+          class="field-error"
+          id="err-usuario"
+        ></span>
+
+      </div>
+
+
+      <!-- CONTRASEÑA -->
+
+      <div class="field-group">
+
+        <label for="password">
+          Contraseña
+        </label>
+
+
+        <div class="input-icon-wrap">
+
+          <span class="input-icon">
+
+            <img
+              src="../img/icons/candado.svg"
+              alt=""
+              width="15"
+              height="15"
+            >
+
+          </span>
+
+
+          <input
+            type="password"
+            id="password"
+            placeholder="Ingresá tu contraseña"
+            autocomplete="current-password"
+          >
+
+
+          <button
+            class="toggle-pw"
+            id="togglePassword"
+            type="button"
+            aria-label="Mostrar contraseña"
+          >
+
+            <img
+              src="../img/icons/ver.svg"
+              alt=""
+              width="14"
+              height="14"
+            >
+
+          </button>
+
+        </div>
+
+
+        <span
+          class="field-error"
+          id="err-password"
+        ></span>
+
+      </div>
+
+
+      <!-- ERROR GENERAL -->
+
+      <div
+        class="admin-login-error"
+        id="loginError"
+        role="alert"
+        aria-live="polite"
+      ></div>
+
+
+      <!-- BOTÓN -->
+
+      <button
+        class="btn-primary"
+        id="btnLogin"
+        type="button"
+      >
+
+        <span id="btnText">
+          Ingresar al panel
+        </span>
+
+        <span
+          id="btnLoader"
+          class="btn-loader hidden"
+        ></span>
+
+      </button>
+
+
+      <a
+        href="index.html"
+        class="back-link"
+      >
+        ← Volver al sitio
+      </a>
+
+
+    </div>
+
+  </main>
+
+
+  <script src="../js/admin-login.js"></script>
+  <script src="../js/darkmode.js"></script>
+
+  <script src="../js/iconos-adaptativos.js"></script>
+</body>
+
+</html>

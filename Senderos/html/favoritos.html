@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Favoritos — Senderos</title>
+<meta content="Tus servicios y productos favoritos en Senderos." name="description"/>
+<link href="../img/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/favoritos.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<body data-pagina="favoritos">
+<main class="favoritos-page">
+<section class="page-hero">
+<div class="page-hero-content">
+<p class="page-tag">Guardados</p>
+<h1 class="page-title">Mis <em>favoritos</em></h1>
+<p class="page-desc">Todo lo que marcaste con el corazón, en un solo lugar.</p>
+</div>
+</section>
+<section class="favoritos-section">
+<h2 class="section-title">Servicios</h2>
+<div class="favoritos-grid" id="favsServicios"></div>
+<div class="empty-state hidden" id="favsServiciosVacio">
+<p>Todavía no tenés servicios favoritos.</p>
+<a class="btn-outline" href="servicios.html">Ver servicios</a>
+</div>
+</section>
+<section class="favoritos-section">
+<h2 class="section-title">Productos</h2>
+<div class="favoritos-grid" id="favsProductos"></div>
+<div class="empty-state hidden" id="favsProductosVacio">
+<p>Todavía no tenés productos favoritos.</p>
+<a class="btn-outline" href="productos.html">Ver productos</a>
+</div>
+</section>
+</main>
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/favoritos.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+</html>

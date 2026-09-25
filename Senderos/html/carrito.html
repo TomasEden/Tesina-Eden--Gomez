@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Revisá y gestioná tus productos y servicios de Senderos.">
+  <title>Mi carrito — Senderos</title>
+
+  <link rel="icon" href="../img/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/carrito.css">
+  <link rel="stylesheet" href="../css/darkmode.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+</head>
+
+<body data-pagina="carrito">
+  <main class="carrito-page">
+    <section class="carrito-container" aria-labelledby="titulo-carrito">
+
+      <header class="carrito-header">
+        <div>
+          <p class="carrito-tag">Tu selección</p>
+          <h1 id="titulo-carrito">Mi <em>carrito</em></h1>
+          <p class="carrito-descripcion">
+            Revisá tus productos y servicios antes de continuar.
+          </p>
+        </div>
+
+        <a class="carrito-volver" href="servicios.html">
+          Seguir comprando
+        </a>
+      </header>
+
+      <div class="carrito-mensaje" id="carrito-mensaje" role="alert" hidden></div>
+      <div class="carrito-avisos" id="carrito-avisos" role="status" hidden></div>
+
+      <section class="carrito-layout">
+        <div class="carrito-contenido">
+
+          <section class="carrito-seccion" id="carrito-productos" hidden>
+            <div class="carrito-seccion-header">
+              <div>
+                <p class="carrito-kicker">Tu selección</p>
+                <h2>Productos</h2>
+              </div>
+              <span class="carrito-seccion-linea" aria-hidden="true"></span>
+            </div>
+
+            <div class="carrito-lista" id="lista-productos"></div>
+          </section>
+
+          <section class="carrito-seccion" id="carrito-servicios" hidden>
+            <div class="carrito-seccion-header">
+              <div>
+                <p class="carrito-kicker">Reservas</p>
+                <h2>Servicios y turnos</h2>
+                <p class="carrito-ayuda">
+                  Elegí la fecha y el horario para cada servicio que quieras reservar.
+                </p>
+              </div>
+              <span class="carrito-seccion-linea" aria-hidden="true"></span>
+            </div>
+
+            <div class="carrito-lista" id="lista-servicios"></div>
+          </section>
+
+          <section class="carrito-seccion carrito-checkout" id="carrito-checkout" hidden>
+            <div class="carrito-seccion-header">
+              <div>
+                <p class="carrito-kicker">Paso de pago</p>
+                <h2>Entrega y pago</h2>
+                <p class="carrito-ayuda">
+                  El sitio no cobra online: el pedido queda registrado y el pago se coordina por WhatsApp.
+                </p>
+              </div>
+              <span class="carrito-seccion-linea" aria-hidden="true"></span>
+            </div>
+
+            <div class="checkout-bloque" id="bloque-entrega">
+              <h3>Entrega de productos</h3>
+              <div class="checkout-opciones" role="radiogroup" aria-label="Entrega">
+                <label class="checkout-opcion">
+                  <input type="radio" name="entrega" value="retiro" checked>
+                  <span>Retiro en el local</span>
+                </label>
+                <label class="checkout-opcion">
+                  <input type="radio" name="entrega" value="envio">
+                  <span>Envío a domicilio <small id="costo-envio-txt"></small></span>
+                </label>
+              </div>
+              <div class="form-group" id="grupo-direccion" hidden>
+                <label for="direccion-envio">Dirección completa</label>
+                <input type="text" id="direccion-envio" autocomplete="street-address" placeholder="Calle, número, ciudad...">
+                <p class="form-error" id="err-direccion-envio"></p>
+              </div>
+            </div>
+
+            <div class="checkout-bloque" id="bloque-pago">
+              <h3>Método de pago</h3>
+              <p class="carrito-ayuda">El sitio no cobra online: el pedido queda registrado y el pago se coordina por WhatsApp.</p>
+              <div class="checkout-opciones checkout-opciones-cards" role="radiogroup" aria-label="Método de pago">
+                <label class="checkout-opcion checkout-opcion-card">
+                  <input type="radio" name="metodo_pago" value="transferencia" checked>
+                  <img src="../img/icons/transferencia.svg" alt="" width="22" height="22" aria-hidden="true">
+                  <span><strong>Transferencia</strong><small>Bancaria · coordinamos por WhatsApp</small></span>
+                </label>
+                <label class="checkout-opcion checkout-opcion-card">
+                  <input type="radio" name="metodo_pago" value="debito">
+                  <img src="../img/icons/tarjeta.svg" alt="" width="22" height="22" aria-hidden="true">
+                  <span><strong>Débito</strong><small>En el local · acreditación al momento</small></span>
+                </label>
+                <label class="checkout-opcion checkout-opcion-card">
+                  <input type="radio" name="metodo_pago" value="tarjeta">
+                  <img src="../img/icons/tarjeta.svg" alt="" width="22" height="22" aria-hidden="true">
+                  <span><strong>Tarjeta</strong><small>Visa · Mastercard · Cabal · Naranja X · Amex</small></span>
+                </label>
+              </div>
+
+              <div class="pago-panel" id="panel-transferencia">
+                <div class="pago-alias">
+                  <div class="pago-alias-datos">
+                    <span class="pago-alias-label">Alias para transferir</span>
+                    <strong class="pago-alias-valor" id="alias-valor">—</strong>
+                  </div>
+                  <button class="btn-copiar-alias" id="btn-copiar-alias" type="button">
+                    Copiar alias
+                  </button>
+                </div>
+                <p class="medios-nota">Coordinamos la transferencia por WhatsApp al <span data-pago-whatsapp></span>.</p>
+              </div>
+
+              <div class="pago-panel" id="panel-tarjeta" hidden>
+                <p class="carrito-ayuda">Elegí la marca de tu tarjeta:</p>
+                <div class="pago-marcas" role="radiogroup" aria-label="Marca de la tarjeta">
+                  <label class="pago-marca"><input type="radio" name="tarjeta_marca" value="visa"><span><img src="../img/tarjetas/visa.svg" alt="" width="39" height="13">Visa</span></label>
+                  <label class="pago-marca"><input type="radio" name="tarjeta_marca" value="mastercard"><span><img src="../img/tarjetas/mastercard.svg" alt="" width="39" height="13">Mastercard</span></label>
+                  <label class="pago-marca"><input type="radio" name="tarjeta_marca" value="cabal"><span><img src="../img/tarjetas/cabal.svg" alt="" width="39" height="13">Cabal</span></label>
+                  <label class="pago-marca"><input type="radio" name="tarjeta_marca" value="naranja_x"><span><img src="../img/tarjetas/naranja-x.svg" alt="" width="39" height="13">Naranja X</span></label>
+                  <label class="pago-marca"><input type="radio" name="tarjeta_marca" value="amex"><span><img src="../img/tarjetas/amex.svg" alt="" width="39" height="13">American Express</span></label>
+                </div>
+                <div class="form-group" id="grupo-ultimos4">
+                  <label for="tarjeta-ultimos4">Últimos 4 dígitos</label>
+                  <input type="text" id="tarjeta-ultimos4" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="0000">
+                  <p class="form-error" id="err-tarjeta-ultimos4"></p>
+                </div>
+                <p class="medios-nota">Solo guardamos los últimos 4 dígitos: el sitio no almacena ni cobra el número completo.</p>
+              </div>
+
+              <div class="medios-pago" aria-label="Medios aceptados">
+                <span class="medio-pago">Transferencia bancaria</span>
+                <span class="medio-pago">Tarjeta de débito</span>
+                <span class="medio-pago">Visa</span>
+                <span class="medio-pago">Mastercard</span>
+                <span class="medio-pago">Cabal</span>
+                <span class="medio-pago">Naranja X</span>
+                <span class="medio-pago">American Express</span>
+              </div>
+              <p class="medios-nota">Sin efectivo. Ante cualquier duda consultanos por WhatsApp al <span data-pago-whatsapp></span>.</p>
+            </div>
+
+            <div class="checkout-bloque" id="bloque-grupo" hidden>
+              <h3>¿Qué incluye este pago?</h3>
+              <p class="carrito-ayuda">
+                Los productos y los servicios se pagan por separado: elegí uno y lo que quede afuera sigue en tu carrito.
+              </p>
+              <div class="checkout-opciones" role="radiogroup" aria-label="Qué incluye el pago">
+                <label class="checkout-opcion">
+                  <input type="radio" name="pago_grupo" value="productos" checked>
+                  <span>Solo productos</span>
+                </label>
+                <label class="checkout-opcion">
+                  <input type="radio" name="pago_grupo" value="servicios">
+                  <span>Solo servicios</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="checkout-bloque" id="bloque-turnos" hidden>
+              <h3>Fecha y horario por servicio</h3>
+              <p class="carrito-ayuda">Elegí fecha y horario para cada servicio. Podés agrupar varios en el mismo horario. Lun. a sáb. de 8 a 12:30 y de 16 a 20 hs.</p>
+              <div id="lista-turnos-checkout"></div>
+            </div>
+
+            <p class="form-error" id="checkout-error" role="alert"></p>
+
+            <button class="btn-primary btn-confirmar" id="btn-confirmar-pedido" type="button">
+              Confirmar pedido por WhatsApp
+            </button>
+          </section>
+
+          <section class="carrito-vacio" id="carrito-vacio" hidden>
+            <div class="carrito-vacio-icon" aria-hidden="true">
+              <img src="../img/icons/carrito+.svg" alt="" width="42" height="42">
+            </div>
+
+            <p class="carrito-kicker">Todavía no agregaste nada</p>
+            <h2>Tu carrito está vacío</h2>
+            <p>
+              Explorá nuestros productos y servicios y agregá lo que quieras reservar o comprar.
+            </p>
+
+            <div class="carrito-vacio-links">
+              <a class="btn-primary" href="servicios.html">Ver servicios</a>
+              <a class="btn-outline" href="productos.html">Ver productos</a>
+            </div>
+          </section>
+        </div>
+
+        <aside class="carrito-resumen" id="carrito-resumen" hidden>
+          <div class="carrito-resumen-card">
+            <p class="carrito-kicker">Resumen</p>
+            <h2>Tu pedido</h2>
+
+            <div class="resumen-lineas">
+              <div class="resumen-linea">
+                <span>Productos</span>
+                <strong id="total-productos">$0</strong>
+              </div>
+
+              <div class="resumen-linea">
+                <span>Servicios</span>
+                <strong id="total-servicios">$0</strong>
+              </div>
+
+              <div class="resumen-linea" id="linea-envio" hidden>
+                <span>Envío</span>
+                <strong id="total-envio">$0</strong>
+              </div>
+            </div>
+
+            <div class="resumen-total">
+              <span>Total a pagar</span>
+              <strong id="total-carrito">$0</strong>
+            </div>
+
+            <p class="resumen-ayuda" id="resumen-grupo-ayuda" aria-live="polite">
+              Este pago incluye los productos de tu carrito.
+            </p>
+
+            <div class="resumen-acciones">
+              <button class="btn-primary btn-continuar" id="btn-continuar-compra" type="button">
+                Continuar
+              </button>
+
+              <button class="btn-vaciar" id="btn-vaciar-carrito" type="button">
+                Vaciar carrito
+              </button>
+            </div>
+
+            <p class="resumen-ayuda">
+              Los turnos de servicios se guardan junto con la fecha y hora que selecciones.
+            </p>
+          </div>
+        </aside>
+      </section>
+    </section>
+  </main>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/sesion.js"></script>
+  <script src="../js/config-pagos.js"></script>
+  <script src="../js/carrito.js"></script>
+  <script src="../js/darkmode.js"></script>
+  <script src="../js/iconos-adaptativos.js"></script>
+  <script src="../js/layout.js"></script>
+</body>
+</html>

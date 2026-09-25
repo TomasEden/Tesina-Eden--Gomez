@@ -1,0 +1,820 @@
+/* Senderos — darkmode.css
+   SOLO variables, transiciones y overrides de html.dark.
+*/
+
+html.dark {
+  --rose: #B88A92;
+  --rose-deep: #C28A93;
+  --rose-pale: #2A2025;
+  --rose-mid: #4A3038;
+
+  --cream: #1A1A1A;
+  --sand: #2E2E2E;
+
+  --text: #E8E0DA;
+  --text-light: #a8a499;
+
+  --white: #242424;
+
+  --accent: #C9B8A8;
+}
+
+/* ── BASE ── */
+
+html.dark body {
+  background-color: #1A1A1A;
+  color: #E8E0DA;
+}
+
+/* ── NAVBAR ── */
+
+html.dark .navbar {
+  background-color: rgba(26, 26, 26, 0.96);
+  color: #E8E0DA;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .navbar.scrolled {
+  background-color: rgba(26, 26, 26, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+html.dark .nav-logo,
+html.dark .nav-links a,
+html.dark .nav-mobile-links a {
+  color: #E8E0DA;
+}
+
+html.dark .nav-links a:hover,
+html.dark .nav-links a.active,
+html.dark .nav-mobile-links a:hover,
+html.dark .nav-mobile-links a.active {
+  color: #C28A93;
+}
+
+html.dark .nav-mobile {
+  background-color: #1A1A1A;
+  color: #E8E0DA;
+}
+
+html.dark .nav-mobile-close {
+  background-color: #242424;
+  color: #C28A93;
+}
+
+html.dark .nav-mobile-links a {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .nav-mobile-bottom {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .btn-login {
+  background-color: #C28A93;
+  color: #1A1A1A;
+}
+
+/* ── BOTONES ── */
+
+html.dark .btn-primary {
+  background-color: #C28A93;
+  color: #1A1A1A;
+}
+
+html.dark .btn-primary:hover {
+  background-color: #D09AA3;
+}
+
+html.dark .btn-outline {
+  border-color: #C28A93;
+  color: #C28A93;
+}
+
+html.dark .btn-outline:hover {
+  background-color: #C28A93;
+  color: #1A1A1A;
+}
+
+/* ── TEXTOS GENERALES ── */
+
+html.dark .section-title {
+  color: #E8E0DA;
+}
+
+html.dark .section-tag,
+html.dark .page-tag {
+  color: #C28A93;
+}
+
+html.dark .see-all {
+  color: #C28A93;
+}
+
+/* ── HERO ── */
+
+html.dark .hero {
+  background-color: #1A1A1A;
+  color: #E8E0DA;
+}
+
+html.dark .hero-desc {
+  color: #BDB5AF;
+}
+
+html.dark .hero-tag {
+  color: #C28A93;
+}
+
+html.dark .hero-title {
+  color: #E8E0DA;
+}
+
+html.dark .hero-title em {
+  color: #C28A93;
+}
+
+html.dark .stat-label {
+  color: #9A9A8A;
+}
+
+html.dark .stat-num {
+  color: #E8E0DA;
+}
+
+/* ── SECCIONES ── */
+
+html.dark .services-section,
+html.dark .products-section,
+html.dark .banners-section {
+  background-color: #1A1A1A;
+  color: #E8E0DA;
+}
+
+/* ── CARDS ── */
+
+html.dark .service-card,
+html.dark .product-card {
+  background-color: #242424;
+  border-color: #383838;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.20);
+}
+
+html.dark .service-card:hover,
+html.dark .product-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+}
+
+html.dark .service-name,
+html.dark .product-name {
+  color: #E8E0DA;
+}
+
+html.dark .service-desc,
+html.dark .product-desc {
+  color: #AAA29C;
+}
+
+html.dark .service-duration,
+html.dark .product-category,
+html.dark .product-stock {
+  color: #9A9A8A;
+}
+
+html.dark .service-price,
+html.dark .product-price {
+  color: #C28A93;
+}
+
+html.dark .btn-reservar,
+html.dark .btn-add,
+html.dark .btn-product {
+  background-color: #C28A93;
+  color: #1A1A1A;
+}
+
+html.dark .btn-add:hover,
+html.dark .btn-product:hover {
+  background-color: #D09AA3;
+}
+
+/* ── PRODUCTOS ── */
+
+html.dark .product-filters {
+  background-color: #242424;
+  border-color: #383838;
+}
+
+html.dark .product-filter-group label {
+  color: #BDB5AF;
+}
+
+html.dark .product-filter-group select {
+  background-color: #1A1A1A;
+  color: #E8E0DA;
+  border-color: #404040;
+}
+
+html.dark .product-filter-group select:focus {
+  border-color: #C28A93;
+}
+
+/* ── PANEL PRODUCTO ── */
+
+html.dark .product-panel {
+  background-color: #242424;
+  color: #E8E0DA;
+}
+
+html.dark .product-panel-backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+html.dark .product-panel-close {
+  background-color: rgba(36, 36, 36, 0.92);
+  color: #E8E0DA;
+}
+
+html.dark .product-panel-brand {
+  color: #C28A93;
+}
+
+html.dark .product-panel-category,
+html.dark .product-panel-stock {
+  color: #9A9A8A;
+}
+
+html.dark .product-panel-body h2 {
+  color: #E8E0DA;
+}
+
+html.dark .product-panel-price {
+  color: #C28A93;
+}
+
+html.dark .product-panel-description {
+  color: #AAA29C;
+}
+
+html.dark .product-panel-stock.out-of-stock {
+  color: #D58B8B;
+}
+
+/* ── FORMULARIOS ── */
+
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #242424;
+  color: #E8E0DA;
+  border-color: #404040;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #77716C;
+}
+
+html.dark input:focus,
+html.dark textarea:focus,
+html.dark select:focus {
+  border-color: #C28A93;
+  outline: none;
+}
+
+html.dark label {
+  color: #E8E0DA;
+}
+
+/* ── FOOTER ── */
+
+html.dark .site-footer {
+  background-color: #111111;
+  color: #E8E0DA;
+}
+
+html.dark .footer-brand {
+  color: #E8E0DA;
+}
+
+html.dark .footer-desc {
+  color: #9A9A8A;
+}
+
+html.dark .footer-col h4 {
+  color: #E8E0DA;
+}
+
+html.dark .footer-col a,
+html.dark .footer-col > span {
+  color: #9A9A8A;
+}
+
+html.dark .footer-col a:hover {
+  color: #C28A93;
+}
+
+html.dark .footer-bottom {
+  background-color: #0D0D0D;
+  color: #77716C;
+}
+
+/* ── TOAST ── */
+
+html.dark .toast {
+  background-color: #E8E0DA;
+  color: #1A1A1A;
+}
+
+/* ── MODAL VALIDACIÓN ── */
+
+html.dark .modal-validacion-content {
+  background: var(--white);
+}
+
+html.dark .modal-validacion-title {
+  color: var(--text);
+}
+
+html.dark .modal-validacion-message {
+  color: var(--text-light);
+}
+
+html.dark .modal-btn-validacion.primary {
+  color: #16211b;
+}
+
+html.dark .modal-btn-validacion.outline {
+  color: var(--rose-deep);
+  border-color: var(--rose-deep);
+}
+
+html.dark .modal-btn-validacion.outline:hover {
+  background: var(--rose-pale);
+}
+
+/* ── TOGGLE — Fase A: solo flotante, usa currentColor (sin filtros) ── */
+
+html.dark .dark-toggle {
+  background-color: #242424;
+  color: #C28A93;
+  border-color: rgba(194, 138, 147, .45);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.30);
+}
+
+html.dark .dark-toggle .icon-svg {
+  color: #C28A93;
+}
+
+/* Los iconos SVG ya se convierten a currentColor (iconos-adaptativos.js),
+   por eso no se usan filtros: heredan el color del texto. */
+html.dark .nav-cart,
+html.dark .nav-search,
+html.dark .nav-mobile-links a,
+html.dark .site-footer .footer-col a {
+  color: #E8E0DA;
+}
+
+html.dark .nav-cart:hover,
+html.dark .nav-search:hover {
+  color: #C28A93;
+}
+
+html.dark .cart-badge,
+html.dark .cart-badge-mobile {
+  background-color: #C28A93;
+  color: #1A1A1A;
+  border-color: #1A1A1A;
+}
+
+html.dark .dark-float {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .45);
+}
+
+/* ── NOSOTROS ── */
+
+html.dark .nos-historia,
+html.dark .nos-valores,
+html.dark .nos-equipo,
+html.dark .nos-galeria {
+  background-color: #000000;
+}
+
+html.dark .nos-body {
+  color: #A9A9A9;
+}
+
+html.dark .nos-hitos {
+  border-top-color: #292929;
+}
+
+html.dark .hito-desc {
+  color: #8F8F8F;
+}
+
+html.dark .nos-historia-img {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+html.dark .section-title em,
+html.dark .hito-year {
+  color: #C28A93;
+}
+
+html.dark .valor-card {
+  background-color: #111111;
+  color: #E8E0DA;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+html.dark .valor-card:hover {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65);
+}
+
+html.dark .valor-card h3,
+html.dark .equipo-nombre {
+  color: var(--white);
+}
+
+html.dark .valor-card p,
+html.dark .equipo-desc,
+html.dark .nos-cta-desc {
+  color: #999999;
+}
+
+html.dark .valor-icon,
+html.dark .equipo-rol {
+  color: #C28A93;
+}
+
+html.dark .equipo-img-wrap {
+  border-color: #111111;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
+}
+
+html.dark .galeria-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    transparent 65%
+  );
+}
+
+html.dark .nos-cta {
+  background-color: #111111;
+}
+
+html.dark .nos-cta-title {
+  color: var(--white);
+}
+
+html.dark .nos-cta-title em {
+  color: #C28A93;
+}
+
+/* ── IMÁGENES ADAPTATIVAS ── */
+
+html.dark .logo-adaptive {
+  filter: brightness(1.15) saturate(0.95);
+}
+
+/* ── BACKDROP + TOGGLE + DROPDOWN — Fase A: solo flotante ── */
+
+html.dark .nav-mobile-backdrop {
+  background: rgba(0, 0, 0, .6);
+}
+
+html.dark .dark-toggle {
+  background: var(--white);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, .14);
+}
+
+html.dark .dark-float {
+  background-color: #242424;
+  color: #C28A93;
+  border-color: rgba(194, 138, 147, .45);
+}
+
+html.dark .nav-dropdown {
+  background: var(--white);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+html.dark .nav-dropdown-head {
+  border-bottom-color: rgba(255, 255, 255, .08);
+}
+
+html.dark .nav-dropdown-mail {
+  color: var(--text-light);
+}
+
+html.dark .nav-dropdown-link:hover {
+  background: var(--rose-pale);
+}
+
+html.dark .modal-validacion-content,
+html.dark .modal,
+html.dark .modal-validacion {
+  background: var(--white);
+  color: var(--text);
+}
+
+html.dark .oferta-badge-sitio {
+  background: var(--rose-deep);
+  color: var(--white);
+}
+
+html.dark .precio-final {
+  color: var(--rose-deep);
+}
+
+html.dark .nav-mobile-logout {
+  border-color: rgba(255, 255, 255, .14);
+}
+
+/* ── CARRITO / CHECKOUT / CONFIRMACIÓN / MIS TURNOS (Fase 3) ── */
+
+html.dark .checkout-opcion {
+  background: var(--white);
+  color: var(--text);
+}
+
+html.dark .carrito-avisos {
+  background: rgba(212, 133, 10, .1);
+  color: var(--text);
+}
+
+html.dark .confirm-detalle {
+  background: var(--rose-pale);
+}
+
+html.dark .badge-preparado {
+  background: rgba(212, 133, 10, .16);
+}
+
+html.dark .badge-enviado {
+  background: rgba(74, 122, 181, .18);
+}
+/* Fase 4 */
+html.dark .promo-section { background: var(--rose-pale); }
+html.dark .skel { opacity: .6; }
+html.dark .resenas-login-aviso { background: var(--rose-pale); color: var(--text); }
+
+/* Fase 5 */
+html.dark .field-error { color: #e08a8a; }
+html.dark .pw-strength.weak { color: #e08a8a; }
+html.dark .pw-strength.medium { color: #d8a04a; }
+html.dark .pw-strength.strong { color: #7fc79a; }
+
+/* Fase 6 — admin */
+html.dark .admin-sidebar {
+  background: #141414;
+  color: #E8E0DA;
+  border-right-color: rgba(255, 255, 255, .08);
+}
+
+html.dark .sidebar-link {
+  color: #9A9A8A;
+}
+
+html.dark .sidebar-link:hover,
+html.dark .sidebar-link.active {
+  background: rgba(194, 138, 147, .14);
+  color: #C28A93;
+}
+
+html.dark .admin-main {
+  background: #1A1A1A;
+  color: #E8E0DA;
+}
+
+html.dark .admin-topbar {
+  background: #141414;
+  border-bottom-color: rgba(255, 255, 255, .08);
+}
+
+html.dark .topbar-title {
+  color: #E8E0DA;
+}
+
+html.dark .table-card,
+html.dark .modal,
+html.dark .modal-card,
+html.dark .modal-box {
+  background: #242424;
+  color: #E8E0DA;
+  border-color: rgba(255, 255, 255, .08);
+}
+
+html.dark .dark-toggle-admin {
+  border-color: rgba(255, 255, 255, .14);
+}
+
+/* Mejoras — carrito legible en oscuro */
+html.dark .carrito-page {
+  background: #1A1A1A;
+}
+
+html.dark .carrito-seccion,
+html.dark .carrito-vacio,
+html.dark .carrito-resumen-card {
+  background: #242424;
+  border-color: rgba(255, 255, 255, .1);
+}
+
+html.dark .carrito-header h1,
+html.dark .carrito-seccion-header h2,
+html.dark .carrito-resumen-card h2,
+html.dark .carrito-vacio h2,
+html.dark .carrito-item h3,
+html.dark .carrito-subtotal,
+html.dark .checkout-bloque h3,
+html.dark .turno-checkout-fila strong {
+  color: #E8E0DA;
+}
+
+html.dark .carrito-volver,
+html.dark .checkout-opcion,
+html.dark .btn-vaciar {
+  background: #2E2E2E;
+  border-color: rgba(255, 255, 255, .12);
+  color: #E8E0DA;
+}
+
+html.dark .carrito-mensaje {
+  background: rgba(224, 80, 80, .12);
+  color: #E8E0DA;
+}
+
+html.dark .carrito-item-imagen {
+  background: #2A2025;
+}
+
+html.dark .resumen-total strong {
+  color: #C28A93;
+}
+
+/* ── FIXES reporte usuaria: favoritos, filtros, reseñas, paneles ── */
+
+html.dark .category-bar {
+  background-color: #242424;
+  border-bottom-color: rgba(255, 255, 255, .08);
+}
+
+html.dark .cat-tab {
+  border-color: rgba(255, 255, 255, .14);
+  color: #E8E0DA;
+}
+
+html.dark .product-filters {
+  background-color: #242424;
+}
+
+html.dark .fav-card,
+html.dark .review-card,
+html.dark .resena,
+html.dark .resena-card,
+html.dark .resenas-seccion {
+  background-color: #242424;
+  border-color: rgba(255, 255, 255, .08);
+}
+
+html.dark .fav-card h3,
+html.dark .review-card strong,
+html.dark .resena-autor,
+html.dark .resenas-promedio strong {
+  color: #E8E0DA;
+}
+
+html.dark .estrella-btn {
+  color: #5a534e;
+}
+
+html.dark .estrella-btn.elegida {
+  color: #d8a04a;
+}
+
+html.dark .resena-estrellas {
+  color: #d8a04a;
+}
+
+html.dark .srv-panel,
+html.dark .product-panel {
+  background-color: #242424;
+  color: #E8E0DA;
+}
+
+html.dark .checkout-opcion-card:has(input:checked) {
+  background: #2A2025;
+}
+
+/* ── NUEVOS COMPONENTES: favoritos, modales, check-listas ── */
+
+html.dark .fav-btn,
+html.dark .btn-fav,
+html.dark .service-likes {
+  background: rgba(36, 36, 36, .92);
+}
+
+html.dark .fav-btn:hover,
+html.dark .btn-fav:hover,
+html.dark .fav-btn.active,
+html.dark .btn-fav.active,
+html.dark .service-likes:hover,
+html.dark .service-likes.liked {
+  background: #2E2E2E;
+}
+
+html.dark .modal-close {
+  background: var(--rose-mid);
+  color: var(--rose-deep);
+}
+
+html.dark .modal-close:hover {
+  background: var(--rose-deep);
+  color: var(--text);
+}
+
+html.dark .check-lista {
+  background: #1A1A1A;
+  border-color: rgba(255, 255, 255, .1);
+}
+
+html.dark .check-lista-titulo {
+  color: #9A9A8A;
+}
+
+html.dark .estrella {
+  color: #5a534e;
+}
+
+html.dark .estrella.active {
+  color: #f0a800;
+}
+
+html.dark .form-resena,
+html.dark .resenas-login-aviso {
+  background: var(--rose-pale);
+  border-color: var(--rose-mid);
+}
+
+html.dark .resena-textarea {
+  background: #1A1A1A;
+  border-color: #404040;
+  color: var(--text);
+}
+
+html.dark .btn-nueva-resena-outline,
+html.dark .btn-ver-mas-resenas,
+html.dark .btn-cancelar-resena {
+  color: var(--text-light);
+  border-color: rgba(255, 255, 255, .14);
+}
+
+html.dark .btn-enviar-resena,
+html.dark .btn-nueva-resena {
+  background: var(--rose-deep);
+  color: #1A1A1A;
+}
+
+html.dark .review-card {
+  background: #242424;
+}
+
+/* ── CARRITO: alias y tarjeta ── */
+
+html.dark .btn-copiar-alias,
+html.dark .pago-marca input:checked + span {
+  color: #1A1A1A;
+}
+
+html.dark .pago-alias {
+  background: var(--rose-pale);
+  border-color: var(--rose-deep);
+}
+
+html.dark .pago-alias-valor {
+  color: var(--text);
+}
+
+html.dark .pago-marca span {
+  background: #242424;
+  border-color: rgba(255, 255, 255, .12);
+  color: var(--text);
+}
+
+html.dark .pago-marca:hover span {
+  border-color: var(--rose-deep);
+}
+
+html.dark .medio-pago {
+  background: #242424;
+  border-color: rgba(255, 255, 255, .12);
+  color: var(--text);
+}
+
+html.dark .form-error {
+  color: #E8918F;
+}

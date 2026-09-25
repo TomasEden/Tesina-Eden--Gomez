@@ -1,0 +1,677 @@
+/* ═══════════════════════════════════════════════════════════════
+   Senderos — confirmacion.css
+   Estilos exclusivos de la página de confirmación
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTENEDOR PRINCIPAL
+   ═══════════════════════════════════════════════════════════════ */
+
+.confirm-main {
+  width: min(620px, 100%);
+  min-height: calc(100vh - 68px);
+
+  margin: 68px auto 0;
+  padding: 5rem 1.5rem 4rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   CHECK DE CONFIRMACIÓN
+   ═══════════════════════════════════════════════════════════════ */
+
+.confirm-icon-wrap {
+  margin-bottom: 2rem;
+
+  animation:
+    confirmPopIn
+    0.6s
+    cubic-bezier(0.34, 1.56, 0.64, 1)
+    forwards;
+}
+
+.confirm-circle {
+  width: 90px;
+  height: 90px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: var(--rose-pale);
+  stroke-width: 5;
+}
+
+.circle-fill {
+  fill: none;
+  stroke: var(--success);
+  stroke-width: 5;
+
+  stroke-dasharray: 226;
+  stroke-dashoffset: 226;
+
+  stroke-linecap: round;
+
+  transform-origin: center;
+  transform: rotate(-90deg);
+
+  animation:
+    drawCircle
+    0.7s
+    0.2s
+    ease
+    forwards;
+}
+
+.check-mark {
+  fill: none;
+  stroke: var(--success);
+  stroke-width: 5;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+
+  animation:
+    drawCheck
+    0.4s
+    0.85s
+    ease
+    forwards;
+}
+
+
+@keyframes drawCircle {
+
+  to {
+    stroke-dashoffset: 0;
+  }
+
+}
+
+
+@keyframes drawCheck {
+
+  to {
+    stroke-dashoffset: 0;
+  }
+
+}
+
+
+@keyframes confirmPopIn {
+
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   TÍTULO
+   ═══════════════════════════════════════════════════════════════ */
+
+.confirm-title {
+  margin-bottom: 0.6rem;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(2.2rem, 6vw, 3.2rem);
+
+  font-weight: 300;
+  line-height: 1.1;
+
+  color: var(--text);
+
+  animation:
+    fadeUp
+    0.5s
+    0.5s
+    both;
+}
+
+.confirm-title em {
+  font-style: italic;
+  color: var(--rose-deep);
+}
+
+.confirm-subtitle {
+  margin-bottom: 2.5rem;
+
+  font-size: 0.92rem;
+  color: var(--text-light);
+
+  animation:
+    fadeUp
+    0.5s
+    0.65s
+    both;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   TARJETA DEL PEDIDO
+   ═══════════════════════════════════════════════════════════════ */
+
+.confirm-card {
+  width: 100%;
+
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+
+  border-radius: 24px;
+
+  background: var(--white);
+
+  box-shadow:
+    0 4px 24px
+    rgba(173, 113, 126, 0.09);
+
+  text-align: left;
+
+  animation:
+    fadeUp
+    0.5s
+    0.75s
+    both;
+}
+
+
+.confirm-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  margin-bottom: 1.2rem;
+  padding-bottom: 1.2rem;
+
+  border-bottom:
+    1px solid
+    var(--rose-pale);
+}
+
+
+.confirm-order-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: var(--text-light);
+}
+
+
+.confirm-order-num {
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  color: var(--rose-deep);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ITEMS
+   ═══════════════════════════════════════════════════════════════ */
+
+.confirm-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+
+  margin-bottom: 1.2rem;
+}
+
+
+.confirm-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+.confirm-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+
+.confirm-item-name {
+  overflow: hidden;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  color: var(--text);
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+.confirm-item-meta {
+  margin-top: 0.1rem;
+
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+
+.confirm-item-price {
+  flex-shrink: 0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  color: var(--rose-deep);
+}
+
+
+.confirm-generic {
+  margin: 0;
+
+  font-size: 0.88rem;
+  line-height: 1.6;
+
+  color: var(--text-light);
+}
+
+
+.confirm-divider {
+  height: 1px;
+
+  margin:
+    0.5rem
+    0
+    1.2rem;
+
+  background: var(--sand);
+}
+
+.confirm-detalle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+
+  border-radius: 14px;
+
+  background: var(--cream);
+}
+
+.confirm-detalle-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.confirm-detalle-fila strong {
+  color: var(--text);
+  font-weight: 600;
+  text-align: right;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   TOTALES
+   ═══════════════════════════════════════════════════════════════ */
+
+.confirm-totals {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+
+.confirm-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+
+.confirm-total-row.grand {
+  margin-top: 0.3rem;
+  padding-top: 0.6rem;
+
+  border-top:
+    1px solid
+    var(--sand);
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: var(--text);
+}
+
+
+.confirm-total-row.grand span:last-child {
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.6rem;
+  color: var(--rose-deep);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PASOS
+   ═══════════════════════════════════════════════════════════════ */
+
+.confirm-steps {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  margin-bottom: 2.5rem;
+
+  animation:
+    fadeUp
+    0.5s
+    0.9s
+    both;
+}
+
+
+.confirm-step {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 0.5rem;
+
+  text-align: center;
+}
+
+
+.cstep-num {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--success);
+  color: var(--white);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  box-shadow:
+    0 2px 8px
+    rgba(92, 158, 110, 0.3);
+}
+
+
+.cstep-num.pending {
+  background: var(--white);
+  color: var(--text-light);
+
+  border:
+    2px solid
+    var(--sand);
+
+  box-shadow: none;
+}
+
+
+.cstep-text strong {
+  display: block;
+
+  font-size: 0.78rem;
+  font-weight: 500;
+
+  color: var(--text);
+}
+
+
+.cstep-text span {
+  font-size: 0.7rem;
+  color: var(--text-light);
+}
+
+
+.confirm-step-line {
+  flex: 0.8;
+
+  height: 2px;
+
+  margin-bottom: 1.6rem;
+
+  background:
+    linear-gradient(
+      to right,
+      var(--success),
+      var(--sand)
+    );
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ACCIONES
+   ═══════════════════════════════════════════════════════════════ */
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  margin-bottom: 2rem;
+
+  animation:
+    fadeUp
+    0.5s
+    1s
+    both;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   WHATSAPP
+   ═══════════════════════════════════════════════════════════════ */
+
+.confirm-wa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 0.8rem;
+
+  padding: 1rem 1.5rem;
+
+  border:
+    1px solid
+    #bbf7d0;
+
+  border-radius: 14px;
+
+  background: #f0fdf4;
+
+  font-size: 0.85rem;
+  color: #166534;
+
+  animation:
+    fadeUp
+    0.5s
+    1.1s
+    both;
+}
+
+
+.confirm-wa.hidden {
+  display: none;
+}
+
+
+.btn-wa {
+  display: inline-block;
+
+  padding:
+    0.45rem
+    1.1rem;
+
+  border-radius: 50px;
+
+  background: #25d366;
+  color: var(--white);
+
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+
+.btn-wa:hover {
+  background: #1db954;
+  transform: translateY(-1px);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+
+  .confirm-main {
+    padding:
+      4rem
+      1.2rem
+      3rem;
+  }
+
+
+  .confirm-card {
+    padding: 1.4rem;
+    border-radius: 18px;
+  }
+
+
+  .confirm-card-header {
+    align-items: flex-start;
+  }
+
+
+  .confirm-steps {
+    gap: 0;
+  }
+
+
+  .cstep-text strong {
+    font-size: 0.7rem;
+  }
+
+
+  .cstep-text span {
+    display: none;
+  }
+
+
+  .confirm-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+
+  .confirm-actions a {
+    width: 100%;
+    text-align: center;
+  }
+
+
+  .confirm-wa {
+    flex-direction: column;
+
+    width: 100%;
+
+    text-align: center;
+  }
+
+
+  .confirm-item {
+    gap: 0.7rem;
+  }
+
+
+  .confirm-item-name {
+    font-size: 0.82rem;
+  }
+
+
+  .confirm-item-price {
+    font-size: 1rem;
+  }
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+  .confirm-icon-wrap,
+  .confirm-title,
+  .confirm-subtitle,
+  .confirm-card,
+  .confirm-steps,
+  .confirm-actions,
+  .confirm-wa {
+    animation: none;
+  }
+
+
+  .circle-fill,
+  .check-mark {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+}

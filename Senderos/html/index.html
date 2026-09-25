@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Senderos — Tu momento de pura calma</title>
+<meta content="Explorá servicios y descubrí productos de belleza seleccionados para vos en Senderos, tu espacio de bienestar." name="description"/>
+<link href="../img/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+
+
+
+
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/index.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<body class="page-index" data-pagina="index">
+<!-- NAVBAR -->
+
+<!-- MENÚ MÓVIL -->
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-left">
+<p class="hero-tag">
+        Bienvenida al bienestar
+      </p>
+<h1 class="hero-title">
+        Tu momento de<br/>
+<em>pura calma</em><br/>
+        te espera
+      </h1>
+<p class="hero-desc">
+        Explorá nuestros servicios y descubrí productos de belleza
+        seleccionados para vos. Todo en un solo lugar.
+      </p>
+<div class="hero-actions">
+<a class="btn-primary" href="servicios.html">
+          Ver Servicios
+        </a>
+<a class="btn-outline" href="productos.html">
+          Ver Productos
+        </a>
+</div>
+<div class="hero-stats">
+<div>
+<div class="stat-num" id="statServicios">
+            —
+          </div>
+<div class="stat-label">
+            Servicios
+          </div>
+</div>
+<div>
+<div class="stat-num" id="statProductos">
+            —
+          </div>
+<div class="stat-label">
+            Productos
+          </div>
+</div>
+<div>
+<div class="stat-num" id="statMarcas">
+            —
+          </div>
+<div class="stat-label">
+            Marcas
+          </div>
+</div>
+</div>
+</div>
+<div class="hero-right img-slot">
+<div class="hero-badge">
+<div class="badge-icon">
+<img alt="" height="20" src="../img/icons/logo.png" width="20"/>
+</div>
+<div class="badge-text">
+<strong>
+            Bienestar personalizado
+          </strong>
+
+          Un espacio pensado para vos
+        </div>
+</div>
+</div>
+</section>
+<!-- INFORMACIÓN -->
+<section class="promo-section">
+<div class="promo-track" id="promoTrack">
+<span class="promo-item">
+<span class="promo-dot"></span>
+        General Roca 145
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        3571-616113
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Lun. a sáb. · 8 a 12:30 y 16 a 20 hs
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Domingos y feriados: cerrado
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Envíos a todo el país
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Pagás con transferencia o débito
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Tarjetas: Visa · Mastercard · Cabal · Naranja X · American Express
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Coordiná tu turno por WhatsApp al 3571-616113
+      </span>
+<!-- Segunda copia: el marquee translateX(-50%) necesita el track duplicado
+     para dar la vuelta sin salto. js/ofertas.js lo re-renderiza solo. -->
+<span class="promo-item">
+<span class="promo-dot"></span>
+        General Roca 145
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        3571-616113
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Lun. a sáb. · 8 a 12:30 y 16 a 20 hs
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Domingos y feriados: cerrado
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Envíos a todo el país
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Pagás con transferencia o débito
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Tarjetas: Visa · Mastercard · Cabal · Naranja X · American Express
+      </span>
+<span class="promo-item">
+<span class="promo-dot"></span>
+        Coordiná tu turno por WhatsApp al 3571-616113
+      </span>
+</div>
+</section>
+<!-- CATEGORÍAS -->
+<section class="banners-section reveal">
+<div class="section-header">
+<div>
+<p class="section-tag">
+          Explorá
+        </p>
+<h2 class="section-title">
+          Nuestros servicios
+        </h2>
+</div>
+<a class="see-all" href="servicios.html">
+        Ver todos →
+      </a>
+</div>
+<div class="cat-grid" id="categoriasGrid"></div>
+</section>
+<!-- SERVICIOS DESTACADOS -->
+<section class="services-section reveal">
+<div class="section-header">
+<div>
+<p class="section-tag">
+          Lo más reservado
+        </p>
+<h2 class="section-title">
+          Nuestros Servicios
+        </h2>
+</div>
+<a class="see-all" href="servicios.html">
+        Ver todos →
+      </a>
+</div>
+<div class="services-grid" id="serviciosDestacados">
+<div class="skel"></div>
+<div class="skel"></div>
+<div class="skel"></div>
+</div>
+</section>
+<!-- PRODUCTOS DESTACADOS -->
+<section class="products-section reveal">
+<div class="section-header">
+<div>
+<p class="section-tag">
+          Catálogo
+        </p>
+<h2 class="section-title">
+          Productos destacados
+        </h2>
+</div>
+<a class="see-all" href="productos.html">
+        Ver todos →
+      </a>
+</div>
+<div class="products-grid" id="productosDestacados">
+<div class="skel"></div>
+<div class="skel"></div>
+<div class="skel"></div>
+<div class="skel"></div>
+</div>
+</section>
+<!-- CONTACTO -->
+<section class="contact-section reveal">
+<div class="contact-left">
+<div>
+<p class="section-tag">
+          Encontranos
+        </p>
+<h2 class="section-title">
+          Contacto &amp;<br/>
+          Ubicación
+        </h2>
+</div>
+<div class="contact-info">
+<div class="contact-item">
+<div class="contact-icon">
+<img alt="" height="22" src="../img/icons/ubicacion.svg" width="22"/>
+</div>
+<div class="contact-item-text">
+<strong>
+              Dirección
+            </strong>
+<span>
+              General Roca 145
+            </span>
+</div>
+</div>
+<div class="contact-item">
+<div class="contact-icon">
+<img alt="" height="22" src="../img/icons/telefono.svg" width="22"/>
+</div>
+<div class="contact-item-text">
+<strong>
+              Teléfono / WhatsApp
+            </strong>
+<span>
+              3571-616113
+            </span>
+</div>
+</div>
+<div class="contact-item">
+<div class="contact-icon">
+<img alt="" height="22" src="../img/icons/tiempo.svg" width="22"/>
+</div>
+<div class="contact-item-text">
+<strong>
+              Horario de atención
+            </strong>
+<span>
+              Lunes a sábado · 8 a 12:30 y 16 a 20 hs
+            </span>
+</div>
+</div>
+<div class="contact-item">
+<div class="contact-icon">
+<img alt="" height="22" src="../img/icons/correo.svg" width="22"/>
+</div>
+<div class="contact-item-text">
+<strong>
+              Email
+            </strong>
+<span>
+<a href="mailto:claudia.senderospa@gmail.com">
+                claudia.senderospa@gmail.com
+              </a>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div class="contact-right">
+<div>
+<p class="section-tag">
+          Escribinos
+        </p>
+<h2 class="section-title">
+          Envianos un mensaje
+        </h2>
+</div>
+<form class="contact-form" id="formContacto" novalidate="">
+<div class="form-row">
+<div class="form-group">
+<label for="cNombre">
+              Nombre
+            </label>
+<input autocomplete="name" id="cNombre" name="nombre" placeholder="Tu nombre" type="text"/>
+<p class="field-error" id="err-cNombre"></p>
+</div>
+<div class="form-group">
+<label for="cTelefono">
+              Teléfono
+            </label>
+<input autocomplete="tel" id="cTelefono" name="telefono" placeholder="3571-..." type="tel"/>
+<p class="field-error" id="err-cTelefono"></p>
+</div>
+</div>
+<div class="form-group">
+<label for="cEmail">
+            Email
+          </label>
+<input autocomplete="email" id="cEmail" name="email" placeholder="tu@email.com" type="email"/>
+<p class="field-error" id="err-cEmail"></p>
+</div>
+<div class="form-group">
+<label for="cAsunto">
+            Consulta
+          </label>
+<select id="cAsunto" name="asunto">
+<option value="Información general">
+              Información general
+            </option>
+<option value="Información de servicios">
+              Información de servicios
+            </option>
+<option value="Productos">
+              Productos
+            </option>
+<option value="Otro">
+              Otro
+            </option>
+</select>
+<p class="field-error" id="err-cAsunto"></p>
+</div>
+<div class="form-group">
+<label for="cMensaje">
+            Mensaje
+          </label>
+<textarea id="cMensaje" name="mensaje" placeholder="¿En qué podemos ayudarte?"></textarea>
+<p class="field-error" id="err-cMensaje"></p>
+</div>
+<button class="btn-primary" type="submit">
+          Enviar consulta
+        </button>
+<p class="field-ok">
+          Al enviar se abre WhatsApp con tu mensaje.
+        </p>
+</form>
+</div>
+</section>
+<!-- FOOTER -->
+
+
+
+
+
+
+
+
+
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/ofertas.js"></script><script src="../js/index.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+</html>

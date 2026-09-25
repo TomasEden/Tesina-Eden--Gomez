@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Servicios — Admin Senderos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/admin.css"/>
+  <link rel="stylesheet" href="../css/darkmode.css"/>
+</head>
+<body>
+  <button class="admin-menu-toggle" id="adminMenuToggle" type="button" aria-label="Abrir menú de administración" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="admin-menu-backdrop" id="adminMenuBackdrop"></div>
+
+  <aside class="admin-sidebar">
+    <a href="admin-dashboard.html" class="sidebar-logo"><img src="../img/icons/logo.png" alt="" width="22" height="22" style="vertical-align:middle;margin-right:0.4rem">Senderos <span>Panel Admin</span></a>
+    <nav class="sidebar-nav"><span class="sidebar-section">Principal</span><a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/grafico.svg" alt="" width="15" height="15"></span> Dashboard</a><span class="sidebar-section">Gesti�n</span><a href="admin-turnos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/calendario.svg" alt="" width="13" height="13"></span> Turnos</a><a href="admin-pedidos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/caja.svg" alt="" width="15" height="15"></span> Pedidos</a><a href="admin-clientes.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/usuario.svg" alt="" width="15" height="15"></span> Clientes</a><a href="admin-servicios.html" class="sidebar-link active"><span class="sidebar-icon"><img src="../img/icons/servicio.svg" alt="" width="15" height="15"></span> Servicios</a><a href="admin-productos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/bolsa.svg" alt="" width="15" height="15"></span> Productos</a><a href="admin-ofertas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/oferta.svg" alt="" width="14" height="14"></span> Ofertas</a><a href="admin-resenas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/ver.svg" alt="" width="15" height="15"></span> Reseñas</a><span class="sidebar-section">Sitio</span><a href="index.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/web.svg" alt="" width="15" height="15"></span> Ver sitio</a></nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">A</div>
+        <div><div class="sidebar-user-name">Administrador</div><div class="sidebar-user-role">Admin</div></div>
+      </div>
+      <button class="sidebar-logout" id="btnAdminLogout">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1 class="topbar-title">Gestión de Servicios</h1>
+      <div class="topbar-right">
+        <button class="btn-primary" onclick="abrirModalNuevo()">+ Nuevo servicio</button>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <div class="table-card">
+        <div class="table-header">
+          <h3 class="table-title">Servicios del spa</h3>
+          <div class="table-actions">
+            <div class="search-input-wrap">
+              <input type="text" id="searchInput" placeholder="Buscar..." oninput="filtrar()"/>
+            </div>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Servicio</th>
+              <th>Categoría</th>
+              <th>Duración</th>
+              <th>Precio</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="serviciosBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL CREAR / EDITAR -->
+  <div class="modal-overlay hidden" id="modalForm">
+    <div class="modal">
+      <button class="modal-close" type="button" aria-label="Cerrar" onclick="cerrarModal('modalForm')"><img src="../img/icons/x.svg" alt="" width="16" height="16"></button>
+      <h2 class="modal-title" id="modalFormTitle">Nuevo servicio</h2>
+      <input type="hidden" id="editId"/>
+      <div class="form-grid form-grid-2">
+        <div class="field-group" style="grid-column:1/-1">
+          <label>Nombre del servicio</label>
+          <input type="text" id="fNombre" placeholder="Ej: Masaje Relajante"/>
+          <span class="field-error" id="err-nombre"></span>
+        </div>
+        <div class="field-group">
+          <label>Categoría</label>
+          <input type="text" id="fCategoria" placeholder="Ej: Masaje corporal" list="datalistCategorias" autocomplete="off"/>
+          <datalist id="datalistCategorias"></datalist>
+        </div>
+        <div class="field-group">
+          <label>Duración (min)</label>
+          <input type="number" id="fDuracion" placeholder="60"/>
+          <span class="field-error" id="err-duracion"></span>
+        </div>
+        <div class="field-group">
+          <label>Precio ($)</label>
+          <input type="number" id="fPrecio" placeholder="5000"/>
+          <span class="field-error" id="err-precio"></span>
+        </div>
+        <div class="field-group">
+          <label>URL de imagen</label>
+          <input type="text" id="fImg" placeholder="https://..."/>
+        </div>
+        <div class="field-group" style="grid-column:1/-1">
+          <label>Descripción</label>
+          <textarea id="fDesc" placeholder="Descripción del servicio..."></textarea>
+        </div>
+        <div class="field-group">
+          <label>Badge (etiqueta)</label>
+          <input type="text" id="fBadge" placeholder="Ej: Popular, Nuevo"/>
+        </div>
+        <div class="field-group">
+          <label>Texto del badge</label>
+          <input type="text" id="fBadgeTexto" placeholder="Ej: Más elegido"/>
+        </div>
+        <div class="field-group" style="grid-column:1/-1">
+          <label>¿Qué incluye? (separado con |)</label>
+          <textarea id="fIncluye" placeholder="Ej: Masaje corporal completo | Aromaterapia"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" onclick="cerrarModal('modalForm')">Cancelar</button>
+        <button class="btn-primary" onclick="guardarServicio()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ELIMINAR -->
+  <div class="modal-overlay hidden" id="modalEliminar">
+    <div class="modal modal-confirm">
+      <button class="modal-close" type="button" aria-label="Cerrar" onclick="cerrarModal('modalEliminar')"><img src="../img/icons/x.svg" alt="" width="16" height="16"></button>
+      <div class="modal-confirm-icon"><img src="../img/icons/basura.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem"></div>
+      <h2 class="modal-confirm-title">¿Eliminar servicio?</h2>
+      <p class="modal-confirm-desc">Esta acción no se puede deshacer.</p>
+      <div class="modal-confirm-actions">
+        <button class="btn-ghost" onclick="cerrarModal('modalEliminar')">Cancelar</button>
+        <button class="btn-danger" onclick="confirmarEliminar()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="../js/admin-servicios.js"></script>
+  <script src="../js/darkmode.js"></script>
+  <script src="../js/admin-shell.js"></script>
+<script src="../js/iconos-adaptativos.js"></script>
+</body>
+</html>

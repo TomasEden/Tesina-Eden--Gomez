@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mis Turnos &amp; Pedidos | Senderos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+
+
+
+
+<link href="../img/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+<meta content="Consultá tus turnos y pedidos de Senderos." name="description"/>
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/mis-turnos.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<body data-pagina="mis-turnos">
+
+
+<section class="page-hero">
+<div class="page-hero-content">
+<p class="page-tag">
+        Tu cuenta
+      </p>
+<h1 class="page-title">
+        Mis turnos <em>&amp;</em> pedidos
+      </h1>
+<p class="page-desc">
+        Revisá tus reservas y seguí el estado
+        de tus pedidos.
+      </p>
+</div>
+<img alt="" aria-hidden="true" class="page-hero-img" src="../img/placeholder.svg"/>
+<div aria-hidden="true" class="page-hero-overlay"></div>
+</section>
+<main class="mt-layout">
+<div aria-label="Contenido de mi cuenta" class="main-tabs" role="tablist">
+<button aria-selected="true" class="main-tab active" data-tab="tabTurnos" role="tab" type="button">
+<img alt="" height="16" src="../img/icons/calendario.svg" width="16"/>
+
+        Turnos
+
+        <span class="tab-badge" id="badgeTurnos">0</span>
+</button>
+<button aria-selected="false" class="main-tab" data-tab="tabPedidos" role="tab" type="button">
+<img alt="" height="16" src="../img/icons/paquete.svg" width="16"/>
+
+        Pedidos
+
+        <span class="tab-badge" id="badgePedidos">0</span>
+</button>
+</div>
+<section class="tab-panel active" id="tabTurnos" role="tabpanel">
+<div class="mt-filters">
+<button class="filter-tab active" data-estado="todos" type="button">
+          Todos
+        </button>
+<button class="filter-tab" data-estado="pendiente" type="button">
+          Pendientes
+        </button>
+<button class="filter-tab" data-estado="confirmado" type="button">
+          Confirmados
+        </button>
+<button class="filter-tab" data-estado="cancelado" type="button">
+          Cancelados
+        </button>
+</div>
+<div class="mt-list" id="turnosList"></div>
+<div class="mt-empty hidden" id="turnosEmpty">
+<div class="empty-icon">
+<img alt="" height="48" src="../img/icons/calendario.svg" width="48"/>
+</div>
+<h2 class="empty-title">
+          No tenés turnos aún
+        </h2>
+<p class="empty-desc">
+          Reservá tu primer turno y aparecerá aquí.
+        </p>
+<a class="btn-primary" href="servicios.html">
+          Reservar ahora
+        </a>
+</div>
+</section>
+<section class="tab-panel" id="tabPedidos" role="tabpanel">
+<div class="mt-list" id="pedidosList"></div>
+<div class="mt-empty hidden" id="pedidosEmpty">
+<div class="empty-icon">
+<img alt="" height="48" src="../img/icons/paquete.svg" width="48"/>
+</div>
+<h2 class="empty-title">
+          No tenés pedidos aún
+        </h2>
+<p class="empty-desc">
+          Cuando compres productos aparecerán aquí
+          con su estado.
+        </p>
+<a class="btn-primary" href="productos.html">
+          Ver productos
+        </a>
+</div>
+</section>
+</main>
+<div aria-labelledby="modalCancelarTitulo" aria-modal="true" class="modal-overlay hidden" id="modalCancelar" role="dialog">
+<div class="modal">
+<div class="modal-icon">
+<img alt="" height="48" src="../img/icons/advertencia.svg" width="48"/>
+</div>
+<h2 class="modal-title" id="modalCancelarTitulo">
+        ¿Cancelar turno?
+      </h2>
+<p class="modal-desc">
+        Esta acción no se puede deshacer.
+      </p>
+<div class="modal-actions">
+<button class="btn-outline" id="btnModalVolver" type="button">
+          Volver
+        </button>
+<button class="btn-danger" id="btnModalConfirmar" type="button">
+          Sí, cancelar
+        </button>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/mis-turnos.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+</html>

@@ -1,0 +1,765 @@
+/* ═══════════════════════════════════════
+   Senderos — registro.css
+   Estilos exclusivos de registro
+   ═══════════════════════════════════════ */
+
+.registro-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.82fr);
+  background: var(--cream);
+}
+
+
+/* ─────────────────────────────────────
+   PANEL VISUAL
+   ───────────────────────────────────── */
+
+.side-panel {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem clamp(2rem, 5vw, 5rem);
+  isolation: isolate;
+  background: var(--text);
+}
+
+.side-img {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.side-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+
+  background:
+    linear-gradient(
+      160deg,
+      rgba(173, 113, 126, 0.82) 0%,
+      rgba(69, 99, 77, 0.88) 100%
+    );
+}
+
+.side-logo {
+  position: relative;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+
+  width: fit-content;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+}
+
+.side-logo img {
+  width: 27px;
+  height: 27px;
+
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.side-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 450px;
+
+  margin: auto 0;
+  padding: 4rem 0;
+}
+
+.side-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  margin: 0 0 1.2rem;
+
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: var(--rose-mid);
+}
+
+.side-tag::before {
+  content: "";
+
+  width: 28px;
+  height: 1px;
+
+  background: var(--rose-mid);
+}
+
+.side-title {
+  margin: 0 0 1.2rem;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 300;
+  line-height: 0.98;
+
+  color: var(--white);
+}
+
+.side-title em {
+  font-style: italic;
+  color: #f3cfd4;
+}
+
+.side-desc {
+  max-width: 370px;
+  margin: 0 0 2rem;
+
+  font-size: 0.9rem;
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.side-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  flex: 0 0 36px;
+
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.feature-icon img {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+}
+
+
+/* ─────────────────────────────────────
+   PANEL DEL FORMULARIO
+   ───────────────────────────────────── */
+
+.form-panel {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 3rem clamp(1.5rem, 5vw, 5rem);
+
+  background: var(--cream);
+  overflow-y: auto;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 440px;
+
+  animation: fadeUp 0.5s ease both;
+}
+
+.form-header {
+  margin-bottom: 2.4rem;
+}
+
+.form-header .section-tag {
+  margin-bottom: 0.7rem;
+}
+
+.form-title {
+  margin: 0 0 0.5rem;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1;
+
+  color: var(--text);
+}
+
+.form-subtitle {
+  margin: 0;
+
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.form-subtitle a {
+  color: var(--rose-deep);
+  font-weight: 500;
+  text-decoration: none;
+
+  transition: opacity 0.2s ease;
+}
+
+.form-subtitle a:hover {
+  opacity: 0.72;
+}
+
+
+/* ─────────────────────────────────────
+   PASOS
+   ───────────────────────────────────── */
+
+.step {
+  animation: fadeUp 0.35s ease both;
+}
+
+.step.hidden {
+  display: none;
+}
+
+.step-label {
+  margin: 0 0 0.6rem;
+
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: var(--text-light);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 3px;
+
+  margin-bottom: 2rem;
+
+  overflow: hidden;
+
+  background: var(--sand);
+  border-radius: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+
+  background: var(--rose-deep);
+  border-radius: 10px;
+
+  transition: width 0.4s ease;
+}
+
+
+/* ─────────────────────────────────────
+   CAMPOS
+   ───────────────────────────────────── */
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  margin-bottom: 1rem;
+}
+
+.field-group label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  color: var(--text-light);
+}
+
+.input-icon-wrap {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.9rem;
+
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+
+  pointer-events: none;
+}
+
+.input-icon img {
+  width: 14px;
+  height: 14px;
+
+  object-fit: contain;
+}
+
+.field-group input {
+  width: 100%;
+  min-height: 46px;
+
+  padding: 0.8rem 1rem;
+
+  border: 1.5px solid var(--sand);
+  border-radius: 12px;
+
+  background: var(--white);
+  color: var(--text);
+
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.88rem;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.input-icon-wrap input {
+  padding-left: 2.6rem;
+}
+
+.field-group input::placeholder {
+  color: var(--text-light);
+  opacity: 0.7;
+}
+
+.field-group input:focus {
+  border-color: var(--rose-deep);
+
+  box-shadow:
+    0 0 0 3px rgba(173, 113, 126, 0.1);
+}
+
+.field-group input.error {
+  border-color: var(--error);
+}
+
+.field-error {
+  display: block;
+
+  min-height: 1rem;
+
+  font-size: 0.74rem;
+  line-height: 1.4;
+
+  color: var(--error);
+}
+
+.terms-error {
+  margin-top: -0.1rem;
+}
+
+
+/* ─────────────────────────────────────
+   CONTRASEÑA
+   ───────────────────────────────────── */
+
+.toggle-pw {
+  position: absolute;
+  right: 0.8rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.toggle-pw img {
+  width: 14px;
+  height: 14px;
+
+  object-fit: contain;
+  opacity: 0.7;
+
+  transition: opacity 0.2s ease;
+}
+
+.toggle-pw:hover img {
+  opacity: 1;
+}
+
+.pw-strength {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  min-height: 1rem;
+  margin-top: 0.2rem;
+
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.pw-strength img {
+  width: 13px;
+  height: 13px;
+
+  object-fit: contain;
+}
+
+.pw-strength.weak {
+  color: var(--error);
+}
+
+.pw-strength.medium {
+  color: #d4850a;
+}
+
+.pw-strength.strong {
+  color: var(--success);
+}
+
+
+/* ─────────────────────────────────────
+   TÉRMINOS
+   ───────────────────────────────────── */
+
+.field-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+
+  margin: 0 0 0.25rem;
+}
+
+.field-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+
+  flex: 0 0 16px;
+
+  margin: 0.1rem 0 0;
+
+  accent-color: var(--rose-deep);
+  cursor: pointer;
+}
+
+.field-check label {
+  font-size: 0.8rem;
+  line-height: 1.5;
+
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.field-check label a {
+  color: var(--rose-deep);
+  text-decoration: none;
+}
+
+.field-check label a:hover {
+  text-decoration: underline;
+}
+
+
+/* ─────────────────────────────────────
+   BOTONES
+   ───────────────────────────────────── */
+
+.btn-row {
+  display: flex;
+  gap: 0.8rem;
+
+  margin-top: 0.7rem;
+}
+
+.btn-row .btn-primary {
+  flex: 2;
+}
+
+.btn-row .btn-outline {
+  flex: 1;
+}
+
+.btn-row button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* ─────────────────────────────────────
+   ÉXITO
+   ───────────────────────────────────── */
+
+.exito-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 3rem 1rem;
+
+  text-align: center;
+
+  animation: fadeUp 0.5s ease both;
+}
+
+.exito-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 76px;
+  height: 76px;
+
+  margin-bottom: 1.5rem;
+
+  border-radius: 50%;
+
+  background: var(--rose-pale);
+
+  animation: float 2s ease-in-out infinite;
+}
+
+.exito-icon img {
+  width: 44px;
+  height: 44px;
+
+  object-fit: contain;
+}
+
+.exito-title {
+  margin: 0 0 0.8rem;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+
+  color: var(--text);
+}
+
+.exito-desc {
+  margin: 0 0 2rem;
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+
+  color: var(--text-light);
+}
+
+.exito-loader {
+  width: 40px;
+  height: 40px;
+
+  border: 3px solid var(--rose-mid);
+  border-top-color: var(--rose-deep);
+
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+}
+
+
+/* ─────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────── */
+
+@media (max-width: 900px) {
+
+  .registro-page {
+    grid-template-columns: minmax(0, 0.85fr) minmax(380px, 1fr);
+  }
+
+  .side-panel {
+    padding: 2rem;
+  }
+
+  .side-title {
+    font-size: clamp(2.7rem, 6vw, 4.3rem);
+  }
+
+  .form-panel {
+    padding: 2.5rem 2rem;
+  }
+}
+
+
+@media (max-width: 760px) {
+
+  .registro-page {
+    display: block;
+  }
+
+  .side-panel {
+    min-height: 240px;
+
+    padding: 1.5rem;
+
+    justify-content: flex-start;
+  }
+
+  .side-content {
+    margin: auto 0;
+    padding: 2rem 0 0;
+  }
+
+  .side-title {
+    font-size: 2.3rem;
+  }
+
+  .side-desc {
+    max-width: 420px;
+    margin-bottom: 0;
+  }
+
+  .side-features {
+    display: none;
+  }
+
+  .form-panel {
+    min-height: auto;
+
+    padding: 2.5rem 1.5rem 3rem;
+  }
+
+  .form-container {
+    max-width: 500px;
+  }
+}
+
+
+@media (max-width: 560px) {
+
+  .side-panel {
+    min-height: 150px;
+
+    padding: 1.2rem 1.5rem;
+  }
+
+  .side-tag {
+    display: none;
+  }
+
+  .side-content {
+    padding: 1rem 0 0;
+  }
+
+  .side-title {
+    font-size: 1.8rem;
+  }
+
+  .side-desc {
+    display: none;
+  }
+
+  .form-panel {
+    padding: 2rem 1.2rem 3rem;
+  }
+
+  .form-title {
+    font-size: 2.3rem;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .btn-row {
+    flex-direction: column-reverse;
+  }
+
+  .btn-row .btn-primary,
+  .btn-row .btn-outline {
+    flex: none;
+    width: 100%;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+  .form-container,
+  .step,
+  .exito-wrap {
+    animation: none;
+  }
+
+  .exito-icon,
+  .exito-loader {
+    animation: none;
+  }
+
+  .progress-fill,
+  .toggle-pw,
+  .form-subtitle a {
+    transition: none;
+  }
+}
+.pw-strength { min-height: 1.2rem; font-size: .75rem; color: var(--text-light); }
+.pw-strength.weak { color: var(--error); }
+.pw-strength.medium { color: var(--warning); }
+.pw-strength.strong { color: var(--success); }
+.field-error { min-height: 1rem; font-size: .72rem; color: var(--error); }
+.toggle-pw { background: none; border: none; cursor: pointer; color: var(--text-light); padding: .3rem; }
+@media (max-width: 900px) { .registro-page { grid-template-columns: 1fr; } .side-panel { display: none; } }
+
+
+/* -- NACIMIENTO DIA/MES/ANIO -- */
+
+.nacimiento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: 0.6rem;
+}
+
+.nacimiento-grid select {
+  width: 100%;
+  padding: 0.7rem 0.6rem;
+  border: 1px solid var(--sand);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--text);
+  font-size: 0.82rem;
+}

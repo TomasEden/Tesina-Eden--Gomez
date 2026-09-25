@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Buscar — Senderos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+
+
+
+
+<link href="../img/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/buscar.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<body data-pagina="buscar">
+
+
+<main>
+<section class="search-hero">
+<div class="search-hero-inner">
+<p class="search-tag">
+          ¿Qué estás buscando?
+        </p>
+<h1 class="search-title">
+          Buscar en <em>Senderos</em>
+</h1>
+<div class="search-box-wrap">
+<img alt="" class="search-icon" height="20" src="../img/icons/lupa.svg" width="20"/>
+<input aria-label="Buscar servicios y productos" autocomplete="off" autofocus="" class="search-input" id="searchInput" placeholder="Crema hidratante, masaje, facial..." type="text"/>
+<button aria-label="Limpiar búsqueda" class="search-clear hidden" id="btnClear" type="button">
+<img alt="" height="12" src="../img/icons/x.svg" width="12"/>
+</button>
+</div>
+<div aria-label="Filtrar resultados" class="search-filters" id="searchFilters" role="group">
+<button class="sf-chip active" data-tipo="todo" type="button">
+            Todo
+          </button>
+<button class="sf-chip" data-tipo="servicio" type="button">
+            Servicios
+          </button>
+<button class="sf-chip" data-tipo="producto" type="button">
+            Productos
+          </button>
+</div>
+</div>
+</section>
+<section aria-live="polite" class="search-body">
+<div class="search-state" id="stateInitial">
+<p class="state-hint">
+          Escribí al menos 2 caracteres para buscar
+        </p>
+<div class="search-suggestions">
+<p class="sug-label">
+            Búsquedas frecuentes
+          </p>
+<div class="sug-chips">
+<button data-sugerencia="masaje" type="button">
+              Masaje
+            </button>
+<button data-sugerencia="facial" type="button">
+              Facial
+            </button>
+<button data-sugerencia="crema" type="button">
+              Crema
+            </button>
+<button data-sugerencia="hidratante" type="button">
+              Hidratante
+            </button>
+<button data-sugerencia="jacuzzi" type="button">
+              Jacuzzi
+            </button>
+<button data-sugerencia="aceite" type="button">
+              Aceite
+            </button>
+</div>
+</div>
+</div>
+<div class="search-state hidden" id="stateEmpty">
+<div class="empty-icon">
+<img alt="" height="48" src="../img/icons/lupa.svg" width="48"/>
+</div>
+<p class="empty-title">
+          Sin resultados para
+          "<span id="emptyQuery"></span>"
+        </p>
+<p class="empty-hint">
+          Probá con otra palabra o explorá
+          el catálogo completo.
+        </p>
+<div class="empty-actions">
+<a class="btn-outline" href="servicios.html">
+            Ver servicios
+          </a>
+<a class="btn-outline" href="productos.html">
+            Ver productos
+          </a>
+</div>
+</div>
+<div class="search-results hidden" id="searchResults">
+<p class="results-count" id="resultsCount"></p>
+<section class="results-section" id="secServicios">
+<h2 class="results-section-title">
+<img alt="" height="18" src="../img/icons/servicio.svg" width="18"/>
+
+            Servicios
+
+          </h2>
+<div class="results-grid" id="gridServicios"></div>
+</section>
+<section class="results-section" id="secProductos">
+<h2 class="results-section-title">
+<img alt="" height="18" src="../img/icons/bolsa.svg" width="18"/>
+
+            Productos
+
+          </h2>
+<div class="results-grid" id="gridProductos"></div>
+</section>
+</div>
+</section>
+</main>
+
+
+
+
+
+
+
+
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/buscar.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+</html>

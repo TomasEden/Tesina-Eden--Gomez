@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ingresar | Senderos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+
+
+
+
+<link href="../img/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+<meta content="Ingresá a tu cuenta en Senderos para gestionar tus turnos y pedidos." name="description"/>
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/login.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<body data-pagina="login">
+<main class="login-page">
+<aside class="login-side">
+<a class="side-logo" href="index.html">
+<img alt="Senderos" height="26" src="../img/icons/logo.png" width="26"/>
+<span>Senderos</span>
+</a>
+<div class="side-content">
+<p class="side-tag">
+          Bienvenida
+        </p>
+<h1 class="side-title">
+          Tu bienestar
+          <br/>
+          empieza
+          <br/>
+<em>aquí</em>
+</h1>
+<p class="side-desc">
+          Accedé a tus turnos, pedidos,
+          favoritos y beneficios
+          exclusivos de Senderos.
+        </p>
+</div>
+<img alt="Espacio de bienestar de Senderos" class="side-img" loading="lazy" src="../img/placeholder.svg"/>
+<div aria-hidden="true" class="side-overlay"></div>
+</aside>
+<section class="login-form-section">
+<div class="login-form-wrap">
+<a class="mobile-logo" href="index.html">
+<img alt="Senderos" height="26" src="../img/icons/logo.png" width="26"/>
+<span>Senderos</span>
+</a>
+<div class="form-header">
+<p class="section-tag">
+            Mi cuenta
+          </p>
+<h2>
+            Ingresar
+          </h2>
+<p>
+            Ingresá para continuar
+            con tu experiencia en Senderos.
+          </p>
+</div>
+<form id="loginForm" novalidate="">
+<div class="form-group">
+<label for="email">
+              Email
+            </label>
+<input autocomplete="email" id="email" inputmode="email" name="email" placeholder="tu@email.com" required="" type="email"/>
+<span aria-live="polite" class="field-error" id="err-email" role="alert"></span>
+</div>
+<div class="form-group">
+<div class="label-row">
+<label for="password">
+                Contraseña
+              </label>
+<a href="#" id="linkOlvido">
+                ¿Olvidaste tu contraseña?
+              </a>
+</div>
+<div class="password-wrap">
+<input autocomplete="current-password" id="password" name="password" placeholder="Tu contraseña" required="" type="password"/>
+<button aria-label="Mostrar contraseña" aria-pressed="false" class="toggle-pw" id="btnTogglePw" type="button">
+<img alt="" height="14" src="../img/icons/ver.svg" width="14"/>
+</button>
+</div>
+<span aria-live="polite" class="field-error" id="err-password" role="alert"></span>
+</div>
+<label class="check-row" for="recordar">
+<input id="recordar" name="recordar" type="checkbox"/>
+<span>
+              Recordarme en este dispositivo
+            </span>
+</label>
+<button class="btn-primary login-submit" id="btnLogin" type="submit">
+<span id="btnText">
+              Ingresar
+            </span>
+<span aria-hidden="true" class="btn-loader hidden" id="btnLoader"></span>
+</button>
+</form>
+<div class="form-divider">
+<span>o</span>
+</div>
+<p class="register-link">
+          ¿Todavía no tenés una cuenta?
+          <a href="registro.html">
+            Crear una cuenta
+          </a>
+</p>
+<p class="register-link">
+          ¿Sos administrador?
+          <a href="admin-login.html">
+            Ingresar como administrador
+          </a>
+</p>
+<a class="back-link" href="index.html">
+<img alt="" height="12" src="../img/icons/x.svg" width="12"/>
+          Volver al inicio
+        </a>
+</div>
+</section>
+</main>
+
+
+
+
+
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/login.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+</html>
