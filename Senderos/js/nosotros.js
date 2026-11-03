@@ -1,6 +1,6 @@
 /* Senderos — nosotros.js
    Muro de marcas (sale de las marcas reales del catálogo).
-   Para sumar el logo de una marca, agregá su imagen en img/marcas/
+   Los logos viven en img/Otros/; si falta uno, se busca en img/marcas/
    con el nombre en minúsculas y sin espacios (ej: selecta.png).
 */
 
@@ -10,6 +10,13 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!grid) {
     return;
   }
+
+  var LOGOS = {
+    jules: '../img/Otros/jules-logo.jpg',
+    milamarzi: '../img/Otros/mila-marzi-logo.jpg',
+    natachanina: '../img/Otros/natacha-nina-logo.jpg',
+    selecta: '../img/Otros/selecta-logo.jpg'
+  };
 
   fetch('../api/productos.php', {
     credentials: 'same-origin',
@@ -45,17 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {
         var card = document.createElement('div');
         card.className = 'marca-card';
 
-        var archivo =
-          '../img/marcas/' +
-          marca
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z0-9]+/g, '') +
-          '.png';
+        var clave = marca
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '');
 
         var img = document.createElement('img');
-        img.src = archivo;
+        img.src = LOGOS[clave] || '../img/marcas/' + clave + '.png';
         img.alt = marca;
         img.loading = 'lazy';
         img.onerror = function () {
@@ -67,10 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         card.appendChild(img);
-
-        var pie = document.createElement('span');
-        pie.textContent = marca;
-        card.appendChild(pie);
 
         grid.appendChild(card);
       });

@@ -342,6 +342,14 @@ try {
                 ], 404);
             }
 
+            if ((int)$producto['stock_cantidad'] <= 0) {
+                jsonResponse([
+                    'ok' => false,
+                    'mensaje' =>
+                        'Este producto se quedó sin stock'
+                ], 409);
+            }
+
             $cantidadActual =
                 (int)(
                     $carrito['productos'][$id] ?? 0
@@ -358,14 +366,6 @@ try {
                     'ok' => false,
                     'mensaje' =>
                         'No hay suficiente stock disponible'
-                ], 409);
-            }
-
-            if ((int)$producto['stock_cantidad'] <= 0) {
-                jsonResponse([
-                    'ok' => false,
-                    'mensaje' =>
-                        'Este producto se quedó sin stock'
                 ], 409);
             }
 

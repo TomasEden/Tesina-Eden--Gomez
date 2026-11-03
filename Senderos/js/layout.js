@@ -119,7 +119,7 @@ function crearNavbar() {
 
   navbar.innerHTML =
     '<a href="index.html" class="nav-logo">' +
-      '<img src="../img/icons/logo.png" alt="Senderos" width="26" height="26">' +
+      '<span class="nav-logo-icon" aria-hidden="true"></span>' +
       'Senderos' +
     '</a>' +
 
@@ -319,7 +319,7 @@ function crearFooter() {
 
       '<div class="footer-brand-col">' +
         '<div class="footer-brand">' +
-          '<img src="../img/icons/logo.png" alt="Senderos" width="26" height="26">' +
+          '<span class="nav-logo-icon" aria-hidden="true"></span>' +
           '<span>Senderos</span>' +
         '</div>' +
         '<p class="footer-desc">Tu espacio de bienestar en Río Tercero: spa y tienda de cosmética.</p>' +

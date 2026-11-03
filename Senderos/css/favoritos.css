@@ -12,7 +12,7 @@
 
 .favoritos-page .page-title {
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-size: clamp(2.75rem, 4.5vw, 3.5rem);
   font-weight: 400;
   color: var(--text);
   line-height: 1.05;

@@ -4,6 +4,20 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
 
+header('Cache-Control: no-store');
+
+/*
+ * Solo POST: un GET a logout.php cerraría la sesión de cualquiera que siga
+ * un enlace (CSRF de logout). El front ya envía POST (ver js/sesion.js y
+ * js/admin-shell.js).
+ */
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    jsonResponse([
+        'ok' => false,
+        'mensaje' => 'Método no permitido'
+    ], 405);
+}
+
 /*
  * Fase E — cierre de sesión SIN perder el carrito.
  *

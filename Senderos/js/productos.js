@@ -853,22 +853,10 @@ function toggleFavoritoProducto(id, boton) {
 }
 
 function aplicarToggleFavoritoProducto(id, boton) {
-  var lista = leerFavoritosProductos();
   var num = Number(id);
-  var idx = lista.indexOf(num);
+  var activo = !esFavoritoProducto(num);
 
-  if (idx === -1) {
-    lista.push(num);
-  } else {
-    lista.splice(idx, 1);
-  }
-
-  try {
-    window.localStorage.setItem('senderos-likes-productos', JSON.stringify(lista));
-  } catch (e) {}
-
-  var activo = idx === -1;
-
+  /* Se pinta al instante (optimista) y se confirma contra la BD. */
   if (boton) {
     boton.classList.toggle('active', activo);
     boton.setAttribute('aria-pressed', String(activo));
@@ -895,6 +883,22 @@ function aplicarToggleFavoritoProducto(id, boton) {
   if (typeof window.showToast === 'function') {
     window.showToast(activo ? 'Agregado a favoritos' : 'Quitado de favoritos');
   }
+
+  window.FAVORITOS.alternar('producto', num).catch(function (error) {
+    /* Si el servidor rechazó, se revierte el pintado y se avisa. */
+    if (boton) {
+      boton.classList.toggle('active', !activo);
+      boton.setAttribute('aria-pressed', String(!activo));
+      boton.setAttribute(
+        'aria-label',
+        !activo ? 'Quitar de favoritos' : 'Agregar a favoritos'
+      );
+    }
+
+    if (typeof window.showToast === 'function') {
+      window.showToast(error.message || 'No se pudo guardar el favorito.');
+    }
+  });
 }
 
 function limpiarFiltrosProductos() {

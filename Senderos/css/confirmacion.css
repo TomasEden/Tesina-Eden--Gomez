@@ -675,3 +675,97 @@
   }
 
 }
+
+/* ── Pago simulado / cupón / QR ── */
+
+.confirm-sim-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .55rem;
+  width: 100%;
+  margin-top: .85rem;
+  padding: .9rem;
+  border: 1px dashed rgba(173, 113, 126, .55);
+  border-radius: 14px;
+  background: rgba(173, 113, 126, .07);
+  text-align: center;
+}
+
+.confirm-sim-box > strong {
+  color: var(--rose-deep);
+  font-size: .7rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.confirm-sim-box > p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--text-light);
+  font-size: .7rem;
+  line-height: 1.5;
+}
+
+.confirm-cupon-sim {
+  padding: .65rem 1rem;
+  border: 1px dashed var(--rose-deep);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--text);
+  font: 600 1rem/1 "DM Sans", sans-serif;
+  letter-spacing: .12em;
+}
+
+.confirm-qr-sim {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+}
+
+.confirm-qr-grid {
+  display: grid;
+  grid-template-columns: repeat(21, 1fr);
+  width: 168px;
+  height: 168px;
+  padding: 7px;
+  border: 1px solid var(--sand);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.confirm-qr-grid span {
+  display: block;
+  background: #fff;
+}
+
+.confirm-qr-grid span.is-dark {
+  background: #2b2326;
+}
+
+.confirm-qr-sim small {
+  color: var(--text-light);
+  font-size: .62rem;
+}
+
+html.dark .confirm-sim-box {
+  border-color: rgba(194, 138, 147, .48);
+  background: rgba(194, 138, 147, .1);
+}
+
+html.dark .confirm-sim-box > strong {
+  color: var(--rose);
+}
+
+html.dark .confirm-cupon-sim {
+  background: #1f1f1f;
+}
+
+@media (max-width: 400px) {
+  .confirm-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+}

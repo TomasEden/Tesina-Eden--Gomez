@@ -341,8 +341,8 @@ function tarjetaServicio(servicio) {
   footer.appendChild(price);
 
   var cta = document.createElement('span');
-  cta.className = 'result-card-cta';
-  cta.textContent = 'Reservar →';
+  cta.className = 'result-card-cta result-card-cta--link';
+  cta.textContent = 'Reservar';
   footer.appendChild(cta);
 
   body.appendChild(footer);
@@ -398,8 +398,10 @@ function tarjetaProducto(producto) {
   footer.appendChild(price);
 
   var cta = document.createElement('span');
-  cta.className = 'result-card-cta';
-  cta.textContent = producto.stock ? 'Ver →' : 'Sin stock';
+  cta.className = producto.stock
+    ? 'result-card-cta result-card-cta--link'
+    : 'result-card-cta';
+  cta.textContent = producto.stock ? 'Ver' : 'Sin stock';
   footer.appendChild(cta);
 
   body.appendChild(footer);

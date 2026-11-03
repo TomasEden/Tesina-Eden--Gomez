@@ -7,24 +7,38 @@ declare(strict_types=1);
  * Crea el pedido + turnos en una transacción a partir del carrito de sesión.
  * Los servicios con igual fecha y hora se agrupan en un solo turno.
  *
- * Un pedido NUNCA mezcla productos y servicios: pago_grupo decide qué se
- * factura en este pedido y lo que queda afuera sigue en el carrito.
+ * pago_grupo = "todo" permite pagar productos y servicios juntos en un solo
+ * pedido, manteniendo el desglose por grupo. También se conservan las opciones
+ * "productos" y "servicios" para pagar solo una parte.
+ *
+ * Los métodos tarjeta_online, billetera, transferencia_qr y efectivo son
+ * simulaciones locales claramente identificadas. No representan un cobro real
+ * ni acreditan dinero. El servidor recibe solo la marca y los últimos 4 dígitos
+ * de la tarjeta de prueba; nunca el número completo ni el CVV.
  *
  * Entrada JSON:
  * {
  *   "entrega": "retiro" | "envio",
  *   "direccion": "calle, número, ciudad...",
- *   "metodo_pago": "transferencia" | "debito" | "visa" | "mastercard" |
- *                   "cabal" | "naranja_x" | "amex",
- *   "tarjeta_ultimos4": "1234",   // obligatorio si metodo_pago es una tarjeta
- *   "pago_grupo": "productos" | "servicios",
- *   "turnos": { "<servicio_id>": {"fecha": "Y-m-d", "hora": "HH:MM"} }
+ *   "metodo_pago": "transferencia" | "debito" | "tarjeta" |
+ *                   "mercadopago" | "tarjeta_online" | "billetera" |
+ *                   "transferencia_qr" | "efectivo" |
+ *                   "visa" | "mastercard" | "cabal" | "naranja_x" | "amex",
+ *   "tarjeta_ultimos4": "1234",
+ *   "tarjeta_marca": "visa",
+ *   "tarjeta_tipo": "credito" | "debito" | "prepaga",
+ *   "cuotas": 1 | 3 | 6 | 12,
+ *   "billetera": "mercadopago" | "paypal" | "applepay" | "googlepay" | "samsungpay",
+ *   "pago_grupo": "todo" | "productos" | "servicios",
+ *   "turnos": { "<servicio_id>": {"fecha": "Y-m-d", "hora": "HH:MM"} },
+ *   "checkout_token": "uuid"      // opcional, evita duplicados por reintentos
  * }
  * "turnos" es opcional: si no viene, se usan fecha/hora guardadas en el carrito.
  */
 
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/ofertas_lib.php';
+require_once __DIR__ . '/pagos_lib.php';
 
 header('Cache-Control: no-store');
 
@@ -37,6 +51,21 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $usuario = requireLogin();
 $data = getJsonInput();
+
+/* Idempotencia: si el navegador reintenta el mismo checkout (por ejemplo,
+   porque se perdió la respuesta), devolvemos el pedido ya creado en esta
+   sesión en lugar de registrar otro. No se persiste ningún dato sensible. */
+$checkoutToken = trim((string)($data['checkout_token'] ?? ''));
+
+if (!preg_match('/^[A-Za-z0-9._-]{8,100}$/', $checkoutToken)) {
+    $checkoutToken = '';
+} else {
+    $checkoutsPrevios = $_SESSION['checkout_idempotencia'] ?? [];
+
+    if (isset($checkoutsPrevios[$checkoutToken]) && is_array($checkoutsPrevios[$checkoutToken])) {
+        jsonResponse($checkoutsPrevios[$checkoutToken], 200);
+    }
+}
 
 try {
     $db = getDB();
@@ -55,15 +84,31 @@ try {
     }
 
     $metodosTarjeta = ['visa', 'mastercard', 'cabal', 'naranja_x', 'amex'];
-    $metodosValidos = array_merge(['transferencia', 'debito'], $metodosTarjeta);
+    $metodosBilletera = ['mercadopago', 'paypal', 'applepay', 'googlepay', 'samsungpay'];
+    $metodosSimulados = ['billetera', 'transferencia_qr', 'efectivo'];
+    $metodosValidos = array_merge(
+        ['transferencia', 'debito', 'tarjeta', 'mercadopago', 'tarjeta_online'],
+        $metodosTarjeta,
+        $metodosSimulados
+    );
 
     if (!in_array($metodoPago, $metodosValidos, true)) {
-        jsonResponse(['ok' => false, 'mensaje' => 'Elegí un método de pago válido: transferencia, débito o una tarjeta (Visa, Mastercard, Cabal, Naranja X o American Express).'], 400);
+        jsonResponse(['ok' => false, 'mensaje' => 'Elegí un método de pago válido: transferencia, tarjeta, billetera, QR, efectivo, Mercado Pago o pago presencial.'], 400);
     }
 
-    /* Tarjeta: solo se guardan los últimos 4 dígitos, nunca el número completo. */
+    if ($metodoPago === 'mercadopago' && !mpConfigurado()) {
+        jsonResponse(['ok' => false, 'mensaje' => 'Mercado Pago no está disponible en este momento.'], 503);
+    }
+
+    /* El sitio no pide ni almacena datos de tarjeta completos. Para la
+       simulación de tarjeta online solo se conserva la marca, el tipo, las
+       cuotas y los últimos 4 dígitos. El CVV nunca se envía al servidor. */
     $ultimos4 = preg_replace('/\D/', '', (string)($data['tarjeta_ultimos4'] ?? ''));
     $metodoPagoGuardado = $metodoPago;
+    $pagoEstado = 'pendiente';
+    $pagoProveedor = 'manual';
+    $pagoReferencia = null;
+    $pagoMetodoDetalle = null;
 
     if (in_array($metodoPago, $metodosTarjeta, true)) {
         if (strlen($ultimos4) !== 4) {
@@ -71,6 +116,88 @@ try {
         }
 
         $metodoPagoGuardado = $metodoPago . ' ****' . $ultimos4;
+    }
+
+    if ($metodoPago === 'tarjeta_online') {
+        $marcaTarjeta = strtolower(trim((string)($data['tarjeta_marca'] ?? '')));
+        $tipoTarjeta = strtolower(trim((string)($data['tarjeta_tipo'] ?? '')));
+        $cuotasTarjeta = (int)($data['cuotas'] ?? 1);
+
+        if (strlen($ultimos4) < 4) {
+            jsonResponse(['ok' => false, 'mensaje' => 'Ingresá al menos los últimos 4 dígitos de la tarjeta.'], 400);
+        }
+
+        $ultimos4 = substr($ultimos4, -4);
+
+        if (!in_array($marcaTarjeta, ['visa', 'mastercard', 'amex', 'cabal', 'naranja_x'], true)) {
+            $marcaTarjeta = 'visa';
+        }
+
+        if (!in_array($tipoTarjeta, ['credito', 'debito', 'prepaga'], true)) {
+            $tipoTarjeta = 'credito';
+        }
+
+        if (!in_array($cuotasTarjeta, [1, 3, 6, 12], true)) {
+            $cuotasTarjeta = 1;
+        }
+
+        $tipoTarjetaTexto = ['credito' => 'Crédito', 'debito' => 'Débito', 'prepaga' => 'Prepaga'][$tipoTarjeta] ?? ucfirst($tipoTarjeta);
+        $marcaTarjetaTexto = [
+            'visa' => 'Visa',
+            'mastercard' => 'Mastercard',
+            'amex' => 'American Express',
+            'cabal' => 'Cabal',
+            'naranja_x' => 'Naranja X'
+        ][$marcaTarjeta] ?? ucfirst($marcaTarjeta);
+
+        $pagoEstado = 'aprobado';
+        $pagoProveedor = 'tarjeta';
+        $pagoReferencia = 'TARJETA-' . strtoupper(bin2hex(random_bytes(4)));
+        $pagoMetodoDetalle = mb_substr(
+            $tipoTarjetaTexto . ' ' . $marcaTarjetaTexto . ' · ****' . $ultimos4,
+            0,
+            60
+        );
+    }
+
+    if ($metodoPago === 'billetera') {
+        $billetera = strtolower(trim((string)($data['billetera'] ?? '')));
+
+        if (!in_array($billetera, $metodosBilletera, true)) {
+            jsonResponse(['ok' => false, 'mensaje' => 'Elegí una billetera virtual válida.'], 400);
+        }
+
+        $nombresBilletera = [
+            'mercadopago' => 'Mercado Pago',
+            'paypal' => 'PayPal',
+            'applepay' => 'Apple Pay',
+            'googlepay' => 'Google Pay',
+            'samsungpay' => 'Samsung Pay'
+        ];
+
+        $pagoEstado = 'simulado';
+        $pagoProveedor = 'simulacion';
+        $pagoReferencia = 'SIM-WALLET-' . strtoupper(bin2hex(random_bytes(4)));
+        $pagoMetodoDetalle = mb_substr($nombresBilletera[$billetera], 0, 60);
+    }
+
+    if ($metodoPago === 'transferencia_qr') {
+        $pagoEstado = 'pendiente';
+        $pagoProveedor = 'simulacion_qr';
+        $pagoReferencia = 'QR-' . strtoupper(bin2hex(random_bytes(5)));
+        $pagoMetodoDetalle = 'QR / débito inmediato (demostración)';
+    }
+
+    if ($metodoPago === 'efectivo') {
+        $pagoEstado = 'pendiente';
+        $pagoProveedor = 'simulacion_efectivo';
+        $pagoReferencia = 'SEND-' . strtoupper(bin2hex(random_bytes(4)));
+        $pagoMetodoDetalle = 'Cupón Pago Fácil / RapiPago (demostración)';
+    }
+
+    if ($metodoPago === 'mercadopago') {
+        $pagoProveedor = 'mercadopago';
+        $pagoMetodoDetalle = 'Mercado Pago Checkout Pro';
     }
 
     $pagoGrupo = strtolower(trim((string)($data['pago_grupo'] ?? 'todo')));
@@ -90,12 +217,12 @@ try {
     $tieneProductos = !empty($productosCant);
     $tieneServicios = !empty($serviciosCant);
 
-    /* Productos y servicios se pagan por separado: un pedido contiene
-       solo productos o solo servicios, nunca ambos. Lo no elegido queda
-       en el carrito para el próximo pago. */
+    /* "todo" permite un único pago con productos y turnos, manteniendo el
+       desglose por grupo. Las opciones parciales siguen disponibles y lo no
+       incluido queda en el carrito para el próximo pago. */
     if ($tieneProductos && $tieneServicios) {
-        if (!in_array($pagoGrupo, ['productos', 'servicios'], true)) {
-            jsonResponse(['ok' => false, 'mensaje' => 'Tu carrito tiene productos y servicios. Elegí si pagás los productos o los servicios: no se mezclan en un mismo pedido.'], 400);
+        if (!in_array($pagoGrupo, ['todo', 'productos', 'servicios'], true)) {
+            $pagoGrupo = 'todo';
         }
     } elseif ($tieneProductos) {
         $pagoGrupo = 'productos';
@@ -103,11 +230,11 @@ try {
         $pagoGrupo = 'servicios';
     }
 
-    $incluyeProductos = $pagoGrupo === 'productos';
-    $incluyeServicios = $pagoGrupo === 'servicios';
+    $incluyeProductos = in_array($pagoGrupo, ['todo', 'productos'], true);
+    $incluyeServicios = in_array($pagoGrupo, ['todo', 'servicios'], true);
 
     if (!$incluyeProductos && !$incluyeServicios) {
-        jsonResponse(['ok' => false, 'mensaje' => 'Elegí qué incluye este pago: productos o servicios.'], 400);
+        jsonResponse(['ok' => false, 'mensaje' => 'Elegí qué incluye este pago: todo junto, productos o servicios.'], 400);
     }
 
     if ($entrega === 'envio' && !$incluyeProductos) {
@@ -122,7 +249,7 @@ try {
         $direccion = '';
     }
 
-    $costoEnvio = ($entrega === 'envio') ? (float)COSTO_ENVIO : 0.0; // CONFIRMAR con Claudia
+    $costoEnvio = ($entrega === 'envio') ? (float)COSTO_ENVIO : 0.0;
 
     $db->beginTransaction();
 
@@ -340,7 +467,12 @@ try {
     $total = round($subtotalProductos + $subtotalServicios + $costoEnvio, 2);
 
     /* ── Crear pedido ── */
-    $stmt = $db->prepare('INSERT INTO pedidos (usuario_id, total, estado, metodo_pago, entrega, direccion_envio, pago_grupo) VALUES (?, ?, ?, ?, ?, ?, ?)');
+    $stmt = $db->prepare(
+        'INSERT INTO pedidos
+         (usuario_id, total, estado, metodo_pago, entrega, direccion_envio, pago_grupo,
+          pago_estado, pago_proveedor, pago_referencia, pago_metodo, pago_actualizado_en)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())'
+    );
     $stmt->execute([
         (int)$usuario['id'],
         $total,
@@ -348,7 +480,11 @@ try {
         $metodoPagoGuardado,
         $entrega,
         $direccion !== '' ? $direccion : null,
-        $pagoGrupo
+        $pagoGrupo,
+        $pagoEstado,
+        $pagoProveedor,
+        $pagoReferencia,
+        $pagoMetodoDetalle
     ]);
 
     $pedidoId = (int)$db->lastInsertId();
@@ -411,6 +547,109 @@ try {
         $turnoIds[] = (int)$db->lastInsertId();
     }
 
+    /* ── Mercado Pago Checkout Pro ─────────────────────────────
+       La preferencia se crea antes del commit: si Mercado Pago falla,
+       se revierte el pedido y el carrito/stock quedan intactos. */
+    $redirectUrl = '';
+
+    if ($metodoPago === 'mercadopago') {
+        $mpItems = [];
+
+        foreach ($itemsPedido as $it) {
+            $precio = round((float)$it['precio'], 2);
+            $cantidad = max(1, (int)$it['cantidad']);
+
+            if ($precio <= 0) {
+                continue;
+            }
+
+            $mpItems[] = [
+                'title' => mb_substr((string)$it['nombre'], 0, 250),
+                'quantity' => $cantidad,
+                'unit_price' => $precio,
+                'currency_id' => MP_CURRENCY
+            ];
+        }
+
+        if ($costoEnvio > 0) {
+            $mpItems[] = [
+                'title' => 'Envío a domicilio',
+                'quantity' => 1,
+                'unit_price' => round((float)$costoEnvio, 2),
+                'currency_id' => MP_CURRENCY
+            ];
+        }
+
+        if (!$mpItems) {
+            $db->rollBack();
+            jsonResponse(['ok' => false, 'mensaje' => 'No hay importe para cobrar con Mercado Pago.'], 400);
+        }
+
+        $externalReference = 'senderos-' . $pedidoId . '-' . bin2hex(random_bytes(8));
+
+        $preferencia = [
+            'items' => $mpItems,
+            'external_reference' => $externalReference,
+            'notification_url' => mpWebhookUrl(),
+            'back_urls' => [
+                'success' => mpBackUrl('success', $pedidoId),
+                'pending' => mpBackUrl('pending', $pedidoId),
+                'failure' => mpBackUrl('failure', $pedidoId)
+            ],
+            'statement_descriptor' => MP_STATEMENT_DESCRIPTOR,
+            'metadata' => ['pedido_id' => $pedidoId]
+        ];
+
+        /* auto_return exige una back_url HTTPS. En local se omite para que
+           Mercado Pago no rechace la preferencia. */
+        if (str_starts_with(APP_URL, 'https://')) {
+            $preferencia['auto_return'] = 'approved';
+        }
+
+        try {
+            $preferenciaMp = mpCrearPreferencia($preferencia);
+            $preferenciaId = trim((string)($preferenciaMp['id'] ?? ''));
+            $redirectUrl = mpUrlPreferencia($preferenciaMp);
+
+            if ($preferenciaId === '' || $redirectUrl === '') {
+                throw new RuntimeException('Mercado Pago no devolvió una preferencia válida.');
+            }
+        } catch (Throwable $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+
+            error_log('Checkout Mercado Pago: ' . $e->getMessage());
+
+            jsonResponse([
+                'ok' => false,
+                'mensaje' => 'No se pudo iniciar el pago con Mercado Pago. El pedido no se registró y tu carrito sigue intacto.'
+            ], 502);
+        }
+
+        $stmtPago = $db->prepare(
+            'INSERT INTO pagos
+             (pedido_id, proveedor, preferencia_id, external_reference, estado, monto, moneda)
+             VALUES (?, ?, ?, ?, ?, ?, ?)'
+        );
+        $stmtPago->execute([
+            $pedidoId,
+            'mercadopago',
+            $preferenciaId,
+            $externalReference,
+            'pendiente',
+            $total,
+            MP_CURRENCY
+        ]);
+
+        $stmt = $db->prepare(
+            'UPDATE pedidos
+             SET pago_referencia = ?, pago_proveedor = ?, pago_estado = ?, pago_actualizado_en = NOW()
+             WHERE id = ?'
+        );
+        $stmt->execute([$externalReference, 'mercadopago', 'pendiente', $pedidoId]);
+    }
+
     $db->commit();
 
     /* Vaciar solo lo comprado: lo no incluido queda en el carrito. */
@@ -423,9 +662,23 @@ try {
     }
     $_SESSION['carrito'] = $nuevoCarrito;
 
-    jsonResponse([
+    if ($metodoPago === 'mercadopago') {
+        $mensajeCheckout = 'Pedido registrado. Te estamos redirigiendo a Mercado Pago.';
+    } elseif ($metodoPago === 'tarjeta_online') {
+        $mensajeCheckout = 'Pedido registrado. El pago con tarjeta fue aprobado.';
+    } elseif ($metodoPago === 'billetera') {
+        $mensajeCheckout = 'Pedido registrado. Pago con billetera simulado en modo demostración.';
+    } elseif ($metodoPago === 'transferencia_qr') {
+        $mensajeCheckout = 'Pedido registrado. Se generó un QR demostrativo; el pago queda pendiente.';
+    } elseif ($metodoPago === 'efectivo') {
+        $mensajeCheckout = 'Pedido registrado. Se generó un cupón demostrativo para abonar en efectivo.';
+    } else {
+        $mensajeCheckout = 'Pedido registrado. Coordinamos el pago por WhatsApp.';
+    }
+
+    $respuestaCheckout = [
         'ok' => true,
-        'mensaje' => 'Pedido registrado. Coordinamos el pago por WhatsApp.',
+        'mensaje' => $mensajeCheckout,
         'pedido_id' => $pedidoId,
         'total' => $total,
         'subtotal_productos' => $subtotalProductos,
@@ -434,8 +687,29 @@ try {
         'entrega' => $entrega,
         'metodo_pago' => $metodoPagoGuardado,
         'pago_grupo' => $pagoGrupo,
+        'pago_estado' => $pagoEstado,
+        'pago_proveedor' => $pagoProveedor,
+        'pago_referencia' => $pagoReferencia,
+        'pago_simulado' => in_array($metodoPago, $metodosSimulados, true),
         'turnos' => $turnoIds
-    ], 201);
+    ];
+
+    if ($redirectUrl !== '') {
+        $respuestaCheckout['redirect_url'] = $redirectUrl;
+    }
+
+    if ($checkoutToken !== '') {
+        $checkoutsPrevios = $_SESSION['checkout_idempotencia'] ?? [];
+        $checkoutsPrevios[$checkoutToken] = $respuestaCheckout;
+
+        if (count($checkoutsPrevios) > 10) {
+            $checkoutsPrevios = array_slice($checkoutsPrevios, -10, null, true);
+        }
+
+        $_SESSION['checkout_idempotencia'] = $checkoutsPrevios;
+    }
+
+    jsonResponse($respuestaCheckout, 201);
 } catch (Throwable $e) {
     if (isset($db) && $db->inTransaction()) {
         $db->rollBack();

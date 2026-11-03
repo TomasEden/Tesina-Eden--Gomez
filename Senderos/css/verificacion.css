@@ -1,0 +1,185 @@
+/* ═══════════════════════════════════════
+   Senderos — verificacion.css
+   Estilos exclusivos de la pantalla de
+   verificación en dos pasos.
+   ═══════════════════════════════════════ */
+
+/* ─────────────────────────────────────
+   CAMPO DE CÓDIGO DE 6 DÍGITOS
+   ───────────────────────────────────── */
+
+.form-group input#codigo {
+  width: 100%;
+  padding: 0.85rem 1rem;
+
+  text-align: center;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em;
+
+  color: var(--text);
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: 10px;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input#codigo::placeholder {
+  color: var(--sand);
+  letter-spacing: 0.5em;
+}
+
+.form-group input#codigo:focus {
+  outline: none;
+  border-color: var(--rose);
+  box-shadow: 0 0 0 3px rgba(211, 161, 169, 0.16);
+}
+
+.form-group input#codigo.error {
+  border-color: var(--error);
+}
+
+/* ─────────────────────────────────────
+   META: TIEMPO RESTANTE Y REENVÍO
+   ───────────────────────────────────── */
+
+.verif-meta {
+  margin-top: 1.6rem;
+  text-align: center;
+}
+
+.verif-tiempo {
+  margin: 0 0 0.8rem;
+  font-size: 0.86rem;
+  color: var(--text-light);
+}
+
+.verif-tiempo strong {
+  font-weight: 500;
+  color: var(--rose-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.verif-tiempo.agotado strong {
+  color: var(--error);
+}
+
+.verif-reenviar {
+  padding: 0.5rem 1.2rem;
+
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  color: var(--rose-deep);
+  background: transparent;
+  border: 1px solid var(--rose);
+  border-radius: 999px;
+  cursor: pointer;
+
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.verif-reenviar:hover:not(:disabled) {
+  background: var(--rose);
+  color: #ffffff;
+}
+
+.verif-reenviar:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.verif-espera {
+  margin: 0.7rem 0 0;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+/* ─────────────────────────────────────
+   ESTADO SIN DESAFÍO
+   ───────────────────────────────────── */
+
+.verif-sin-desafio {
+  padding: 1.4rem;
+  text-align: center;
+
+  background: var(--rose-pale);
+  border: 1px solid var(--rose-mid);
+  border-radius: 12px;
+}
+
+.verif-sin-desafio-txt {
+  margin: 0 0 1.2rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────
+   CONFIRMACIÓN (éxito)
+   ───────────────────────────────────── */
+
+.verif-exito {
+  padding: 1.6rem;
+  text-align: center;
+
+  background: var(--rose-pale);
+  border: 1px solid var(--rose-mid);
+  border-radius: 12px;
+}
+
+.verif-exito-txt {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────── */
+
+@media (max-width: 560px) {
+  .form-group input#codigo {
+    font-size: 1.35rem;
+    letter-spacing: 0.4em;
+    text-indent: 0.4em;
+  }
+
+  .verif-meta {
+    margin-top: 1.3rem;
+  }
+}
+
+/* ─────────────────────────────────────
+   MODO OSCURO
+   ───────────────────────────────────── */
+
+html.dark .form-group input#codigo {
+  background: #242424;
+  border-color: #3a3a3a;
+  color: #E8E0DA;
+}
+
+html.dark .form-group input#codigo::placeholder {
+  color: #4a4a4a;
+}
+
+html.dark .verif-sin-desafio,
+html.dark .verif-exito {
+  background: #2A2025;
+  border-color: #4A3038;
+}
+
+html.dark .verif-reenviar:hover:not(:disabled) {
+  color: #1A1A1A;
+}
+
+html.dark .verif-tiempo strong {
+  color: #C28A93;
+}

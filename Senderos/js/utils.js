@@ -150,16 +150,30 @@ async function fetchJSON(url, opciones = {}) {
     credentials: 'same-origin'
   });
 
-  let data;
+  let data = null;
 
   try {
     data = await response.json();
   } catch {
-    throw new Error('JSON inválido');
+    /* Si el cuerpo no es JSON seguimos adelante: más abajo se decide
+       con el estado HTTP. */
+    data = null;
   }
 
   if (response.status >= 500) {
     throw new Error('Error del servidor');
+  }
+
+  /* Una respuesta 4xx también es un fallo: antes se devolvía como si
+     fuera un éxito y el caller no podía distinguirlo. */
+  if (!response.ok) {
+    const mensaje =
+      (data && (data.error || data.mensaje || data.message)) ||
+      'No se pudo completar la operación';
+
+    const error = new Error(mensaje);
+    error.status = response.status;
+    throw error;
   }
 
   return data;

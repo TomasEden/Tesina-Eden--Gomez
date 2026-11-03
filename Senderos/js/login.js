@@ -126,6 +126,21 @@ function iniciarSesion() {
           return null;
         }
 
+        /*
+          Verificación en dos pasos: las credenciales son correctas
+          pero el servidor aún NO creó la sesión. Se redirige a la
+          pantalla de verificación con el código enviado al correo.
+        */
+        if (data.requiere_verificacion) {
+          try {
+            window.localStorage.removeItem('redirectAfterLogin');
+            window.sessionStorage.removeItem('redirectAfterLogin');
+          } catch (e) {}
+
+          window.location.href = 'verificacion.html';
+          return null;
+        }
+
         if (!data.usuario) {
           throw new Error('El servidor no devolvió los datos del usuario.');
         }

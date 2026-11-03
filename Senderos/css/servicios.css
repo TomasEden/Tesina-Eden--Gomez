@@ -12,7 +12,8 @@
   align-items: center;
   padding: 3rem 5rem;
   overflow: hidden;
-  background: var(--text);
+  /* Banner de página: foto real sobre la base verde */
+  background: var(--text) url('../img/Otros/banner-servicios.jpg') no-repeat 72% bottom / cover;
 }
 
 .page-hero::after {
@@ -35,15 +36,19 @@
 
 .page-hero h1 {
   margin: 0.35rem 0 0.7rem;
-  color: var(--white);
+  color: #ffffff;
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3rem, 6vw, 5rem);
+  font-size: clamp(2.75rem, 4.5vw, 3.5rem);
   font-weight: 300;
   line-height: 0.95;
 }
 
+.page-hero .section-tag {
+  color: var(--rose-deep);
+}
+
 .page-hero h1 em {
-  color: var(--rose-mid);
+  color: var(--rose-deep);
   font-style: italic;
 }
 
@@ -60,10 +65,22 @@
    CATEGORÍAS
    ═══════════════════════════════════════ */
 
-.category-bar {
+.cat-bar-wrap {
   position: sticky;
   top: 68px;
   z-index: 100;
+
+  display: flex;
+  align-items: center;
+
+  background: var(--white);
+  border-bottom: 1px solid var(--sand);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.category-bar {
+  flex: 1;
+  min-width: 0;
 
   display: flex;
   flex-wrap: wrap;
@@ -73,14 +90,42 @@
   padding: 0.9rem clamp(1rem, 4vw, 3rem);
 
   overflow: visible;
-
-  background: var(--white);
-  border-bottom: 1px solid var(--sand);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
 
 .category-bar::-webkit-scrollbar {
   display: none;
+}
+
+/* Flechas de scroll: solo en móvil (se activan en el media query ≤820px). */
+.cat-arrow {
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: var(--rose-deep);
+
+  cursor: pointer;
+
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.cat-arrow:hover {
+  background: var(--rose-pale);
+}
+
+.cat-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+  background: transparent;
 }
 
 .cat-tab {
@@ -122,12 +167,12 @@
 .cat-tab.active {
   border-color: var(--rose-deep);
   background: var(--rose-deep);
-  color: var(--white);
+  color: #ffffff;
 }
 
 .cat-tab.active .cat-count {
   background: rgba(255, 255, 255, 0.25);
-  color: var(--white);
+  color: #ffffff;
 }
 
 .cat-count {
@@ -225,7 +270,7 @@
   border-radius: 50px;
 
   background: var(--rose-deep);
-  color: var(--white);
+  color: #ffffff;
 
   font-size: 0.65rem;
   font-weight: 600;
@@ -249,8 +294,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
 
   padding: 0;
 
@@ -382,7 +427,7 @@
 
 .btn-ver-servicio:hover {
   background: var(--rose-deep);
-  color: var(--white);
+  color: #ffffff;
 
   transform: translateY(-1px);
 }
@@ -464,9 +509,12 @@ body.panel-open {
 .panel-img-wrap {
   position: relative;
 
-  height: 280px;
+  height: auto;
+  aspect-ratio: 1 / 1;
 
   overflow: hidden;
+
+  background: linear-gradient(135deg, var(--rose-pale), var(--sand));
 }
 
 .panel-img-wrap > img {
@@ -475,7 +523,7 @@ body.panel-open {
   width: 100%;
   height: 100%;
 
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .panel-img-overlay {
@@ -503,8 +551,8 @@ body.panel-open {
   align-items: center;
   justify-content: center;
 
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
 
   padding: 0;
 
@@ -540,7 +588,7 @@ body.panel-open {
 .panel-nombre {
   margin: 0.3rem 0 0.5rem;
 
-  color: var(--white);
+  color: #ffffff;
 
   font-family: 'Cormorant Garamond', serif;
   font-size: 2rem;
@@ -609,13 +657,14 @@ body.panel-open {
 }
 
 .btn-reservar-panel {
+  min-height: 46px;
   padding: 0.75rem 1.6rem;
 
   border: 0;
   border-radius: 50px;
 
   background: var(--rose-deep);
-  color: var(--white);
+  color: #ffffff;
 
   cursor: pointer;
 
@@ -773,7 +822,7 @@ body.panel-open {
 
   overflow: hidden;
 
-  background: var(--text);
+  background: var(--text) url('../img/Otros/gimnasio.jpg') center 62% / cover no-repeat;
 }
 
 .cta-section::after {
@@ -802,7 +851,7 @@ body.panel-open {
 .cta-content h2 {
   margin: 0.35rem 0 0.7rem;
 
-  color: var(--white);
+  color: #ffffff;
 
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(2.2rem, 4vw, 3.5rem);
@@ -861,9 +910,21 @@ body.panel-open {
     padding: 1.5rem 1rem 3rem;
   }
 
-  .category-bar {
+  .cat-bar-wrap {
     top: 60px;
-    padding: 0 1rem;
+  }
+
+  .category-bar {
+    padding: 0 0.25rem;
+
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .cat-arrow {
+    display: inline-flex;
   }
 
   .cat-tab {
@@ -903,11 +964,7 @@ body.panel-open {
 @media (max-width: 600px) {
 
   .srv-panel {
-    width: 100vw;
-  }
-
-  .panel-img-wrap {
-    height: 220px;
+    width: 100%;
   }
 
   .panel-nombre {
@@ -963,7 +1020,8 @@ body.panel-open {
   .btn-ver-servicio,
   .srv-panel,
   .srv-panel-backdrop,
-  .btn-reservar-panel {
+  .btn-reservar-panel,
+  .cat-arrow {
     transition: none;
   }
 
@@ -979,30 +1037,3 @@ body.panel-open {
 .resenas-promedio strong { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; }
 .resenas-login-aviso { padding: 1rem; border-radius: 12px; background: var(--rose-pale); color: var(--text); font-size: .82rem; }
 .sugerido-item { cursor: pointer; }
-
-/* ── RESEÑAS GENERALES ── */
-
-.reviews-services {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
-}
-
-.review-card {
-  padding: 1.2rem 1.4rem;
-  border: 1px solid var(--sand);
-  border-radius: 16px;
-  background: var(--white);
-}
-
-.review-card strong {
-  color: var(--text);
-  font-family: "Cormorant Garamond", serif;
-  font-size: 1.15rem;
-}
-
-.review-card p {
-  margin: .3rem 0 0;
-  color: var(--text-light);
-  font-size: .8rem;
-}

@@ -25,23 +25,51 @@ function leerLS(clave) {
   }
 }
 
+/* Normaliza a IDs numéricos: la BD y favoritos-api.js guardan el ID. */
+function aIdsNumericos(lista) {
+  var unicos = [];
+
+  lista.forEach(function (valor) {
+    var num = Number(valor);
+
+    if (Number.isFinite(num) && num > 0 && unicos.indexOf(num) === -1) {
+      unicos.push(num);
+    }
+  });
+
+  return unicos;
+}
+
 function cargarFavoritos() {
-  return Promise.all([
-    fetch('../api/servicios.php', {
-      credentials: 'same-origin',
-      cache: 'no-store',
-      headers: { Accept: 'application/json' }
-    }).then(function (r) {
-      return r.ok ? r.json() : null;
-    }),
-    fetch('../api/productos.php', {
-      credentials: 'same-origin',
-      cache: 'no-store',
-      headers: { Accept: 'application/json' }
-    }).then(function (r) {
-      return r.ok ? r.json() : null;
+  /*
+   * Se piden los favoritos al servidor (tabla `favoritos`) y se guardan
+   * en la caché local; el render se apoya en los IDs numéricos, no en
+   * el slug, que es lo que guarda la BD.
+   */
+  var favoritosListos =
+    typeof window.FAVORITOS !== 'undefined'
+      ? window.FAVORITOS.sincronizar()
+      : Promise.resolve();
+
+  return favoritosListos
+    .then(function () {
+      return Promise.all([
+        fetch('../api/servicios.php', {
+          credentials: 'same-origin',
+          cache: 'no-store',
+          headers: { Accept: 'application/json' }
+        }).then(function (r) {
+          return r.ok ? r.json() : null;
+        }),
+        fetch('../api/productos.php', {
+          credentials: 'same-origin',
+          cache: 'no-store',
+          headers: { Accept: 'application/json' }
+        }).then(function (r) {
+          return r.ok ? r.json() : null;
+        })
+      ]);
     })
-  ])
     .then(function (resultados) {
       var servicios = Array.isArray(resultados[0] && resultados[0].servicios)
         ? resultados[0].servicios
@@ -50,12 +78,12 @@ function cargarFavoritos() {
         ? resultados[1].productos
         : [];
 
-      var likesServ = leerLS('senderos-likes').map(String);
-      var likesProd = leerLS('senderos-likes-productos').map(Number);
+      var likesServ = aIdsNumericos(leerLS('senderos-likes'));
+      var likesProd = aIdsNumericos(leerLS('senderos-likes-productos'));
 
       renderFavsServicios(
         servicios.filter(function (s) {
-          return likesServ.indexOf(String(s.slug || s.id)) !== -1;
+          return likesServ.indexOf(Number(s.id)) !== -1;
         })
       );
 
@@ -125,8 +153,7 @@ function renderFavsServicios(lista) {
     quitar.className = 'btn-ghost btn-chico';
     quitar.textContent = 'Quitar';
     quitar.addEventListener('click', function () {
-      quitarLike('senderos-likes', String(s.slug || s.id));
-      cargarFavoritos();
+      quitarFavorito('servicio', Number(s.id), quitar);
     });
     fila.appendChild(quitar);
 
@@ -196,8 +223,7 @@ function renderFavsProductos(lista) {
     quitar.className = 'btn-ghost btn-chico';
     quitar.textContent = 'Quitar';
     quitar.addEventListener('click', function () {
-      quitarLike('senderos-likes-productos', Number(p.id));
-      cargarFavoritos();
+      quitarFavorito('producto', Number(p.id), quitar);
     });
     fila.appendChild(quitar);
 
@@ -206,14 +232,28 @@ function renderFavsProductos(lista) {
   });
 }
 
-function quitarLike(clave, valor) {
-  var lista = leerLS(clave).filter(function (x) {
-    return x !== valor && String(x) !== String(valor) && Number(x) !== Number(valor);
-  });
+/* Quita un favorito en el servidor y recarga la lista.
+   Si el servidor rechaza se avisa y no se modifica nada. */
+function quitarFavorito(tipo, refId, boton) {
+  if (boton) {
+    boton.disabled = true;
+    boton.textContent = 'Quitando...';
+  }
 
-  try {
-    window.localStorage.setItem(clave, JSON.stringify(lista));
-  } catch (e) {}
+  window.FAVORITOS.alternar(tipo, refId)
+    .then(function () {
+      cargarFavoritos();
+    })
+    .catch(function (error) {
+      if (boton) {
+        boton.disabled = false;
+        boton.textContent = 'Quitar';
+      }
+
+      if (typeof window.showToast === 'function') {
+        window.showToast(error.message || 'No se pudo quitar el favorito.');
+      }
+    });
 }
 
 function agregarFavoritoAlCarrito(id, boton) {

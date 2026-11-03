@@ -101,8 +101,19 @@ textarea {
   text-decoration: none;
 }
 
-.nav-logo img {
-  border-radius: 6px;
+/* Logo Senderos: misma forma, tiñida con el color del texto
+   (currentColor) para adaptarse al tema claro y oscuro. */
+.nav-logo-icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+
+  flex: 0 0 auto;
+
+  background-color: currentColor;
+
+  -webkit-mask: url("../img/icons/logo.svg") no-repeat center / contain;
+  mask: url("../img/icons/logo.svg") no-repeat center / contain;
 }
 
 .nav-links {
@@ -526,12 +537,15 @@ textarea {
   font-size: 1.4rem;
 }
 
-.site-footer .footer-brand img {
-  width: 26px;
-  height: 26px;
+.site-footer .footer-brand img,
+.site-footer .footer-brand .nav-logo-icon {
+  width: 28px;
+  height: 28px;
 
   flex: 0 0 auto;
+}
 
+.site-footer .footer-brand img {
   object-fit: contain;
   border-radius: 5px;
 }
@@ -818,11 +832,25 @@ textarea {
   }
 }
 
+@media (max-width: 940px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-hamburger {
+    display: flex;
+  }
+}
+
 @media (max-width: 820px) {
   .navbar {
-    height: 68px;
+    height: 60px;
     padding: 0 1rem 0 1.1rem;
     gap: .5rem;
+  }
+
+  body {
+    padding-top: 60px;
   }
 
   .nav-links {
@@ -841,8 +869,8 @@ textarea {
     align-items: center;
     justify-content: center;
 
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     padding: .35rem;
   }
 
@@ -903,6 +931,13 @@ textarea {
     gap: 1.8rem 1.25rem;
     padding: 2.6rem 1.3rem;
   }
+
+  .site-footer .footer-col a {
+    min-height: 40px;
+    align-items: center;
+    margin-bottom: 0;
+    padding-block: 0.35rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -915,24 +950,42 @@ textarea {
     font-size: 1.18rem;
   }
 
+  .nav-logo-icon {
+    width: 26px;
+    height: 26px;
+  }
+
   .nav-right {
     gap: 0;
   }
 
   .nav-right .nav-search,
   .nav-right .nav-cart {
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
   }
 
   .nav-hamburger {
-    width: 38px;
-    flex-basis: 38px;
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
   }
 
   .nav-mobile {
     left: 10%;
     width: 90%;
+  }
+
+  .toast {
+    left: 1rem;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+    justify-content: center;
+  }
+
+  .dark-float {
+    right: 1rem;
+    bottom: calc(1.1rem + env(safe-area-inset-bottom));
   }
 
   .site-footer .footer-inner {
@@ -943,6 +996,11 @@ textarea {
 
   .site-footer .footer-col h4 {
     margin-bottom: .7rem;
+    font-size: .75rem;
+  }
+
+  .site-footer .footer-bottom {
+    font-size: .75rem;
   }
 
   .site-footer .footer-col a,
@@ -953,6 +1011,15 @@ textarea {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
   .reveal,
   .reveal-left,
   .reveal-right {
@@ -960,6 +1027,17 @@ textarea {
     transform: none;
     transition: none;
   }
+}
+
+/* ══════════════════════════════════════════
+   FOCO VISIBLE (accesibilidad)
+   Anillo rosa coherente con la marca para
+   navegación por teclado en toda la página.
+   ══════════════════════════════════════════ */
+
+:focus-visible {
+  outline: 2px solid var(--rose-deep);
+  outline-offset: 3px;
 }
 
 /* ══════════════════════════════════════════
@@ -988,6 +1066,10 @@ textarea {
 
 body.menu-abierto {
   overflow: hidden;
+}
+
+body.menu-abierto .navbar {
+  z-index: 245;
 }
 
 /* ══════════════════════════════════════════
@@ -1133,5 +1215,29 @@ body.menu-abierto {
 .btn-sesion-activa {
   text-transform: none;
   letter-spacing: .02em;
+}
+
+/* ══════════════════════════════════════════
+   FLECHAS DE CTA (SVG real enmascarado)
+   Reemplazan los glifos Unicode de flecha.
+   Heredan el color del texto (currentColor)
+   y el tamaño del contexto.
+   ══════════════════════════════════════════ */
+
+.see-all::after,
+.result-card-cta--link::after {
+  content: '';
+  flex-shrink: 0;
+  width: 13px;
+  height: 13px;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6 6 6-6 6'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6 6 6-6 6'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+.result-card-cta--link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 

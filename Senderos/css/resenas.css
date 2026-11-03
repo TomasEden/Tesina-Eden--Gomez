@@ -65,11 +65,11 @@
   outline: none;
 }
 .resena-textarea:focus { border-color: var(--rose-deep); }
-.form-resena-btns { display: flex; gap: 0.8rem; margin-top: 0.8rem; }
+.form-resena-btns { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.8rem; }
 .btn-enviar-resena {
   background: var(--rose-deep); color: var(--white); border: none; cursor: pointer;
   font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500;
-  padding: 0.55rem 1.4rem; border-radius: 50px; transition: background 0.2s;
+  min-height: 44px; padding: 0.55rem 1.4rem; border-radius: 50px; transition: background 0.2s;
 }
 .btn-enviar-resena:hover { background: #8d5560; }
 .btn-cancelar-resena {
@@ -297,6 +297,8 @@
   line-height: 1;
   color: var(--sand);
   cursor: pointer;
+  min-width: 40px;
+  min-height: 40px;
   padding: 0 0.15rem;
   transition: transform .15s ease, color .15s ease;
 }

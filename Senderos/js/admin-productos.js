@@ -458,10 +458,23 @@ function renderTabla(lista) {
     tr.appendChild(tdPrecio);
 
     const tdStock = document.createElement('td');
-    const stockBadge = document.createElement('span');
-    stockBadge.className = 'badge-count' + (qty > 0 ? ' green' : '');
-    stockBadge.textContent = qty > 0 ? 'Stock: ' + qty : 'Sin stock';
-    tdStock.appendChild(stockBadge);
+    const stockIndicador = document.createElement('span');
+    stockIndicador.className =
+      'stock-indicador' +
+      (qty <= 0 ? ' sin' : qty <= 5 ? ' bajo' : '');
+
+    const stockLabel = document.createElement('span');
+    stockLabel.className = 'stock-label';
+    stockLabel.textContent = qty > 0 ? 'Stock' : 'Sin stock';
+    stockIndicador.appendChild(stockLabel);
+
+    if (qty > 0) {
+      const stockNum = document.createElement('strong');
+      stockNum.textContent = String(qty);
+      stockIndicador.appendChild(stockNum);
+    }
+
+    tdStock.appendChild(stockIndicador);
     tr.appendChild(tdStock);
 
     const tdAcc = document.createElement('td');

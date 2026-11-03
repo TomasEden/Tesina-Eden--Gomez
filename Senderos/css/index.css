@@ -6,12 +6,10 @@
    ═══════════════════════════════════════ */
 
 .hero {
-  min-height: 100vh;
+  min-height: calc(100vh - 68px);
 
   display: grid;
   grid-template-columns: 1fr 1fr;
-
-  padding-top: 68px;
 }
 
 .hero-left {
@@ -61,7 +59,7 @@
     serif;
 
   font-size:
-    clamp(3rem, 5vw, 5rem);
+    clamp(2.75rem, 4.5vw, 3.5rem);
 
   font-weight: 300;
   line-height: 1.1;
@@ -151,17 +149,34 @@
   animation:
     fadeIn 1s 0.3s forwards;
 
-  /* No hay foto real en el repo (img/hero.jpg no existe) y no se inventa una:
-     el hueco se resuelve con un fondo decorativo de la paleta del sitio. */
+  /* Foto real del local (img/Otros). El degradado queda como respaldo
+     mientras la imagen carga o si no está disponible. */
   background:
     radial-gradient(circle at 72% 28%, rgba(255, 255, 255, 0.55), transparent 58%),
     linear-gradient(150deg, var(--rose-pale) 0%, var(--sand) 55%, var(--rose-mid) 100%);
+}
+
+.hero-right-img {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center 35%;
 }
 
 html.dark .hero-right {
   background:
     radial-gradient(circle at 72% 28%, rgba(194, 138, 147, 0.25), transparent 58%),
     linear-gradient(150deg, #2A2025 0%, #1A1A1A 55%, #242424 100%);
+}
+
+html.dark .hero-right-img {
+  filter: brightness(0.9) saturate(0.95);
 }
 
 .hero-right::before {
@@ -174,6 +189,11 @@ html.dark .hero-right {
 
   background:
     linear-gradient(
+      90deg,
+      var(--cream) 0%,
+      rgba(250, 247, 245, 0) 16%
+    ),
+    linear-gradient(
       135deg,
       rgba(243, 207, 212, 0.2) 0%,
       transparent 60%
@@ -183,8 +203,8 @@ html.dark .hero-right {
 .hero-badge {
   position: absolute;
 
-  left: -1.5rem;
-  bottom: 2.5rem;
+  left: 1.75rem;
+  bottom: 2rem;
 
   z-index: 2;
 
@@ -194,15 +214,26 @@ html.dark .hero-right {
 
   padding: 1rem 1.4rem;
 
+  border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 16px;
 
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.9);
 
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.1);
+    0 12px 36px rgba(0, 0, 0, 0.16);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
   animation:
     float 3s ease-in-out infinite;
+}
+
+html.dark .hero-badge {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(36, 36, 36, 0.9);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.35);
 }
 
 .badge-icon {
@@ -213,9 +244,10 @@ html.dark .hero-right {
   width: 32px;
   height: 32px;
 
+  border: 1px solid rgba(173, 113, 126, 0.12);
   border-radius: 10px;
 
-  background: var(--rose-pale);
+  background: rgba(173, 113, 126, 0.1);
 }
 
 .badge-icon img {
@@ -352,6 +384,8 @@ html.dark .hero-right {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  min-height: 40px;
+  padding: 0.55rem 0;
 
   color: var(--rose-deep);
 
@@ -462,7 +496,7 @@ html.dark .hero-right {
 .cat-tile-name {
   margin-bottom: 0.25rem;
 
-  color: var(--white);
+  color: #ffffff;
 
   font-family:
     'Cormorant Garamond',
@@ -633,7 +667,7 @@ html.dark .hero-right {
   border-color: var(--rose-deep);
 
   background: var(--rose-deep);
-  color: var(--white);
+  color: #ffffff;
 }
 
 
@@ -740,13 +774,14 @@ html.dark .hero-right {
 }
 
 .btn-add {
-  padding: 0.45rem 1rem;
+  min-height: 40px;
+  padding: 0.6rem 1.1rem;
 
   border: 0;
   border-radius: 50px;
 
   background: var(--rose-deep);
-  color: var(--white);
+  color: #ffffff;
 
   cursor: pointer;
 
@@ -1051,10 +1086,6 @@ html.dark .hero-right {
     padding: 1rem;
   }
 
-  .services-grid .service-desc {
-    display: none;
-  }
-
   .products-grid {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
@@ -1205,4 +1236,11 @@ html.dark .hero-right {
 .estado-msg button { margin-top: .8rem; }
 .skel { min-height: 220px; border-radius: 18px; background: linear-gradient(100deg, var(--rose-pale) 40%, var(--sand) 50%, var(--rose-pale) 60%); background-size: 200% 100%; animation: skelShimmer 1.4s linear infinite; }
 @keyframes skelShimmer { to { background-position: -200% 0; } }
-@media (max-width: 900px) { .hero { grid-template-columns: 1fr; min-height: auto; } .hero-left { padding: 6rem 1.5rem 2rem; } .hero-right { min-height: 300px; padding: 0 1.5rem 3rem; } }
+@media (min-width: 821px) and (max-width: 900px) { .hero { grid-template-columns: 1fr; min-height: auto; } .hero-left { padding: 6rem 1.5rem 2rem; } .hero-right { min-height: 300px; padding: 0 1.5rem 3rem; } }
+
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -98,13 +98,31 @@ html.dark .btn-outline:hover {
 
 /* ── TEXTOS GENERALES ── */
 
+/* Los títulos siempre parten de un tono claro en modo oscuro; las
+   variantes de acento (em, precios, etc.) se definen debajo. */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: #F2EAE4;
+}
+
 html.dark .section-title {
   color: #E8E0DA;
 }
 
 html.dark .section-tag,
-html.dark .page-tag {
-  color: #C28A93;
+html.dark .page-tag,
+html.dark .nos-hero-tag {
+  color: #F3CFD4;
+}
+
+html.dark .nos-hero-title em,
+html.dark .page-hero .page-title em,
+html.dark .page-hero h1 em {
+  color: #F3CFD4;
 }
 
 html.dark .see-all {
@@ -123,7 +141,7 @@ html.dark .hero-desc {
 }
 
 html.dark .hero-tag {
-  color: #C28A93;
+  color: #F3CFD4;
 }
 
 html.dark .hero-title {
@@ -432,8 +450,9 @@ html.dark .valor-card:hover {
 }
 
 html.dark .valor-card h3,
-html.dark .equipo-nombre {
-  color: var(--white);
+html.dark .equipo-nombre,
+html.dark .marca-card strong {
+  color: #F2EAE4;
 }
 
 html.dark .valor-card p,
@@ -465,7 +484,7 @@ html.dark .nos-cta {
 }
 
 html.dark .nos-cta-title {
-  color: var(--white);
+  color: #F2EAE4;
 }
 
 html.dark .nos-cta-title em {
@@ -536,6 +555,29 @@ html.dark .nav-mobile-logout {
 
 /* ── CARRITO / CHECKOUT / CONFIRMACIÓN / MIS TURNOS (Fase 3) ── */
 
+html.dark .side-overlay {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(12, 12, 12, 0.84) 0%,
+      rgba(12, 12, 12, 0.46) 58%,
+      rgba(12, 12, 12, 0.18) 100%
+    ),
+    linear-gradient(
+      160deg,
+      rgba(74, 48, 56, 0.42) 0%,
+      rgba(26, 26, 26, 0.52) 100%
+    );
+}
+
+html.dark .pol-title {
+  color: #F2EAE4;
+}
+
+html.dark .pol-subtitle {
+  color: #A9A9A9;
+}
+
 html.dark .checkout-opcion {
   background: var(--white);
   color: var(--text);
@@ -550,12 +592,30 @@ html.dark .confirm-detalle {
   background: var(--rose-pale);
 }
 
+html.dark .badge-pendiente {
+  background: rgba(212, 133, 10, .16);
+  color: #F0B45F;
+}
+
+html.dark .badge-confirmado,
+html.dark .badge-listo {
+  background: rgba(92, 158, 110, .16);
+  color: #8FD3A1;
+}
+
 html.dark .badge-preparado {
   background: rgba(212, 133, 10, .16);
+  color: #F0B45F;
 }
 
 html.dark .badge-enviado {
   background: rgba(74, 122, 181, .18);
+  color: #8BB4F0;
+}
+
+html.dark .badge-cancelado {
+  background: rgba(224, 80, 80, .14);
+  color: #F08F8F;
 }
 /* Fase 4 */
 html.dark .promo-section { background: var(--rose-pale); }
@@ -563,6 +623,10 @@ html.dark .skel { opacity: .6; }
 html.dark .resenas-login-aviso { background: var(--rose-pale); color: var(--text); }
 
 /* Fase 5 */
+html.dark .alert-success { color: #8FD3A1; }
+html.dark .alert-warning { color: #F0B45F; }
+html.dark .alert-error { color: #F08F8F; }
+html.dark .product-stock.out-of-stock { color: #E8A0A8; }
 html.dark .field-error { color: #e08a8a; }
 html.dark .pw-strength.weak { color: #e08a8a; }
 html.dark .pw-strength.medium { color: #d8a04a; }
@@ -583,6 +647,18 @@ html.dark .sidebar-link:hover,
 html.dark .sidebar-link.active {
   background: rgba(194, 138, 147, .14);
   color: #C28A93;
+}
+
+html.dark .sidebar-site-link {
+  border-color: rgba(243, 207, 212, .26);
+  background: rgba(243, 207, 212, .09);
+  color: #F3CFD4;
+}
+
+html.dark .sidebar-site-link:hover {
+  border-color: rgba(243, 207, 212, .44);
+  background: rgba(243, 207, 212, .16);
+  color: #FFFFFF;
 }
 
 html.dark .admin-main {
@@ -658,7 +734,7 @@ html.dark .resumen-total strong {
 
 /* ── FIXES reporte usuaria: favoritos, filtros, reseñas, paneles ── */
 
-html.dark .category-bar {
+html.dark .cat-bar-wrap {
   background-color: #242424;
   border-bottom-color: rgba(255, 255, 255, .08);
 }
@@ -673,7 +749,6 @@ html.dark .product-filters {
 }
 
 html.dark .fav-card,
-html.dark .review-card,
 html.dark .resena,
 html.dark .resena-card,
 html.dark .resenas-seccion {
@@ -682,7 +757,6 @@ html.dark .resenas-seccion {
 }
 
 html.dark .fav-card h3,
-html.dark .review-card strong,
 html.dark .resena-autor,
 html.dark .resenas-promedio strong {
   color: #E8E0DA;
@@ -779,10 +853,6 @@ html.dark .btn-nueva-resena {
   color: #1A1A1A;
 }
 
-html.dark .review-card {
-  background: #242424;
-}
-
 /* ── CARRITO: alias y tarjeta ── */
 
 html.dark .btn-copiar-alias,
@@ -817,4 +887,125 @@ html.dark .medio-pago {
 
 html.dark .form-error {
   color: #E8918F;
+}
+
+/* ── PRODUCTO DETALLE ── */
+
+html.dark .btn-agregar {
+  background: #C28A93;
+  color: #1A1A1A;
+}
+
+html.dark .btn-agregar:hover {
+  background: #D09AA3;
+  box-shadow: 0 8px 20px rgba(194, 138, 147, 0.25);
+}
+
+html.dark .btn-agregar:disabled {
+  background: #2E2E2E;
+  color: var(--text-light);
+}
+
+html.dark .producto-badge {
+  background: #C28A93;
+  color: #1A1A1A;
+}
+
+html.dark .detalle-stock,
+html.dark .beneficio {
+  background: #2A2025;
+  border-color: #4A3038;
+}
+
+html.dark .qty-controls {
+  background: #242424;
+  border-color: #2E2E2E;
+}
+
+html.dark .btn-favorito {
+  background: #242424;
+  border-color: #2E2E2E;
+}
+
+html.dark .detalle-extras {
+  border-top-color: #2E2E2E;
+}
+
+html.dark .miniatura:hover,
+html.dark .miniatura.active {
+  border-color: #C28A93;
+}
+
+/* ── FIXES REPORTE USUARIA (ronda 2) ── */
+
+/* 1) Estados vacíos: caja translúcida clara sobre fondo oscuro daba texto
+      invisible (caja gris). Se oscurece la caja y se aclara el borde. */
+html.dark .empty-state {
+  background: rgba(36, 36, 36, .55);
+  border-color: rgba(255, 255, 255, .14);
+}
+
+html.dark .empty-state p {
+  color: #b8b2a9;
+}
+
+/* 2) Botón X de cerrar el panel de servicios: el <svg> inline usa
+      currentColor para el disco y blanco para la X. En oscuro el disco
+      se volvía claro y la X blanca quedaba invisible. Disco oscuro + X blanca. */
+html.dark .panel-close {
+  background: rgba(26, 26, 26, .92);
+  color: #1A1A1A;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .35);
+}
+
+html.dark .panel-close:hover {
+  background: #2E2E2E;
+  color: #1A1A1A;
+}
+
+
+/* ═══════════════════════════════════════
+   AVISO ADMIN EN SITIO PÚBLICO (oscuro)
+   ═══════════════════════════════════════ */
+
+html.dark .admin-aviso {
+  border-color: rgba(194, 138, 147, 0.26);
+  border-left-color: #C28A93;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(42, 32, 37, 0.94) 0%,
+      rgba(32, 32, 32, 0.97) 58%
+    );
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.38),
+    0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+html.dark .admin-aviso-ico {
+  background: rgba(194, 138, 147, 0.16);
+  color: #F3CFD4;
+  box-shadow: inset 0 0 0 1px rgba(194, 138, 147, 0.15);
+}
+
+html.dark .admin-aviso-titulo {
+  color: #F2EAE4;
+}
+
+html.dark .admin-aviso-body {
+  color: #BDB5AF;
+}
+
+html.dark .admin-aviso-body strong {
+  color: #F0B8C0;
+}
+
+html.dark .admin-aviso-cerrar {
+  color: #BDB5AF;
+}
+
+html.dark .admin-aviso-cerrar:hover {
+  background: rgba(194, 138, 147, 0.14);
+  border-color: rgba(194, 138, 147, 0.2);
+  color: #F3CFD4;
 }

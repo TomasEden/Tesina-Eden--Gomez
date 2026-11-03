@@ -1,19 +1,7 @@
-/* SPA M — admin-ofertas.css (complementa admin.css) */
-
-.dias-grid {
-  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.3rem;
-}
-.dia-btn {
-  width: 40px; height: 40px; border-radius: 50%;
-  border: 1.5px solid var(--sand); background: var(--white);
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em;
-  cursor: pointer; transition: all 0.2s; color: var(--text-light);
-  display: flex; align-items: center; justify-content: center;
-}
-.dia-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); }
-.dia-btn.active {
-  background: var(--rose-deep); color: #fff; border-color: var(--rose-deep);
-}
+/* SPA M — admin-ofertas.css (complementa admin.css)
+   Estilos del formulario de ofertas: selector de color, preview del ticker
+   y toggle de estado. Solo se incluyen las clases que admin-ofertas.js
+   crea realmente. */
 
 .color-opts {
   display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.3rem;
@@ -44,15 +32,6 @@
   border-radius: 50px; font-size: 0.72rem; font-weight: 700;
   color: #fff; letter-spacing: 0.04em;
 }
-.dias-display {
-  display: flex; gap: 0.2rem; flex-wrap: wrap;
-}
-.dia-tag {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: var(--rose-pale); color: var(--rose-deep);
-  font-size: 0.62rem; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-}
 
 /* Toggle activo/pausado */
 .toggle-estado {
@@ -71,3 +50,9 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 .toggle-track.on .toggle-thumb { transform: translateX(16px); }
+
+@media (max-width: 768px) {
+  .color-opt { width: 44px; height: 44px; }
+  .toggle-estado { padding: 0.6rem 0; }
+  .preview-ticker { padding: 0.8rem 1.2rem; }
+}

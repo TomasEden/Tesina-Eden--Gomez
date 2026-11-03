@@ -302,6 +302,18 @@ async function loginAdmin() {
             return;
         }
 
+        /*
+          Verificación en dos pasos: credenciales correctas pero la
+          sesión aún no está creada. Se redirige a la verificación.
+        */
+
+        if (data.requiere_verificacion) {
+
+            window.location.href = 'verificacion.html';
+
+            return;
+        }
+
         const usuario = data.usuario;
 
         if (!usuario) {

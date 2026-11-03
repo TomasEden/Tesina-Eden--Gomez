@@ -44,7 +44,7 @@
       svg.dataset.iconDone='1'; img.replaceWith(svg);
     } catch(e) { delete img.dataset.iconDone; }
   }
-  function convertirTodos(root){ if(!root?.querySelectorAll)return; root.querySelectorAll('img[src*="/icons/"]').forEach(convertirIcono); }
+  function convertirTodos(root){ if(!root||!root.querySelectorAll)return; if(root.nodeType===Node.ELEMENT_NODE){var _s=root.getAttribute&&root.getAttribute('src')||'';if(esIcono(_s))convertirIcono(root);} root.querySelectorAll('img[src*="/icons/"]').forEach(convertirIcono); }
   function init(){ convertirTodos(document); const observer=new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType===Node.ELEMENT_NODE) convertirTodos(n);}))); observer.observe(document.documentElement,{childList:true,subtree:true}); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
 })();

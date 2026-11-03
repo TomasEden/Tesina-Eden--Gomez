@@ -7,6 +7,16 @@ require_once __DIR__ . '/config.php';
 header('Cache-Control: no-store');
 header('Content-Type: application/json; charset=utf-8');
 
+/* Solo lectura de constantes públicas de configuración. */
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    http_response_code(405);
+    echo json_encode(
+        ['ok' => false, 'mensaje' => 'Método no permitido'],
+        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+    );
+    exit;
+}
+
 $costoEnvio = defined('COSTO_ENVIO')
     ? COSTO_ENVIO
     : 800;

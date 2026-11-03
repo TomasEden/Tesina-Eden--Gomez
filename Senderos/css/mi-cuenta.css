@@ -1,0 +1,424 @@
+/* ═══════════════════════════════════════
+   Senderos — mi-cuenta.css
+   Sección «Mi cuenta» dentro del panel
+   personal (mis-turnos).
+   ═══════════════════════════════════════ */
+
+/* ─────────────────────────────────────
+   TARJETAS
+   ───────────────────────────────────── */
+
+.mc-card {
+  padding: 1.6rem;
+  margin-bottom: 1.4rem;
+
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: 14px;
+}
+
+.mc-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  margin-bottom: 1.3rem;
+}
+
+.mc-card-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  margin: 0;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.mc-card-titulo img {
+  width: 17px;
+  height: 17px;
+}
+
+/* ─────────────────────────────────────
+   FILAS DE INFORMACIÓN (SOLO LECTURA)
+   ───────────────────────────────────── */
+
+.mc-info-lista {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.mc-info-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+
+  padding: 0.8rem 0;
+
+  border-bottom: 1px solid var(--sand);
+}
+
+.mc-info-fila:last-child {
+  border-bottom: none;
+}
+
+.mc-info-label {
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--text-light);
+}
+
+.mc-info-valor {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  text-align: right;
+  word-break: break-word;
+}
+
+.mc-info-valor.vacio {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+/* ─────────────────────────────────────
+   FORMULARIO DE EDICIÓN
+   ───────────────────────────────────── */
+
+.mc-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.2rem;
+}
+
+.mc-form-grid .form-group {
+  margin-bottom: 0;
+}
+
+.mc-form-grid .form-group.ancho {
+  grid-column: 1 / -1;
+}
+
+.mc-nota-email {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+
+  margin: 0.2rem 0 0;
+
+  padding: 0.7rem 0.9rem;
+
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-light);
+
+  background: var(--rose-pale);
+  border-radius: 8px;
+}
+
+.mc-nota-email img {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: 2px;
+}
+
+/* ─────────────────────────────────────
+   INDICADOR DE CAMBIOS PENDIENTES
+   ───────────────────────────────────── */
+
+.mc-pendiente {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.4rem;
+
+  background: var(--rose-pale);
+  border: 1px solid var(--rose-mid);
+  border-radius: 12px;
+}
+
+.mc-pendiente-txt {
+  flex: 1;
+  min-width: 200px;
+
+  margin: 0;
+
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.mc-pendiente-txt strong {
+  font-weight: 500;
+  color: var(--rose-deep);
+}
+
+.mc-pendiente-acciones {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* ─────────────────────────────────────
+   VERIFICACIÓN (código de 6 dígitos)
+   ───────────────────────────────────── */
+
+.mc-verif {
+  padding: 1.4rem;
+  margin-top: 1.3rem;
+
+  background: var(--rose-pale);
+  border: 1px solid var(--rose-mid);
+  border-radius: 12px;
+}
+
+.mc-verif-titulo {
+  margin: 0 0 0.4rem;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.mc-verif-desc {
+  margin: 0 0 1.1rem;
+
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-light);
+}
+
+.mc-verif-campo {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.mc-verif-campo .form-group {
+  flex: 1;
+  min-width: 170px;
+  margin-bottom: 0;
+}
+
+.mc-verif-campo input {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.45em;
+  text-indent: 0.45em;
+}
+
+.mc-verif-acciones {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  flex-wrap: wrap;
+
+  margin-top: 1rem;
+}
+
+.mc-verif-espera {
+  margin: 0;
+
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.mc-verif-reenviar {
+  padding: 0.45rem 1rem;
+
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+
+  color: var(--rose-deep);
+  background: transparent;
+  border: 1px solid var(--rose);
+  border-radius: 999px;
+  cursor: pointer;
+
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.mc-verif-reenviar:hover:not(:disabled) {
+  background: var(--rose);
+  color: #ffffff;
+}
+
+.mc-verif-reenviar:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ─────────────────────────────────────
+   SEGURIDAD DE LA CUENTA
+   ───────────────────────────────────── */
+
+.mc-seguridad {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.mc-seguridad-ico {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+
+  background: var(--rose-pale);
+  border-radius: 50%;
+}
+
+.mc-seguridad-ico img {
+  width: 18px;
+  height: 18px;
+}
+
+.mc-seguridad-txt h3 {
+  margin: 0 0 0.3rem;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.mc-seguridad-txt p {
+  margin: 0;
+
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-light);
+}
+
+.mc-badge-activo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  margin-top: 0.7rem;
+  padding: 0.3rem 0.8rem;
+
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+
+  color: var(--success);
+  background: rgba(92, 158, 110, 0.1);
+
+  border-radius: 999px;
+}
+
+.mc-badge-activo::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+
+  background: var(--success);
+  border-radius: 50%;
+}
+
+/* ─────────────────────────────────────
+   BOTONES DE ACCIÓN DEL FORMULARIO
+   ───────────────────────────────────── */
+
+.mc-acciones {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+
+  margin-top: 1.4rem;
+}
+
+.mc-acciones .btn-outline,
+.mc-acciones .btn-primary {
+  min-width: 150px;
+}
+
+/* ─────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────── */
+
+@media (max-width: 620px) {
+  .mc-card {
+    padding: 1.2rem;
+  }
+
+  .mc-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mc-info-fila {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .mc-info-valor {
+    text-align: left;
+  }
+
+  .mc-acciones .btn-outline,
+  .mc-acciones .btn-primary {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mc-verif-campo {
+    flex-direction: column;
+  }
+
+  .mc-verif-campo .btn-primary {
+    width: 100%;
+  }
+}
+
+/* ─────────────────────────────────────
+   MODO OSCURO
+   ───────────────────────────────────── */
+
+html.dark .mc-card {
+  background: #242424;
+  border-color: #3a3a3a;
+}
+
+html.dark .mc-info-fila {
+  border-bottom-color: #3a3a3a;
+}
+
+html.dark .mc-nota-email,
+html.dark .mc-pendiente,
+html.dark .mc-verif {
+  background: #2A2025;
+  border-color: #4A3038;
+}
+
+html.dark .mc-seguridad-ico {
+  background: #2A2025;
+}
+
+html.dark .mc-verif-reenviar:hover:not(:disabled) {
+  color: #1A1A1A;
+}
+
+html.dark .mc-badge-activo {
+  background: rgba(92, 158, 110, 0.16);
+}

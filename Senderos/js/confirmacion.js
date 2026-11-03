@@ -68,6 +68,91 @@ function mostrarPedido(pedido) {
   renderTotales(pedido, items, total);
   renderDetalle(pedido, turnos);
   configurarWhatsApp(pedido, items, turnos, total);
+  actualizarSubtituloPago(pedido);
+  programarActualizacionPago(pedido);
+}
+
+function esPagoSimulado(pedido) {
+  var metodo = String((pedido || {}).metodo_pago || '').toLowerCase();
+  var proveedor = String((pedido || {}).pago_proveedor || '').toLowerCase();
+
+  return proveedor.indexOf('simulacion') === 0 ||
+    ['billetera', 'transferencia_qr', 'efectivo'].indexOf(metodo) !== -1;
+}
+
+function actualizarSubtituloPago(pedido) {
+  var subtitulo = document.getElementById('confirmSubtitle');
+
+  if (!subtitulo) {
+    return;
+  }
+
+  var estado = String(pedido.pago_estado || 'pendiente').toLowerCase();
+
+  if (estado === 'simulado') {
+    subtitulo.textContent = 'Recibimos tu pedido. El pago fue aprobado en modo demostración; no se debitó dinero real.';
+    return;
+  }
+
+  if (estado === 'aprobado') {
+    subtitulo.textContent = 'Recibimos tu pedido y el pago fue acreditado. Ya estamos trabajando en él.';
+    return;
+  }
+
+  if (estado === 'rechazado' || estado === 'cancelado' || estado === 'error') {
+    subtitulo.textContent = 'Recibimos tu pedido, pero el pago no se completó. Podés coordinar otro medio con el local.';
+    return;
+  }
+
+  if (estado === 'reembolsado') {
+    subtitulo.textContent = 'Recibimos tu pedido. El pago fue reembolsado.';
+    return;
+  }
+
+  if (estado === 'revisar') {
+    subtitulo.textContent = 'Recibimos tu pedido. El pago necesita una revisión con el local.';
+    return;
+  }
+
+  if (esPagoSimulado(pedido)) {
+    subtitulo.textContent = 'Recibimos tu pedido. El pago simulado quedó pendiente en modo demostración.';
+    return;
+  }
+
+  if (String(pedido.metodo_pago || '').toLowerCase() === 'mercadopago') {
+    subtitulo.textContent = 'Recibimos tu pedido. Estamos esperando la acreditación de Mercado Pago.';
+    return;
+  }
+
+  subtitulo.textContent = 'Recibimos tu pedido. El pago queda pendiente de coordinación.';
+}
+
+var actualizacionPagoTimer = null;
+var intentosActualizacionPago = 0;
+
+function programarActualizacionPago(pedido) {
+  if (actualizacionPagoTimer) {
+    clearTimeout(actualizacionPagoTimer);
+    actualizacionPagoTimer = null;
+  }
+
+  var metodo = String(pedido.metodo_pago || '').toLowerCase();
+  var estado = String(pedido.pago_estado || 'pendiente').toLowerCase();
+
+  if (metodo !== 'mercadopago' || ['pendiente', 'en_proceso'].indexOf(estado) === -1) {
+    intentosActualizacionPago = 0;
+    return;
+  }
+
+  if (intentosActualizacionPago >= 10) {
+    return;
+  }
+
+  intentosActualizacionPago += 1;
+
+  actualizacionPagoTimer = setTimeout(function () {
+    cargarConfirmacion();
+  }, 6000);
 }
 
 function actualizarNumeroPedido(id) {
@@ -200,6 +285,28 @@ function renderTotales(pedido, items, total) {
   fila('Total', total, true);
 }
 
+function formatoFechaTurno(fecha) {
+  var valor = String(fecha || '');
+
+  if (!valor) {
+    return 'Fecha a confirmar';
+  }
+
+  try {
+    var d = new Date(valor + 'T12:00:00');
+
+    if (!isNaN(d.getTime())) {
+      return d.toLocaleDateString('es-AR', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short'
+      });
+    }
+  } catch (e) {}
+
+  return valor;
+}
+
 function renderDetalle(pedido, turnos) {
   var contenedor = document.getElementById('confirmDetalle');
 
@@ -235,7 +342,16 @@ function renderDetalle(pedido, turnos) {
   }
 
   fila('Método de pago', nombreMetodoPago(pedido.metodo_pago));
+  fila('Detalle del pago', pedido.pago_metodo);
+  fila('Estado del pago', estadoPagoTexto(pedido));
+  fila('Proveedor del pago', nombreProveedorPago(pedido.pago_proveedor));
   fila('Este pago incluye', nombreGrupoPago(pedido.pago_grupo));
+
+  if (String(pedido.metodo_pago || '').toLowerCase() === 'efectivo' && pedido.pago_referencia) {
+    fila('Cupón de pago', pedido.pago_referencia);
+  } else if (pedido.pago_referencia) {
+    fila('Referencia de pago', pedido.pago_referencia);
+  }
 
   if (turnos.length) {
     var t = document.createElement('div');
@@ -247,7 +363,7 @@ function renderDetalle(pedido, turnos) {
     var b = document.createElement('strong');
     b.textContent = turnos
       .map(function (x) {
-        return String(x.fecha || '') + ' ' + String(x.horario || '').slice(0, 5);
+        return formatoFechaTurno(x.fecha) + ' · ' + String(x.horario || '').slice(0, 5) + ' hs';
       })
       .join(' · ');
 
@@ -255,6 +371,168 @@ function renderDetalle(pedido, turnos) {
     t.appendChild(b);
     contenedor.appendChild(t);
   }
+
+  agregarSimulacionPago(contenedor, pedido);
+}
+
+function agregarSimulacionPago(contenedor, pedido) {
+  if (!esPagoSimulado(pedido)) {
+    return;
+  }
+
+  var metodo = String(pedido.metodo_pago || '').toLowerCase();
+  var referencia = String(pedido.pago_referencia || '');
+  var caja = document.createElement('div');
+  caja.className = 'confirm-sim-box';
+
+  var titulo = document.createElement('strong');
+  titulo.textContent = 'Pago en modo demostración';
+  caja.appendChild(titulo);
+
+  var texto = document.createElement('p');
+
+  if (metodo === 'transferencia_qr') {
+    texto.textContent = 'Este QR es demostrativo y no permite transferir dinero. La referencia sirve para probar el seguimiento del pedido.';
+    caja.appendChild(texto);
+
+    if (referencia) {
+      caja.appendChild(crearQrDemostrativo(referencia));
+    }
+  } else if (metodo === 'efectivo') {
+    texto.textContent = 'Cupón demostrativo para Pago Fácil o RapiPago. No es válido para abonar en una sucursal real.';
+    caja.appendChild(texto);
+
+    var cupon = document.createElement('div');
+    cupon.className = 'confirm-cupon-sim';
+    cupon.textContent = referencia || 'SEND-DEMO';
+    caja.appendChild(cupon);
+  } else {
+    texto.textContent = 'La billetera virtual se simuló correctamente. No se abrió una cuenta real ni se debitó dinero.';
+    caja.appendChild(texto);
+  }
+
+  contenedor.appendChild(caja);
+}
+
+function crearQrDemostrativo(referencia) {
+  var envoltura = document.createElement('div');
+  envoltura.className = 'confirm-qr-sim';
+
+  var grid = document.createElement('div');
+  grid.className = 'confirm-qr-grid';
+  grid.setAttribute('role', 'img');
+  grid.setAttribute('aria-label', 'QR demostrativo de pago, no escaneable');
+
+  var semilla = 0;
+
+  for (var i = 0; i < referencia.length; i += 1) {
+    semilla = (semilla + referencia.charCodeAt(i) * (i + 3)) % 997;
+  }
+
+  for (var y = 0; y < 21; y += 1) {
+    for (var x = 0; x < 21; x += 1) {
+      var celda = document.createElement('span');
+      var zonaFinder =
+        (x < 7 && y < 7) ||
+        (x > 13 && y < 7) ||
+        (x < 7 && y > 13);
+      var oscuro = false;
+
+      if (zonaFinder) {
+        var lx = x > 13 ? x - 14 : x;
+        var ly = y > 13 ? y - 14 : y;
+        var borde = lx === 0 || lx === 6 || ly === 0 || ly === 6;
+        var centro = lx >= 2 && lx <= 4 && ly >= 2 && ly <= 4;
+        oscuro = borde || centro;
+      } else {
+        oscuro = ((x * 17 + y * 31 + semilla) % 7) < 3;
+      }
+
+      celda.className = oscuro ? 'is-dark' : '';
+      grid.appendChild(celda);
+    }
+  }
+
+  envoltura.appendChild(grid);
+
+  var leyenda = document.createElement('small');
+  leyenda.textContent = 'QR demostrativo';
+  envoltura.appendChild(leyenda);
+
+  return envoltura;
+}
+
+function nombreProveedorPago(proveedor) {
+  var valor = String(proveedor || '').trim().toLowerCase();
+
+  if (valor === 'mercadopago') {
+    return 'Mercado Pago';
+  }
+
+  if (valor === 'manual') {
+    return 'Gestión manual del local';
+  }
+
+  if (valor === 'tarjeta') {
+    return 'Tarjeta';
+  }
+
+  if (valor === 'simulacion') {
+    return 'Simulación local';
+  }
+
+  if (valor === 'simulacion_qr') {
+    return 'QR simulado';
+  }
+
+  if (valor === 'simulacion_efectivo') {
+    return 'Cupón simulado';
+  }
+
+  return proveedor || '';
+}
+
+function estadoPagoTexto(pedido) {
+  var estado = String(pedido.pago_estado || 'pendiente').toLowerCase();
+  var metodo = String(pedido.metodo_pago || '').toLowerCase();
+
+  if (estado === 'simulado') {
+    return 'Pago simulado aprobado (demostración)';
+  }
+
+  if (estado === 'aprobado') {
+    return 'Pago acreditado';
+  }
+
+  if (estado === 'en_proceso') {
+    return 'Pago en proceso';
+  }
+
+  if (estado === 'rechazado') {
+    return 'Pago rechazado';
+  }
+
+  if (estado === 'cancelado') {
+    return 'Pago cancelado';
+  }
+
+  if (estado === 'reembolsado') {
+    return 'Pago reembolsado';
+  }
+
+  if (estado === 'revisar' || estado === 'error') {
+    return 'Pago a revisar con el local';
+  }
+
+  if (esPagoSimulado(pedido)) {
+    return 'Pago simulado pendiente (demostración)';
+  }
+
+  if (metodo === 'mercadopago') {
+    return 'Pendiente de acreditación en Mercado Pago';
+  }
+
+  return 'Pendiente de coordinación con el local';
 }
 
 function nombreMetodoPago(metodo) {
@@ -266,11 +544,36 @@ function nombreMetodoPago(metodo) {
   }
 
   if (m === 'debito') {
-    return 'Débito';
+    return 'Débito en el local';
   }
 
-  /* Tarjetas guardadas como "visa ****1234": solo se muestra la marca
-     y los últimos 4 dígitos. */
+  if (m === 'tarjeta') {
+    return 'Crédito en el local';
+  }
+
+  if (m === 'mercadopago') {
+    return 'Mercado Pago';
+  }
+
+  if (m === 'tarjeta_online') {
+    return 'Tarjeta';
+  }
+
+  if (m === 'billetera') {
+    return 'Billetera virtual (simulación)';
+  }
+
+  if (m === 'transferencia_qr') {
+    return 'Transferencia con QR (simulación)';
+  }
+
+  if (m === 'efectivo') {
+    return 'Efectivo en red · cupón (simulación)';
+  }
+
+  /* Pedidos legacy con tarjetas guardadas como "visa ****1234": solo se
+     muestra la marca y los últimos 4 dígitos. El checkout nuevo no pide
+     datos de tarjeta. */
   var partes = raw.split('****');
   var marca = String(partes[0] || '').trim().toLowerCase();
   var ultimos = partes[1] ? String(partes[1]).replace(/\D/g, '') : '';

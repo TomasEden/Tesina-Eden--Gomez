@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   cablearTabs();
+  abrirTabPorHash();
   cargarTurnos();
   cargarPedidos();
 
@@ -48,11 +49,16 @@ function cablearTabs() {
     });
   });
 
-  document.querySelectorAll('.filter-tab').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      cambiarFiltro(btn);
+  /* Filtro de estado ahora es un desplegable (móvil y escritorio). */
+  var selectEstado = document.getElementById('filtroEstado');
+
+  if (selectEstado) {
+    selectEstado.value = filtroActivo;
+    selectEstado.addEventListener('change', function () {
+      filtroActivo = selectEstado.value || 'todos';
+      renderTurnos();
     });
-  });
+  }
 
   var btnVolver = document.getElementById('btnModalVolver');
 
@@ -85,18 +91,22 @@ function cambiarMainTab(btn) {
   });
 }
 
-function cambiarFiltro(btn) {
-  if (!btn) {
+/*
+  Abre la pestaña indicada en el hash de la URL
+  (p. ej. mis-turnos.html#tabCuenta).
+*/
+function abrirTabPorHash() {
+  var hash = (window.location.hash || '').replace('#', '');
+
+  if (!hash) {
     return;
   }
 
-  filtroActivo = btn.dataset.estado || 'todos';
+  var btn = document.querySelector('.main-tab[data-tab="' + hash + '"]');
 
-  document.querySelectorAll('.filter-tab').forEach(function (tab) {
-    tab.classList.toggle('active', tab === btn);
-  });
-
-  renderTurnos();
+  if (btn) {
+    cambiarMainTab(btn);
+  }
 }
 
 /* ───────── TURNOS ───────── */
@@ -493,6 +503,18 @@ var ESTADO_PEDIDO_LABEL = {
   cancelado: 'Cancelado'
 };
 
+var ESTADO_PAGO_LABEL = {
+  pendiente: 'Pendiente',
+  en_proceso: 'En proceso',
+  aprobado: 'Aprobado',
+  simulado: 'Simulado (demostración)',
+  rechazado: 'Rechazado',
+  cancelado: 'Cancelado',
+  reembolsado: 'Reembolsado',
+  revisar: 'A revisar',
+  error: 'Error'
+};
+
 function crearPedidoCard(pedido, index) {
   var card = document.createElement('article');
   card.className = 'pedido-card';
@@ -551,6 +573,16 @@ function crearPedidoCard(pedido, index) {
     var m = document.createElement('p');
     m.textContent = 'Pago: ' + nombreMetodo(pedido.metodo_pago) + ' (' + nombreGrupo(pedido.pago_grupo) + ')';
     extra.appendChild(m);
+  }
+
+  if (
+    pedido.pago_estado &&
+    (pedido.pago_proveedor || String(pedido.pago_estado).toLowerCase() !== 'pendiente')
+  ) {
+    var ps = document.createElement('p');
+    var estadoPago = String(pedido.pago_estado).toLowerCase();
+    ps.textContent = 'Estado del pago: ' + (ESTADO_PAGO_LABEL[estadoPago] || estadoPago);
+    extra.appendChild(ps);
   }
 
   if (nServicios > 0) {
@@ -716,6 +748,9 @@ function nombreMetodo(metodo) {
   }
   if (m === 'debito') {
     return 'Débito';
+  }
+  if (m === 'mercadopago') {
+    return 'Mercado Pago';
   }
 
   /* Tarjetas guardadas como "visa ****1234": marca + últimos 4 dígitos. */

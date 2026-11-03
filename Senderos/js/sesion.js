@@ -258,6 +258,7 @@ function crearDropdownSesion(btnEl, usuario) {
     dropdown.appendChild(a);
   }
 
+  agregarLink('Mi cuenta', 'mis-turnos.html#tabCuenta');
   agregarLink('Mis turnos y pedidos', 'mis-turnos.html');
   agregarLink('Favoritos', 'favoritos.html');
   agregarLink('Mi carrito', 'carrito.html');
@@ -672,7 +673,7 @@ document.addEventListener('DOMContentLoaded', function () {
 window.addEventListener('resize', function () {
   var menu = document.getElementById('navMobile');
 
-  if (window.innerWidth > 820 && menu && menu.classList.contains('open')) {
+  if (window.innerWidth > 940 && menu && menu.classList.contains('open')) {
     toggleMenu(false);
   }
 });
@@ -700,3 +701,148 @@ window.addEventListener(
   },
   { passive: true }
 );
+
+
+/* ═══════════════════════════════════════════════════════════════
+   AVISO ADMIN EN SITIO PÚBLICO
+   Cuando un admin navega el sitio de clientes se muestra un banner
+   estético y se bloquean las acciones exclusivas de cliente
+   (carrito, favoritos, pagar, reseñas, mensajes).
+   ═══════════════════════════════════════════════════════════════ */
+
+var __avisoAdminInstalado = false;
+
+/* Selectores de acciones que solo un cliente debe poder realizar. */
+var __accionesCliente = [
+  '.btn-add',                 // agregar producto al carrito (index)
+  '.btn-reservar-panel',      // agregar servicio al carrito
+  '#panelProductoAgregar',    // agregar al carrito (productos)
+  '.btn-add-cart',
+  '.btn-fav',                 // favorito (index)
+  '.service-likes',           // favorito (servicios)
+  '.fav-toggle',
+  '.btn-favorito',
+  '.btn-checkout',
+  '#carrito-checkout button',
+  '#carrito-checkout input[type="submit"]'
+].join(',');
+
+/* Formularios exclusivos de cliente (enviar consulta / reseña). */
+var __formulariosCliente = ['#formContacto', '.form-resena'].join(',');
+
+function initAvisoAdmin() {
+  consultarSesionServidor().then(function (usuario) {
+    if (!usuario || String(usuario.rol || '') !== 'admin') {
+      return;
+    }
+
+    instalarBloqueoAccionesCliente();
+    mostrarBannerAdmin();
+  });
+}
+
+function instalarBloqueoAccionesCliente() {
+  if (__avisoAdminInstalado) {
+    return;
+  }
+  __avisoAdminInstalado = true;
+
+  function negar(motivo) {
+    if (typeof window.showToast === 'function') {
+      window.showToast(
+        'Estás navegando como <strong>administrador</strong>: ' +
+          String(motivo || 'esta acción') +
+          ' está disponible solo para clientes.',
+        'info'
+      );
+    }
+  }
+
+  /* Captura para interceptar antes que los handlers de cada página. */
+  document.addEventListener(
+    'click',
+    function (event) {
+      var destino = event.target && event.target.closest
+        ? event.target.closest(__accionesCliente)
+        : null;
+
+      if (!destino || destino.disabled) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      negar('agregar al carrito, pagar o marcar favoritos');
+    },
+    true
+  );
+
+  document.addEventListener(
+    'submit',
+    function (event) {
+      var form = event.target;
+      var coincide = form && form.matches && form.matches(__formulariosCliente);
+
+      if (!coincide) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      negar('enviar mensajes o reseñas');
+    },
+    true
+  );
+}
+
+function mostrarBannerAdmin() {
+  try {
+    if (window.sessionStorage.getItem('senderos-aviso-admin-cerrado')) {
+      return;
+    }
+  } catch (e) {}
+
+  if (document.getElementById('adminAviso')) {
+    return;
+  }
+
+  var banner = document.createElement('aside');
+  banner.id = 'adminAviso';
+  banner.className = 'admin-aviso';
+  banner.setAttribute('role', 'status');
+
+  banner.innerHTML =
+    '<span class="admin-aviso-ico">' +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M12 2 2 7l10 5 10-5-10-5Z"/>' +
+        '<path d="m2 17 10 5 10-5"/>' +
+        '<path d="m2 12 10 5 10-5"/>' +
+      '</svg>' +
+    '</span>' +
+    '<div class="admin-aviso-txt">' +
+      '<p class="admin-aviso-titulo">Modo administrador</p>' +
+      '<p class="admin-aviso-body">Estás viendo el sitio como cliente: no podés agregar al carrito, pagar, marcar favoritos, dejar reseñas ni enviar mensajes. Gestioná el negocio desde el <strong>Panel admin</strong>.</p>' +
+    '</div>' +
+    '<button class="admin-aviso-cerrar" type="button" aria-label="Cerrar aviso">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M18 6 6 18"/>' +
+        '<path d="m6 6 12 12"/>' +
+      '</svg>' +
+    '</button>';
+
+  banner.querySelector('.admin-aviso-cerrar').addEventListener('click', function () {
+    banner.remove();
+    try {
+      window.sessionStorage.setItem('senderos-aviso-admin-cerrado', '1');
+    } catch (e) {}
+  });
+
+  /* Se inserta al inicio del contenido (el navbar es fixed con padding-top 68px). */
+  document.body.insertBefore(banner, document.body.firstChild);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAvisoAdmin);
+} else {
+  initAvisoAdmin();
+}

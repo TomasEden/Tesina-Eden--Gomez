@@ -1,0 +1,22 @@
+# ============================================================
+# Senderos Spa — Archivos excluidos del repositorio
+# ============================================================
+
+# Configuración privada (credenciales SMTP, claves, etc.)
+.env
+
+# Dependencias de Composer
+/vendor/
+
+# Archivos del sistema
+Thumbs.db
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log

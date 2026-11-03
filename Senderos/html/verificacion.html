@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<script>try{(function(){var c="senderos-tema";var g=null;try{g=localStorage.getItem(c);}catch(e){}var o=g==="oscuro"||(!g&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(o){document.documentElement.classList.add("dark");}try{document.documentElement.style.colorScheme=o?"dark":"light";}catch(e){}})();}catch(e){}</script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Verificá tu identidad | Senderos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+
+
+
+
+<link href="../img/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
+<meta content="Verificá tu identidad con el código enviado a tu correo." name="description"/>
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/login.css" rel="stylesheet"/><link href="../css/verificacion.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<body data-pagina="verificacion">
+<main class="login-page">
+<aside class="login-side">
+<a class="side-logo" href="index.html">
+<span aria-hidden="true" class="nav-logo-icon"></span>
+<span>Senderos</span>
+</a>
+<div class="side-content">
+<p class="side-tag">
+          Bienvenida
+        </p>
+<h1 class="side-title">
+          Tu cuenta
+          <br/>
+          protegida
+          <br/>
+<em>para vos</em>
+</h1>
+<p class="side-desc">
+          Verificamos tu identidad para cuidar
+          tus datos y tus compras.
+        </p>
+</div>
+<img alt="Frente del local de Senderos Spa" class="side-img" width="1400" height="933" loading="lazy" decoding="async" src="../img/Otros/local-hero.jpg"/>
+<div aria-hidden="true" class="side-overlay"></div>
+</aside>
+<section class="login-form-section">
+<div class="login-form-wrap">
+<a class="mobile-logo" href="index.html">
+<span aria-hidden="true" class="nav-logo-icon"></span>
+<span>Senderos</span>
+</a>
+<div class="form-header">
+<p class="section-tag">
+            Mi cuenta
+          </p>
+<h2>
+            Verificá tu identidad
+          </h2>
+<p id="verif-subtitulo">
+            Enviamos un código de 6 dígitos a tu correo electrónico.
+          </p>
+</div>
+
+<!-- PENDIENTE (cargado por JS) -->
+<div id="verif-form-wrap">
+<form id="verifForm" novalidate="">
+<div class="form-group">
+<label for="codigo">
+                Código de verificación
+              </label>
+<input autocapitalize="off" autocomplete="one-time-code" id="codigo" inputmode="numeric" maxlength="6" name="codigo" pattern="[0-9]*" placeholder="------" required="" type="text"/>
+<span aria-live="polite" class="field-error" id="err-codigo" role="alert"></span>
+</div>
+<button class="btn-primary login-submit" id="btnVerificar" type="submit">
+<span id="btnText">
+                Verificar código
+              </span>
+<span aria-hidden="true" class="btn-loader hidden" id="btnLoader"></span>
+</button>
+</form>
+<div class="verif-meta">
+<p class="verif-tiempo" id="verifTiempo" aria-live="polite">
+              El código vence en <strong id="verifContador">--:--</strong>
+            </p>
+<button class="verif-reenviar" id="btnReenviar" type="button">
+              Reenviar código
+            </button>
+<p class="verif-espera hidden" id="verifEspera" aria-live="polite"></p>
+</div>
+</div>
+
+<!-- SIN DESAFÍO / ERROR GRAVE -->
+<div class="verif-sin-desafio hidden" id="verifSinDesafio" role="alert">
+<p class="verif-sin-desafio-txt" id="verifSinDesafioTxt">
+            No hay ninguna verificación pendiente.
+          </p>
+<a class="btn-primary login-submit" href="login.html">
+            Volver a ingresar
+          </a>
+</div>
+
+<div class="form-divider">
+<span>o</span>
+</div>
+<a class="back-link" href="login.html" id="btnVolver">
+<img alt="" height="12" src="../img/icons/x.svg" width="12"/>
+          Volver al inicio de sesión
+        </a>
+</div>
+</section>
+</main>
+
+
+
+
+<div aria-live="polite" class="toast" id="toast" role="status"></div>
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/verificacion.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+</html>

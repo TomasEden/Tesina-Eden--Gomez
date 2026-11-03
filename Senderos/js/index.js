@@ -12,11 +12,23 @@ document.addEventListener('DOMContentLoaded', function () {
     window.actualizarNavbar();
   }
 
-  if (typeof window.cargarOfertas === 'function') {
-    window.cargarOfertas().then(cargarInicio).catch(cargarInicio);
-  } else {
-    cargarInicio();
-  }
+  /*
+   * Los favoritos se sincronizan contra la BD antes de pintar las
+   * tarjetas, para que el estado de los corazones sea el real.
+   * Si el servidor falla, se sigue con la caché local.
+   */
+  var favoritosListos =
+    typeof window.FAVORITOS !== 'undefined'
+      ? window.FAVORITOS.sincronizar()
+      : Promise.resolve();
+
+  favoritosListos.then(function () {
+    if (typeof window.cargarOfertas === 'function') {
+      window.cargarOfertas().then(cargarInicio).catch(cargarInicio);
+    } else {
+      cargarInicio();
+    }
+  });
 
   window.addEventListener('ofertas:listas', actualizarTicker);
 
@@ -250,6 +262,21 @@ function renderCategorias() {
     var tile = document.createElement('a');
     tile.className = 'cat-tile img-slot';
     tile.href = 'servicios.html?cat=' + encodeURIComponent(categoria);
+
+    /* Imagen representativa: la del primer servicio de la categoría. */
+    var imagen = String((servicios[0] && servicios[0].img) || '').trim();
+
+    if (imagen) {
+      var foto = document.createElement('img');
+      foto.src = imagen;
+      foto.alt = categoria;
+      foto.loading = 'lazy';
+      foto.onerror = function () {
+        this.onerror = null;
+        this.src = '../img/placeholder.svg';
+      };
+      tile.appendChild(foto);
+    }
 
     var info = document.createElement('div');
     info.className = 'cat-tile-info';
@@ -564,34 +591,11 @@ function toggleFavoritoIndex(id, boton) {
 }
 
 function aplicarToggleFavoritoIndex(id, boton) {
-  var clave = 'senderos-likes-productos';
-  var lista = [];
-
-  try {
-    lista = JSON.parse(window.localStorage.getItem(clave) || '[]');
-
-    if (!Array.isArray(lista)) {
-      lista = [];
-    }
-  } catch (e) {
-    lista = [];
-  }
-
   var num = Number(id);
-  var idx = lista.indexOf(num);
+  var activo = window.FAVORITOS.cacheProductos().indexOf(num) === -1;
 
-  if (idx === -1) {
-    lista.push(num);
-  } else {
-    lista.splice(idx, 1);
-  }
-
-  try {
-    window.localStorage.setItem(clave, JSON.stringify(lista));
-  } catch (e) {}
-
+  /* Se pinta al instante (optimista) y se confirma contra la BD. */
   if (boton) {
-    var activo = idx === -1;
     boton.classList.toggle('active', activo);
     boton.setAttribute('aria-pressed', String(activo));
     boton.setAttribute(
@@ -612,6 +616,22 @@ function aplicarToggleFavoritoIndex(id, boton) {
     icono.setAttribute('aria-hidden', 'true');
     boton.appendChild(icono);
   }
+
+  window.FAVORITOS.alternar('producto', num).catch(function (error) {
+    /* Si el servidor rechazó, se revierte el pintado y se avisa. */
+    if (boton) {
+      boton.classList.toggle('active', !activo);
+      boton.setAttribute('aria-pressed', String(!activo));
+      boton.setAttribute(
+        'aria-label',
+        !activo ? 'Quitar de favoritos' : 'Agregar a favoritos'
+      );
+    }
+
+    if (typeof window.showToast === 'function') {
+      window.showToast(error.message || 'No se pudo guardar el favorito.');
+    }
+  });
 }
 
 /* ── AGREGAR POR API (sin localStorage) ── */

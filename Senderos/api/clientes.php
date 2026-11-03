@@ -4,6 +4,11 @@ require_once __DIR__ . '/config.php';
 
 header('Cache-Control: no-store');
 
+/* Solo lectura: la lista de clientes es exclusiva del panel admin. */
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    jsonResponse(['ok' => false, 'error' => 'Método no permitido.'], 405);
+}
+
 requireAdmin(); // la lista de clientes es solo para el panel admin
 
 try {

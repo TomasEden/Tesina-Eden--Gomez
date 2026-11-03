@@ -27,12 +27,30 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   cablearPanel();
+  cablearFlechasCategorias();
 
-  if (typeof window.cargarOfertas === 'function') {
-    window.cargarOfertas().then(cargarServicios).catch(cargarServicios);
-  } else {
-    cargarServicios();
-  }
+  /*
+   * Los favoritos se sincronizan contra la BD antes de pintar las
+   * tarjetas, para que el estado de los corazones sea el real.
+   * Si el servidor falla, se sigue con la caché local.
+   */
+  var favoritosListos =
+    typeof window.FAVORITOS !== 'undefined'
+      ? window.FAVORITOS.sincronizar()
+      : Promise.resolve();
+
+  favoritosListos.then(function () {
+    likesGuardados =
+      typeof window.FAVORITOS !== 'undefined'
+        ? window.FAVORITOS.cacheServicios()
+        : likesGuardados;
+
+    if (typeof window.cargarOfertas === 'function') {
+      window.cargarOfertas().then(cargarServicios).catch(cargarServicios);
+    } else {
+      cargarServicios();
+    }
+  });
 
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
@@ -46,6 +64,47 @@ function cablearPanel() {
 
   if (backdrop) {
     backdrop.addEventListener('click', cerrarPanel);
+  }
+}
+
+/* Flechas de scroll de categorías (solo visibles en móvil). Llevan la barra
+   horizontal al inicio/fin y se deshabilitan en los extremos. */
+function cablearFlechasCategorias() {
+  var bar = document.getElementById('categoryBar');
+  var prev = document.getElementById('catPrev');
+  var next = document.getElementById('catNext');
+
+  if (!bar || !prev || !next) {
+    return;
+  }
+
+  function paso() {
+    return Math.max(160, Math.round(bar.clientWidth * 0.7));
+  }
+
+  function mover(dir) {
+    var reducida = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    bar.scrollBy({
+      left: dir * paso(),
+      behavior: reducida ? 'auto' : 'smooth'
+    });
+  }
+
+  function actualizar() {
+    var max = bar.scrollWidth - bar.clientWidth;
+    prev.disabled = bar.scrollLeft <= 2;
+    next.disabled = bar.scrollLeft >= max - 2;
+  }
+
+  prev.addEventListener('click', function () { mover(-1); });
+  next.addEventListener('click', function () { mover(1); });
+  bar.addEventListener('scroll', actualizar, { passive: true });
+  window.addEventListener('resize', actualizar);
+
+  // Tras renderizar las categorías y en cambios de tamaño de contenido.
+  actualizar();
+  if (typeof ResizeObserver === 'function') {
+    new ResizeObserver(actualizar).observe(bar);
   }
 }
 
@@ -73,7 +132,6 @@ function cargarServicios() {
       aplicarCategoriaDesdeURL();
       renderServicios();
       abrirPanelDesdeURL();
-      renderResumenGeneral();
     })
     .catch(function () {
       if (typeof window.mostrarErrorConexion === 'function') {
@@ -709,20 +767,7 @@ function toggleLike(id, boton) {
   });
 }
 
-function aplicarToggleLike(id, boton) {
-  var index = likesGuardados.indexOf(id);
-  var liked = index === -1;
-
-  if (liked) {
-    likesGuardados.push(id);
-  } else {
-    likesGuardados.splice(index, 1);
-  }
-
-  try {
-    window.localStorage.setItem('senderos-likes', JSON.stringify(likesGuardados));
-  } catch (e) {}
-
+function pintarLike(boton, liked) {
   boton.classList.toggle('liked', liked);
   boton.setAttribute('aria-label', liked ? 'Quitar de favoritos' : 'Agregar a favoritos');
   boton.setAttribute('aria-pressed', String(liked));
@@ -742,6 +787,43 @@ function aplicarToggleLike(id, boton) {
   icono.setAttribute('aria-hidden', 'true');
   var cont = boton.querySelector('.like-icon');
   (cont || boton).appendChild(icono);
+}
+
+function aplicarToggleLike(id, boton) {
+  var num = Number(id);
+  var liked = likesGuardados.indexOf(num) === -1;
+
+  /* Se actualiza la caché local y el pintado al instante (optimista). */
+  likesGuardados = liked
+    ? likesGuardados.concat([num])
+    : likesGuardados.filter(function (x) {
+        return x !== num;
+      });
+
+  try {
+    window.localStorage.setItem('senderos-likes', JSON.stringify(likesGuardados));
+  } catch (e) {}
+
+  pintarLike(boton, liked);
+
+  /* Se confirma contra la BD; si el servidor rechaza se revierte. */
+  window.FAVORITOS.alternar('servicio', num).catch(function (error) {
+    likesGuardados = liked
+      ? likesGuardados.filter(function (x) {
+          return x !== num;
+        })
+      : likesGuardados.concat([num]);
+
+    try {
+      window.localStorage.setItem('senderos-likes', JSON.stringify(likesGuardados));
+    } catch (e) {}
+
+    pintarLike(boton, !liked);
+
+    if (typeof window.showToast === 'function') {
+      window.showToast(error.message || 'No se pudo guardar el favorito.');
+    }
+  });
 }
 
 /* ── CARRITO POR API ── */
@@ -862,78 +944,4 @@ function formatoPrecioLocal(valor) {
   }
 
   return '$' + Number(valor || 0).toLocaleString('es-AR');
-}
-
-/* ── RESEÑAS GENERALES ("Lo que dicen de nosotros") ── */
-
-function renderResumenGeneral() {
-  var contenedor = document.getElementById('reviewsServices');
-
-  if (!contenedor) {
-    return;
-  }
-
-  fetch('../api/resenas.php?resumen=1', {
-    credentials: 'same-origin',
-    cache: 'no-store',
-    headers: { Accept: 'application/json' }
-  })
-    .then(function (response) {
-      return response.ok ? response.json() : null;
-    })
-    .then(function (data) {
-      var resumen = Array.isArray(data && data.resumen) ? data.resumen : [];
-
-      contenedor.innerHTML = '';
-
-      if (!resumen.length) {
-        var seccion = contenedor.closest('.reviews-section');
-
-        if (seccion) {
-          seccion.hidden = true;
-        }
-
-        return;
-      }
-
-      resumen
-        .slice()
-        .sort(function (a, b) {
-          return Number(b.promedio) - Number(a.promedio);
-        })
-        .slice(0, 3)
-        .forEach(function (fila) {
-          var servicio = SERVICIOS.find(function (s) {
-            return s.id === String(fila.servicio_slug);
-          });
-
-          var card = document.createElement('article');
-          card.className = 'review-card';
-
-          var nombre = document.createElement('strong');
-          nombre.textContent = servicio ? servicio.nombre : String(fila.servicio_slug);
-          card.appendChild(nombre);
-
-          var prom = document.createElement('p');
-          prom.textContent =
-            Number(fila.promedio).toFixed(1) + ' ★ · ' + Number(fila.cantidad) + ' reseñas';
-          card.appendChild(prom);
-
-          if (servicio) {
-            card.style.cursor = 'pointer';
-            card.addEventListener('click', function () {
-              abrirPanel(servicio.id);
-            });
-          }
-
-          contenedor.appendChild(card);
-        });
-    })
-    .catch(function () {
-      var seccion = contenedor.closest('.reviews-section');
-
-      if (seccion) {
-        seccion.hidden = true;
-      }
-    });
 }

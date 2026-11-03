@@ -13,6 +13,8 @@
 
 
 
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+
 <link href="../css/base.css" rel="stylesheet"/><link href="../css/servicios.css" rel="stylesheet"/><link href="../css/resenas.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
 <body class="page-servicios" data-pagina="servicios">
 
@@ -44,7 +46,15 @@
           </h2>
 </div>
 </div>
-<div aria-label="Filtrar servicios por categoría" class="category-bar" id="categoryBar"></div>
+<div class="cat-bar-wrap" aria-label="Filtrar servicios por categoría">
+<button aria-label="Categorías anteriores" class="cat-arrow" id="catPrev" type="button">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="m15 18-6-6 6-6"/></svg>
+</button>
+<div class="category-bar" id="categoryBar"></div>
+<button aria-label="Más categorías" class="cat-arrow" id="catNext" type="button">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="m9 18 6-6-6-6"/></svg>
+</button>
+</div>
 <div class="services-grid" id="servicesGrid">
 <div class="skel"></div>
 <div class="skel"></div>
@@ -61,19 +71,6 @@
 </section>
 <aside aria-hidden="true" aria-label="Detalle del servicio" aria-modal="true" class="srv-panel" id="srvPanel" role="dialog"></aside>
 <div aria-hidden="true" class="srv-panel-backdrop" id="srvPanelBackdrop"></div>
-<section class="reviews-section">
-<div class="section-header">
-<div>
-<p class="section-tag">
-            Experiencias
-          </p>
-<h2 class="section-title">
-            Lo que dicen de nosotros
-          </h2>
-</div>
-</div>
-<div class="reviews-services" id="reviewsServices"></div>
-</section>
 <section class="cta-section img-slot">
 <div class="cta-content">
 <p class="section-tag">
@@ -103,5 +100,5 @@
 
 
 
-<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/ofertas.js"></script><script src="../js/resenas.js"></script><script src="../js/servicios.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/favoritos-api.js"></script><script src="../js/ofertas.js"></script><script src="../js/resenas.js"></script><script src="../js/servicios.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
 </html>

@@ -279,6 +279,48 @@ function normalizarPedido(
       pedido.metodoPago ||
       '',
 
+    pago_grupo:
+      pedido.pago_grupo ||
+      'todo',
+
+    entrega:
+      pedido.entrega ||
+      'retiro',
+
+    direccion_envio:
+      pedido.direccion_envio ||
+      '',
+
+    costo_envio:
+      Number(
+        pedido.costo_envio ||
+        0
+      ),
+
+    pago_estado:
+      pedido.pago_estado ||
+      'pendiente',
+
+    pago_proveedor:
+      pedido.pago_proveedor ||
+      '',
+
+    pago_referencia:
+      pedido.pago_referencia ||
+      '',
+
+    pago_id:
+      pedido.pago_id ||
+      '',
+
+    pago_metodo:
+      pedido.pago_metodo ||
+      '',
+
+    pago_actualizado_en:
+      pedido.pago_actualizado_en ||
+      '',
+
     creado_en:
       pedido.creado_en ||
       pedido.fecha ||
@@ -991,6 +1033,55 @@ function abrirPedido(
   }
 
 
+  const pagoEstado =
+    document.getElementById(
+      'detallePagoEstado'
+    );
+
+
+  if (pagoEstado) {
+
+    pagoEstado.textContent =
+      etiquetaEstadoPago(
+        pedidoActivo.pago_estado
+      ) +
+      (pedidoActivo.pago_proveedor
+        ? ' · ' + etiquetaProveedorPago(pedidoActivo.pago_proveedor)
+        : '');
+
+  }
+
+
+  const pagoRefFila =
+    document.getElementById(
+      'detallePagoReferenciaFila'
+    );
+
+
+  const pagoRef =
+    document.getElementById(
+      'detallePagoReferencia'
+    );
+
+
+  if (pagoRefFila && pagoRef) {
+
+    const referencia =
+      pedidoActivo.pago_id ||
+      pedidoActivo.pago_referencia ||
+      '';
+
+    pagoRefFila.classList.toggle(
+      'hidden',
+      !referencia
+    );
+
+    pagoRef.textContent =
+      referencia || '—';
+
+  }
+
+
   const entrega =
     document.getElementById(
       'detalleEntrega'
@@ -1245,6 +1336,23 @@ function abrirEstadoPedido(
   }
 
 
+  const selectPago =
+    document.getElementById(
+      'nuevoPagoEstadoPedido'
+    );
+
+
+  if (selectPago) {
+
+    selectPago.value =
+      normalizarEstado(
+        pedidoActivo.pago_estado ||
+        'pendiente'
+      );
+
+  }
+
+
   const info =
     document.getElementById(
       'estadoPedidoInfo'
@@ -1299,6 +1407,18 @@ async function guardarEstadoPedido() {
       : 'pendiente';
 
 
+  const selectPago =
+    document.getElementById(
+      'nuevoPagoEstadoPedido'
+    );
+
+
+  const pagoEstado =
+    selectPago
+      ? selectPago.value
+      : '';
+
+
   try {
 
     const response =
@@ -1318,15 +1438,29 @@ async function guardarEstadoPedido() {
               'application/json'
           },
 
-          body: JSON.stringify({
+          body:
+            JSON.stringify(
+              (function () {
 
-            id:
-              pedidoActivo.id,
+                const payload = {
 
-            estado:
-              estado
+                  id:
+                    pedidoActivo.id,
 
-          })
+                  estado:
+                    estado
+
+                };
+
+                if (pagoEstado) {
+                  payload.pago_estado =
+                    pagoEstado;
+                }
+
+                return payload;
+
+              })()
+            )
 
         }
       );
@@ -1370,6 +1504,11 @@ async function guardarEstadoPedido() {
           estado
 
       };
+
+      if (pagoEstado) {
+        pedidos[index].pago_estado =
+          pagoEstado;
+      }
 
     }
 
@@ -1471,8 +1610,9 @@ async function cerrarSesion() {
    UTILIDADES
    ========================================================= */
 
-/* Etiqueta legible del método de pago. Las tarjetas se guardan como
-   "visa ****1234": se muestran marca + últimos 4 dígitos solamente. */
+/* Etiqueta legible del método de pago. Los pedidos legacy con tarjetas
+   guardadas como "visa ****1234" se muestran solo con marca y últimos 4
+   dígitos; el checkout nuevo no solicita ni guarda datos de tarjeta. */
 function etiquetaMetodoPago(metodo) {
   const raw = String(metodo || '').trim();
 
@@ -1488,6 +1628,14 @@ function etiquetaMetodoPago(metodo) {
 
   if (m === 'debito') {
     return 'Débito';
+  }
+
+  if (m === 'tarjeta') {
+    return 'Crédito (presencial)';
+  }
+
+  if (m === 'mercadopago') {
+    return 'Mercado Pago';
   }
 
   const partes = raw.split('****');
@@ -1510,6 +1658,56 @@ function etiquetaMetodoPago(metodo) {
   }
 
   return raw.charAt(0).toUpperCase() + raw.slice(1);
+}
+
+
+function etiquetaProveedorPago(proveedor) {
+  const valor = String(proveedor || '').trim().toLowerCase();
+
+  if (valor === 'mercadopago') {
+    return 'Mercado Pago';
+  }
+
+  if (valor === 'manual' || valor === '') {
+    return 'Manual';
+  }
+
+  if (valor === 'tarjeta') {
+    return 'Tarjeta';
+  }
+
+  if (valor === 'simulacion') {
+    return 'Simulación';
+  }
+
+  if (valor === 'simulacion_qr') {
+    return 'QR simulado';
+  }
+
+  if (valor === 'simulacion_efectivo') {
+    return 'Cupón simulado';
+  }
+
+  return String(proveedor);
+}
+
+
+function etiquetaEstadoPago(estado) {
+  const estados = {
+    pendiente: 'Pendiente',
+    en_proceso: 'En proceso',
+    aprobado: 'Aprobado',
+    simulado: 'Simulado (demostración)',
+    rechazado: 'Rechazado',
+    cancelado: 'Cancelado',
+    reembolsado: 'Reembolsado',
+    revisar: 'Revisar',
+    error: 'Error'
+  };
+
+  const clave = normalizarEstado(estado);
+
+  return estados[clave] || clave;
 }
 
 

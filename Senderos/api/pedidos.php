@@ -87,22 +87,33 @@ try {
         $data = getJsonInput();
         $id = (int)($data['id'] ?? 0);
         $estado = strtolower(trim((string)($data['estado'] ?? '')));
+        $pagoEstado = strtolower(trim((string)($data['pago_estado'] ?? '')));
 
         $permitidos = ['pendiente', 'confirmado', 'preparado', 'enviado', 'entregado', 'cancelado'];
+        $permitidosPago = ['pendiente', 'en_proceso', 'aprobado', 'simulado', 'rechazado', 'cancelado', 'reembolsado', 'revisar', 'error'];
+        $cambiarPago = $pagoEstado !== '';
 
         if ($id <= 0) {
             jsonResponse(['ok' => false, 'error' => 'ID de pedido inválido.'], 400);
         }
 
-        if (!in_array($estado, $permitidos, true)) {
+        if ($estado === '' && !$cambiarPago) {
+            jsonResponse(['ok' => false, 'error' => 'Indicá el estado del pedido o del pago.'], 400);
+        }
+
+        if ($estado !== '' && !in_array($estado, $permitidos, true)) {
             jsonResponse(['ok' => false, 'error' => 'Estado de pedido inválido.'], 400);
+        }
+
+        if ($cambiarPago && !in_array($pagoEstado, $permitidosPago, true)) {
+            jsonResponse(['ok' => false, 'error' => 'Estado de pago inválido.'], 400);
         }
 
         $usuario = requireLogin();
 
         /* Cliente: solo puede cancelar su propio pedido pendiente. */
         if ($usuario['rol'] !== 'admin') {
-            if ($estado !== 'cancelado') {
+            if ($cambiarPago || $estado !== 'cancelado') {
                 jsonResponse(['ok' => false, 'error' => 'No tenés permiso para cambiar este pedido.'], 403);
             }
 
@@ -131,12 +142,30 @@ try {
             $stT->execute([$id]);
         }
 
-        $st = $db->prepare('UPDATE pedidos SET estado = ? WHERE id = ?');
-        $st->execute([$estado, $id]);
+        if ($estado !== '') {
+            $st = $db->prepare('UPDATE pedidos SET estado = ? WHERE id = ?');
+            $st->execute([$estado, $id]);
+        }
+
+        if ($cambiarPago) {
+            $st = $db->prepare(
+                'UPDATE pedidos
+                 SET pago_estado = ?,
+                     pago_proveedor = COALESCE(pago_proveedor, ?),
+                     pago_actualizado_en = NOW()
+                 WHERE id = ?'
+            );
+            $st->execute([$pagoEstado, 'manual', $id]);
+        }
 
         $db->commit();
 
-        jsonResponse(['ok' => true, 'actualizado' => true]);
+        jsonResponse([
+            'ok' => true,
+            'actualizado' => true,
+            'estado' => $estado !== '' ? $estado : (string)$pedido['estado'],
+            'pago_estado' => $cambiarPago ? $pagoEstado : (string)($pedido['pago_estado'] ?? 'pendiente')
+        ]);
     }
 
     jsonResponse(['ok' => false, 'error' => 'Método no permitido.'], 405);

@@ -9,7 +9,6 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .search-hero {
-  margin-top: 68px;
   padding: 3.5rem 2rem 2.5rem;
   background: var(--rose-pale);
   border-bottom: 1px solid var(--rose-mid);
@@ -48,7 +47,7 @@
   margin-bottom: 1.8rem;
 
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2.75rem, 4.5vw, 3.5rem);
   font-weight: 300;
   line-height: 1.1;
   color: var(--text);
@@ -114,6 +113,8 @@
 .search-clear {
   flex-shrink: 0;
 
+  min-width: 40px;
+  min-height: 40px;
   padding: 0.4rem;
 
   border: none;
@@ -150,7 +151,8 @@
 }
 
 .sf-chip {
-  padding: 0.4rem 1.1rem;
+  min-height: 40px;
+  padding: 0.65rem 1.1rem;
 
   border: 1.5px solid var(--sand);
   border-radius: 50px;
@@ -176,7 +178,7 @@
 .sf-chip.active {
   border-color: var(--rose-deep);
   background: var(--rose-deep);
-  color: var(--white);
+  color: #ffffff;
 }
 
 
@@ -232,7 +234,8 @@
 }
 
 .sug-chips button {
-  padding: 0.45rem 1.1rem;
+  min-height: 40px;
+  padding: 0.65rem 1.1rem;
 
   border: 1.5px solid var(--sand);
   border-radius: 50px;

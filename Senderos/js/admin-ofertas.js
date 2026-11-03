@@ -15,8 +15,6 @@ var COLORES = [
   { nombre: 'Morado',  hex: '#7b5ea7' }
 ];
 
-var DIAS_SEMANA = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-
 var ofertas = [];
 var eliminarId = null;
 var colorSeleccionado = '#AD717E';
@@ -728,7 +726,7 @@ function renderTabla() {
             : '∞';
 
         fechaVig +=
-          ' → ';
+          ' – ';
 
         fechaVig +=
           o.fin
@@ -902,8 +900,8 @@ function toggleEstado(id) {
       window.showToast(
         nuevoEstado ===
           'activa'
-          ? '<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Oferta activada'
-          : '<img src="../img/icons/cerrar.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Oferta pausada'
+          ? 'Oferta activada'
+          : 'Oferta pausada'
       );
     }
   );
@@ -991,73 +989,6 @@ function guardarOfertaCompleta(
     .catch(function() {
       window.showToast('Error al procesar la oferta');
     });
-}
-
-// ── Días grid (la UI se eliminó: las ofertas rigen todos los días) ────────
-function buildDiasGrid() {
-  var container =
-    document.getElementById(
-      'diasGrid'
-    );
-
-  if (!container) {
-    return;
-  }
-
-  container.innerHTML = '';
-
-  DIAS_SEMANA.forEach(
-    function(dia, i) {
-      var btn =
-        document.createElement(
-          'button'
-        );
-
-      btn.type =
-        'button';
-
-      btn.className =
-        'dia-btn';
-
-      btn.textContent =
-        dia.substring(
-          0,
-          3
-        );
-
-      btn.dataset.dia =
-        i;
-
-      btn.addEventListener(
-        'click',
-        function() {
-          btn.classList.toggle(
-            'active'
-          );
-
-          var idx =
-            diasSeleccionados.indexOf(
-              i
-            );
-
-          if (idx === -1) {
-            diasSeleccionados.push(
-              i
-            );
-          } else {
-            diasSeleccionados.splice(
-              idx,
-              1
-            );
-          }
-        }
-      );
-
-      container.appendChild(
-        btn
-      );
-    }
-  );
 }
 
 // ── Color opts ───────────────────────────────────────────────────────────────
@@ -1321,7 +1252,7 @@ function actualizarPreviewOferta() {
     resumen.textContent =
       'Se aplica a ' + items.length + (items.length === 1 ? ' ítem' : ' ítems') +
       ' — ej: "' + ejemplo.nombre + '" $' + Number(ejemplo.precio).toLocaleString('es-AR') +
-      ' → $' + Number(final).toLocaleString('es-AR') + '. Tocá para ver todos.';
+      ' a $' + Number(final).toLocaleString('es-AR') + '. Tocá para ver todos.';
   }
 
   banner.appendChild(resumen);
@@ -1348,7 +1279,7 @@ function actualizarPreviewOferta() {
     } else {
       precio.textContent =
         '$' + Number(item.precio).toLocaleString('es-AR') +
-        ' → $' + Number(precioMuestra(item.precio, tipo, descuento)).toLocaleString('es-AR');
+        ' a $' + Number(precioMuestra(item.precio, tipo, descuento)).toLocaleString('es-AR');
     }
 
     fila.appendChild(precio);
@@ -1838,8 +1769,8 @@ function guardarOferta() {
 
       window.showToast(
         editId
-          ? '<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Oferta actualizada'
-          : '<img src="../img/icons/check.svg" alt="" width="13" height="13" style="vertical-align:middle;margin-right:0.3rem">Oferta creada'
+          ? 'Oferta actualizada'
+          : 'Oferta creada'
       );
 
       cerrarModal(
@@ -1981,9 +1912,7 @@ function confirmarEliminar() {
         'modalEliminar'
       );
 
-      window.showToast(
-        '<img src="../img/icons/basura.svg" alt="" width="15" height="15" style="vertical-align:middle;margin-right:0.3rem">Oferta eliminada'
-      );
+      window.showToast('Oferta eliminada');
 
       eliminarId =
         null;

@@ -10,6 +10,8 @@
   background: var(--cream);
 }
 
+/* Toggle de tema: misma posición flotante inferior derecha que el resto del sitio. */
+
 
 /* ─────────────────────────────────────
    PANEL VISUAL
@@ -35,6 +37,7 @@
   height: 100%;
 
   object-fit: cover;
+  object-position: center 38%;
 }
 
 .side-overlay {
@@ -44,9 +47,15 @@
 
   background:
     linear-gradient(
+      90deg,
+      rgba(26, 26, 26, 0.8) 0%,
+      rgba(26, 26, 26, 0.46) 55%,
+      rgba(26, 26, 26, 0.18) 100%
+    ),
+    linear-gradient(
       160deg,
-      rgba(173, 113, 126, 0.82) 0%,
-      rgba(69, 99, 77, 0.88) 100%
+      rgba(173, 113, 126, 0.4) 0%,
+      rgba(69, 99, 77, 0.5) 100%
     );
 }
 
@@ -69,12 +78,9 @@
   text-decoration: none;
 }
 
-.side-logo img {
+.side-logo .nav-logo-icon {
   width: 27px;
   height: 27px;
-
-  object-fit: contain;
-  border-radius: 6px;
 }
 
 .side-content {
@@ -99,7 +105,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
 
-  color: var(--rose-mid);
+  color: #f3cfd4;
 }
 
 .side-tag::before {
@@ -108,7 +114,7 @@
   width: 28px;
   height: 1px;
 
-  background: var(--rose-mid);
+  background: currentColor;
 }
 
 .side-title {
@@ -119,7 +125,7 @@
   font-weight: 300;
   line-height: 0.98;
 
-  color: var(--white);
+  color: #ffffff;
 }
 
 .side-title em {
@@ -164,6 +170,7 @@
 
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.12);
+  color: #F3CFD4;
 }
 
 .feature-icon img {
@@ -625,7 +632,7 @@
 }
 
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
 
   .registro-page {
     display: block;
@@ -743,7 +750,6 @@
 .pw-strength.strong { color: var(--success); }
 .field-error { min-height: 1rem; font-size: .72rem; color: var(--error); }
 .toggle-pw { background: none; border: none; cursor: pointer; color: var(--text-light); padding: .3rem; }
-@media (max-width: 900px) { .registro-page { grid-template-columns: 1fr; } .side-panel { display: none; } }
 
 
 /* -- NACIMIENTO DIA/MES/ANIO -- */
@@ -762,4 +768,15 @@
   background: var(--white);
   color: var(--text);
   font-size: 0.82rem;
+}
+
+@media (max-width: 480px) {
+  .nacimiento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #btnPaso2 {
+    width: 100%;
+    min-height: 48px;
+  }
 }

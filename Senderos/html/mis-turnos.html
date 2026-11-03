@@ -13,7 +13,7 @@
 
 <link href="../img/icons/favicon.svg" rel="icon" type="image/svg+xml"/>
 <meta content="Consultá tus turnos y pedidos de Senderos." name="description"/>
-<link href="../css/base.css" rel="stylesheet"/><link href="../css/mis-turnos.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
+<link href="../css/base.css" rel="stylesheet"/><link href="../css/mis-turnos.css" rel="stylesheet"/><link href="../css/mi-cuenta.css" rel="stylesheet"/><link href="../css/darkmode.css" rel="stylesheet"/><link href="../css/componentes.css" rel="stylesheet"/></head>
 <body data-pagina="mis-turnos">
 
 
@@ -49,21 +49,23 @@
 
         <span class="tab-badge" id="badgePedidos">0</span>
 </button>
+<button aria-selected="false" class="main-tab" data-tab="tabCuenta" role="tab" type="button">
+<img alt="" height="16" src="../img/icons/usuario.svg" width="16"/>
+
+        Mi cuenta
+
+        <span class="tab-badge hidden" id="badgeCuenta"></span>
+</button>
 </div>
 <section class="tab-panel active" id="tabTurnos" role="tabpanel">
 <div class="mt-filters">
-<button class="filter-tab active" data-estado="todos" type="button">
-          Todos
-        </button>
-<button class="filter-tab" data-estado="pendiente" type="button">
-          Pendientes
-        </button>
-<button class="filter-tab" data-estado="confirmado" type="button">
-          Confirmados
-        </button>
-<button class="filter-tab" data-estado="cancelado" type="button">
-          Cancelados
-        </button>
+<label class="mt-filters-label" for="filtroEstado">Estado</label>
+<select class="mt-filter-select" id="filtroEstado">
+<option value="todos">Todos</option>
+<option value="pendiente">Pendientes</option>
+<option value="confirmado">Confirmados</option>
+<option value="cancelado">Cancelados</option>
+</select>
 </div>
 <div class="mt-list" id="turnosList"></div>
 <div class="mt-empty hidden" id="turnosEmpty">
@@ -99,6 +101,145 @@
         </a>
 </div>
 </section>
+<section class="tab-panel" id="tabCuenta" role="tabpanel">
+
+<!-- ═══ MI CUENTA: SOLO LECTURA ═══ -->
+<div id="mcSoloLectura">
+
+<!-- Información personal -->
+<div class="mc-card">
+<div class="mc-card-header">
+<h2 class="mc-card-titulo">
+<img alt="" height="17" src="../img/icons/usuario.svg" width="17"/>
+            Información personal
+          </h2>
+<button class="btn-outline btn-chico" id="mcBtnEditar" type="button">
+            Editar datos
+          </button>
+</div>
+<div class="mc-info-lista" id="mcInfoLista">
+<p class="empty-desc">Cargando tus datos...</p>
+</div>
+</div>
+
+<!-- Seguridad de la cuenta -->
+<div class="mc-card">
+<div class="mc-card-header">
+<h2 class="mc-card-titulo">
+<img alt="" height="17" src="../img/icons/candado.svg" width="17"/>
+            Seguridad de la cuenta
+          </h2>
+</div>
+<div class="mc-seguridad">
+<div class="mc-seguridad-ico">
+<img alt="" height="18" src="../img/icons/candado.svg" width="18"/>
+</div>
+<div class="mc-seguridad-txt">
+<h3>Verificación por correo electrónico</h3>
+<p>
+              Tu cuenta está protegida con verificación en dos pasos.
+              Cada vez que inicies sesión, o modifiques tus datos,
+              te enviaremos un código de 6 dígitos a tu correo electrónico
+              para confirmar que sos vos.
+            </p>
+<span class="mc-badge-activo">
+              Protección activa
+            </span>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- ═══ MI CUENTA: EDICIÓN ═══ -->
+<div class="mc-card hidden" id="mcEdicion">
+<div class="mc-card-header">
+<h2 class="mc-card-titulo">
+<img alt="" height="17" src="../img/icons/formulario.svg" width="17"/>
+          Editar datos
+        </h2>
+</div>
+
+<form id="mcFormEdicion" novalidate="">
+<div class="mc-form-grid">
+<div class="form-group">
+<label for="mcNombre">
+              Nombre
+            </label>
+<input autocomplete="given-name" id="mcNombre" maxlength="100" name="nombre" placeholder="Tu nombre" type="text"/>
+<span aria-live="polite" class="field-error" id="err-nombre" role="alert"></span>
+</div>
+<div class="form-group">
+<label for="mcApellido">
+              Apellido
+            </label>
+<input autocomplete="family-name" id="mcApellido" maxlength="100" name="apellido" placeholder="Tu apellido" type="text"/>
+<span aria-live="polite" class="field-error" id="err-apellido" role="alert"></span>
+</div>
+<div class="form-group">
+<label for="mcTelefono">
+              Teléfono
+            </label>
+<input autocomplete="tel" id="mcTelefono" maxlength="40" name="telefono" placeholder="Tu número de teléfono" type="tel"/>
+<span aria-live="polite" class="field-error" id="err-telefono" role="alert"></span>
+</div>
+<div class="form-group ancho">
+<label for="mcEmail">
+              Correo electrónico
+            </label>
+<input autocomplete="email" id="mcEmail" maxlength="190" name="email" placeholder="tu@email.com" type="email"/>
+<span aria-live="polite" class="field-error" id="err-email" role="alert"></span>
+<p class="mc-nota-email">
+<img alt="" height="14" src="../img/icons/correo.svg" width="14"/>
+              Si cambiás tu correo, te enviaremos un código de
+              verificación a la dirección actual y otro a la nueva
+              para confirmar ambas antes de guardar.
+            </p>
+</div>
+</div>
+
+<div class="mc-acciones">
+<button class="btn-primary" id="mcBtnGuardar" type="button">
+            Guardar cambios
+          </button>
+<button class="btn-outline" id="mcBtnCancelar" type="button">
+            Cancelar
+          </button>
+</div>
+</form>
+
+<!-- ═══ VERIFICACIÓN CON CÓDIGO ═══ -->
+<div class="mc-verif hidden" id="mcVerificacion">
+<h3 class="mc-verif-titulo">
+          Verificá tu identidad
+        </h3>
+<p class="mc-verif-desc" id="mcVerifDesc">
+          Enviamos un código de verificación a tu correo electrónico.
+        </p>
+<form id="mcFormVerificacion" novalidate="">
+<div class="mc-verif-campo">
+<div class="form-group">
+<label for="mcCodigo">
+                Código de verificación
+              </label>
+<input autocapitalize="off" autocomplete="one-time-code" id="mcCodigo" inputmode="numeric" maxlength="6" pattern="[0-9]*" placeholder="------" type="text"/>
+<span aria-live="polite" class="field-error" id="err-codigo-verif" role="alert"></span>
+</div>
+<button class="btn-primary" id="mcBtnVerificar" type="button">
+              Verificar
+            </button>
+</div>
+<div class="mc-verif-acciones">
+<button class="mc-verif-reenviar" id="mcBtnReenviar" type="button">
+              Reenviar código
+            </button>
+<p class="mc-verif-espera hidden" id="mcVerifEspera" aria-live="polite"></p>
+</div>
+</form>
+</div>
+
+</div>
+</section>
 </main>
 <div aria-labelledby="modalCancelarTitulo" aria-modal="true" class="modal-overlay hidden" id="modalCancelar" role="dialog">
 <div class="modal">
@@ -127,5 +268,5 @@
 
 
 
-<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/mis-turnos.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
+<script src="../js/utils.js"></script><script src="../js/sesion.js"></script><script src="../js/mis-turnos.js"></script><script src="../js/mi-cuenta.js"></script><script src="../js/darkmode.js"></script><script src="../js/iconos-adaptativos.js"></script><script src="../js/layout.js"></script></body>
 </html>

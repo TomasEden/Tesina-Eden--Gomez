@@ -33,6 +33,7 @@
     href="../css/darkmode.css"
   >
 
+  <link rel="icon" href="../img/icons/favicon.svg" type="image/svg+xml"/>
 </head>
 
 
@@ -66,12 +67,7 @@
     class="sidebar-logo"
   >
 
-    <img
-      src="../img/icons/logo.png"
-      alt=""
-      width="22"
-      height="22"
-    >
+    <span aria-hidden="true" class="nav-logo-icon"></span>
 
     Senderos
 
@@ -82,7 +78,7 @@
   </a>
 
 
-  <nav class="sidebar-nav"><span class="sidebar-section">Principal</span><a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/grafico.svg" alt="" width="15" height="15"></span> Dashboard</a><span class="sidebar-section">Gesti�n</span><a href="admin-turnos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/calendario.svg" alt="" width="13" height="13"></span> Turnos</a><a href="admin-pedidos.html" class="sidebar-link active"><span class="sidebar-icon"><img src="../img/icons/caja.svg" alt="" width="15" height="15"></span> Pedidos</a><a href="admin-clientes.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/usuario.svg" alt="" width="15" height="15"></span> Clientes</a><a href="admin-servicios.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/servicio.svg" alt="" width="15" height="15"></span> Servicios</a><a href="admin-productos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/bolsa.svg" alt="" width="15" height="15"></span> Productos</a><a href="admin-ofertas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/oferta.svg" alt="" width="14" height="14"></span> Ofertas</a><a href="admin-resenas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/ver.svg" alt="" width="15" height="15"></span> Reseñas</a><span class="sidebar-section">Sitio</span><a href="index.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/web.svg" alt="" width="15" height="15"></span> Ver sitio</a></nav>
+  <nav class="sidebar-nav"><span class="sidebar-section">Principal</span><a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/grafico.svg" alt="" width="15" height="15"></span> Dashboard</a><span class="sidebar-section">Sitio</span><a href="index.html" class="sidebar-link sidebar-site-link" target="_blank" rel="noopener"><span class="sidebar-icon"><img src="../img/icons/web.svg" alt="" width="15" height="15"></span> Ver sitio web</a><span class="sidebar-section">Gestión</span><a href="admin-turnos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/calendario.svg" alt="" width="13" height="13"></span> Turnos</a><a href="admin-pedidos.html" class="sidebar-link active"><span class="sidebar-icon"><img src="../img/icons/caja.svg" alt="" width="15" height="15"></span> Pedidos</a><a href="admin-clientes.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/usuario.svg" alt="" width="15" height="15"></span> Clientes</a><a href="admin-servicios.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/servicio.svg" alt="" width="15" height="15"></span> Servicios</a><a href="admin-productos.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/bolsa.svg" alt="" width="15" height="15"></span> Productos</a><a href="admin-ofertas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/oferta.svg" alt="" width="14" height="14"></span> Ofertas</a><a href="admin-resenas.html" class="sidebar-link"><span class="sidebar-icon"><img src="../img/icons/ver.svg" alt="" width="15" height="15"></span> Reseñas</a></nav>
 
 
   <div class="sidebar-footer">
@@ -373,6 +369,29 @@
 
       <p>
         <strong>
+          Estado del pago:
+        </strong>
+
+        <span id="detallePagoEstado">
+        </span>
+      </p>
+
+
+      <p
+        id="detallePagoReferenciaFila"
+        class="hidden"
+      >
+        <strong>
+          Referencia de pago:
+        </strong>
+
+        <span id="detallePagoReferencia">
+        </span>
+      </p>
+
+
+      <p>
+        <strong>
           Entrega:
         </strong>
 
@@ -533,6 +552,68 @@
         </option>
 
       </select>
+
+
+      <label
+        for="nuevoPagoEstadoPedido"
+        style="display:block;margin-top:1rem"
+      >
+        Estado del pago
+      </label>
+
+
+      <select
+        id="nuevoPagoEstadoPedido"
+        class="admin-select"
+        style="width:100%;margin-top:.5rem"
+      >
+
+        <option value="pendiente">
+          Pendiente
+        </option>
+
+        <option value="en_proceso">
+          En proceso
+        </option>
+
+        <option value="aprobado">
+          Aprobado
+        </option>
+
+        <option value="simulado">
+          Simulado (demostración)
+        </option>
+
+        <option value="rechazado">
+          Rechazado
+        </option>
+
+        <option value="cancelado">
+          Cancelado
+        </option>
+
+        <option value="reembolsado">
+          Reembolsado
+        </option>
+
+        <option value="revisar">
+          Revisar
+        </option>
+
+        <option value="error">
+          Error
+        </option>
+
+      </select>
+
+
+      <p
+        class="td-light"
+        style="margin:.55rem 0 0;font-size:.72rem;line-height:1.45"
+      >
+        En Mercado Pago el estado se actualiza automáticamente. Usá este selector
+        solo para corregir o verificar un pago manualmente.
+      </p>
 
     </div>
 

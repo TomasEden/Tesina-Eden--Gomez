@@ -156,30 +156,49 @@ function renderTabla(lista) {
     var tr = document.createElement('tr');
 
     var tdNombre = document.createElement('td');
+    var nombreWrap = document.createElement('div');
+    nombreWrap.style.display = 'flex';
+    nombreWrap.style.alignItems = 'center';
+    nombreWrap.style.gap = '0.8rem';
+
+    var img = document.createElement('img');
+    img.src = String(servicio.imagen || '').trim() || '../img/placeholder.svg';
+    img.alt = '';
+    img.style.cssText =
+      'width:44px;height:44px;border-radius:10px;object-fit:cover;flex-shrink:0';
+    img.onerror = function () {
+      img.onerror = null;
+      img.src = '../img/placeholder.svg';
+    };
+    nombreWrap.appendChild(img);
+
+    var nombreTxt = document.createElement('div');
     var strong = document.createElement('strong');
     strong.textContent = String(servicio.nombre || '');
-    tdNombre.appendChild(strong);
+    nombreTxt.appendChild(strong);
 
     var desc = String(servicio.descripcion || '').substring(0, 45);
 
     if (desc) {
-      tdNombre.appendChild(document.createElement('br'));
+      nombreTxt.appendChild(document.createElement('br'));
 
       var light = document.createElement('span');
       light.className = 'td-light';
       light.textContent = desc + '...';
-      tdNombre.appendChild(light);
+      nombreTxt.appendChild(light);
     }
 
     if (servicio.badge) {
-      tdNombre.appendChild(document.createElement('br'));
+      nombreTxt.appendChild(document.createElement('br'));
 
       var badge = document.createElement('span');
       badge.className = 'td-light';
       badge.textContent = 'Badge: ' + String(servicio.badge_texto || servicio.badge);
-      tdNombre.appendChild(badge);
+      nombreTxt.appendChild(badge);
     }
 
+    nombreWrap.appendChild(nombreTxt);
+    tdNombre.appendChild(nombreWrap);
     tr.appendChild(tdNombre);
 
     var tdCat = document.createElement('td');
