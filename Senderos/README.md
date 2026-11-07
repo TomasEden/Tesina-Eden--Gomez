@@ -104,9 +104,6 @@ Senderos/
 │
 ├── img/            Imágenes del sitio
 ├── db/             Esquemas y migraciones SQL
-├── docs/           Documentación del proyecto
-│   ├── SEGURIDAD_VERIFICACION.md   Cómo funciona el 2FA (fuente oficial)
-│   └── README_PAGOS.md             Integración de pagos
 │
 ├── vendor/         Dependencias de Composer (PHPMailer)
 ├── .env            Configuración secreta  ← NO versionar ni entregar
@@ -132,8 +129,7 @@ referencias.
 
 ## Seguridad
 
-- **Verificación en dos pasos (2FA)** por correo al iniciar sesión. Ver
-  [`docs/SEGURIDAD_VERIFICACION.md`](docs/SEGURIDAD_VERIFICACION.md).
+- **Verificación en dos pasos (2FA)** por correo al iniciar sesión.
 - Los códigos se guardan **solo como HMAC-SHA256** firmado con una clave del
   servidor: jamás en texto plano, en logs ni en respuestas de la API.
 - Sesión definitiva recién después de los dos pasos, con regeneración de ID y

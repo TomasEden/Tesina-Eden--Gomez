@@ -189,7 +189,6 @@ Tesina-Eden--Gomez/
     ├── api/        # Endpoints PHP + librerías y configuración
     ├── css/        # Hojas de estilo (base, componentes, darkmode + una por página)
     ├── db/         # Esquema y migraciones SQL
-    ├── docs/       # Documentación del proyecto
     ├── html/       # Vistas del sitio público y del panel admin
     ├── img/        # Recursos gráficos (productos, servicios, íconos)
     ├── js/         # Lógica del cliente
@@ -381,8 +380,6 @@ Panel admin:    http://localhost/Senderos/html/admin-login.html
 - Validación de formularios en cliente **y** servidor.
 - Acceso restringido al panel administrativo con `requireAdmin()`.
 - Respuestas JSON sin cachear (`Cache-Control: no-store`).
-
-> 📖 Documentación completa en [`Senderos/docs/SEGURIDAD_VERIFICACION.md`](Senderos/docs/SEGURIDAD_VERIFICACION.md).
 
 ---
 
