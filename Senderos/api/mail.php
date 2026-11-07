@@ -338,10 +338,13 @@ function mailEnviar(string $para, string $asunto, string $html, string $texto): 
         $mail->msgHTML($html);
 
         $mail->send();
-    } catch (MailException $e) {
-        /* El mensaje interno de PHPMailer puede contener credenciales:
-           se registra solo en el log del servidor, jamás se devuelve. */
-        error_log('Senderos mail: ' . $e->getMessage());
+    } catch (Throwable $e) {
+        /* Captura CUALQUIER fallo: SMTP rechazado, TLS, timeout, etc.
+           (PHPMailer lanza PHPMailer\PHPMailer\Exception, que NO hereda
+           de ninguna MailException: por eso se atrapa Throwable.)
+           El mensaje interno puede contener credenciales: se registra
+           solo en el log del servidor, jamás se devuelve al cliente. */
+        error_log('Senderos mail: ' . get_class($e) . ': ' . $e->getMessage());
 
         throw new SenderosMailException('No se pudo enviar el correo de verificación');
     }

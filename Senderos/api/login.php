@@ -10,14 +10,16 @@ header('Cache-Control: no-store');
  * ═══════════════════════════════════════════════════════════
  * Senderos — login.php (verificación en dos pasos)
  *
- * Paso 1 del login: valida credenciales y, si son correctas,
- * genera un código de 6 dígitos que envía por correo al usuario.
+ * Clientes: valida credenciales y, si son correctas, genera un
+ * código de 6 dígitos que envía por correo. La sesión AUTENTICADA
+ * NO se crea acá: solo se guarda el estado mínimo del desafío en
+ * $_SESSION['verificacion_login']. La sesión definitiva se crea
+ * en verificacion.php cuando el código es correcto.
  *
- * La sesión AUTENTICADA NO se crea acá: únicamente se guarda el
- * estado mínimo del desafío pendiente en
- * $_SESSION['verificacion_login']. La sesión definitiva (con id,
- * rol y permisos) se crea en verificacion.php cuando el código
- * es correcto.
+ * Administradores: ACCESO DIRECTO sin código. El correo del panel
+ * es una cuenta de prueba que no recibe mensajes, por lo que el
+ * 2FA dejaría el panel bloqueado. La sesión se crea en este mismo
+ * archivo con las mismas claves que verificacion.php.
  * ═══════════════════════════════════════════════════════════
  */
 
@@ -91,6 +93,76 @@ try {
     unset($usuario['password_hash']);
 
     $usuarioId = (int)$usuario['id'];
+
+    /*
+     * ═══════════════════════════════════════════════════════
+     * Administradores: ACCESO DIRECTO, sin verificación en dos
+     * pasos.
+     *
+     * El correo del panel de administración es una cuenta de
+     * prueba que no recibe mensajes, por lo que exigir el código
+     * dejaría el panel bloqueado. La contraseña sigue siendo
+     * obligatoria y se guarda con hash bcrypt.
+     *
+     * La sesión se crea con EXACTAMENTE las mismas claves que
+     * genera verificacion.php, de modo que requireAdmin(),
+     * sesion.php y el resto del panel funcionan igual.
+     * ═══════════════════════════════════════════════════════
+     */
+    if ((string)$usuario['rol'] === 'admin') {
+
+        /* Se resguarda el carrito del invitado antes de regenerar. */
+        $carritoInvitado = isset($_SESSION['carrito']) && is_array($_SESSION['carrito'])
+            ? $_SESSION['carrito']
+            : null;
+
+        /* Regeneración del ID de sesión (fijación de sesión). */
+        session_regenerate_id(true);
+
+        /* Claves que leen auth.php, pedidos.php y turnos.php. */
+        $_SESSION['id'] = (int)$usuario['id'];
+        $_SESSION['nombre'] = (string)$usuario['nombre'];
+        $_SESSION['apellido'] = (string)$usuario['apellido'];
+        $_SESSION['email'] = (string)$usuario['email'];
+        $_SESSION['rol'] = (string)$usuario['rol'];
+
+        /* Claves que lee sesion.php. */
+        $_SESSION['usuario_id'] = (int)$usuario['id'];
+        $_SESSION['usuario'] = $usuario;
+
+        /* Se restituye el carrito del invitado (unión, sin duplicar). */
+        $_SESSION['carrito'] = fusionarCarritos(
+            isset($_SESSION['carrito']) && is_array($_SESSION['carrito'])
+                ? $_SESSION['carrito']
+                : null,
+            $carritoInvitado
+        );
+
+        /* "Recordarme" alarga la cookie de sesión PHP a SESION_DIAS. */
+        if ($recordarme) {
+            $lifetime = SESION_DIAS * 86400;
+            $params = session_get_cookie_params();
+
+            setcookie(
+                session_name(),
+                session_id(),
+                time() + $lifetime,
+                $params['path'] ?? '/',
+                $params['domain'] ?? '',
+                (bool)($params['secure'] ?? false),
+                (bool)($params['httponly'] ?? true)
+            );
+        }
+
+        jsonResponse([
+            'ok' => true,
+            'requiere_verificacion' => false,
+            'mensaje' => 'Sesión de administrador iniciada.',
+            'usuario' => $usuario
+        ]);
+    }
+
+    /* ── Clientes: verificación en dos pasos ──────────────── */
 
     /* Limpieza de desafíos vencidos (operación barata, hecha en cada creación). */
     verifLimpiarVencidos();
