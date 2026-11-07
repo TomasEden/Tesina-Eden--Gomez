@@ -87,7 +87,7 @@ Senderos/
 │   ├── productos.html        Catálogo (?id=X para detalle)
 │   ├── servicios.html        Servicios
 │   ├── carrito.html          Carrito
-│   ├── checkout/confirmacion Flujo de compra
+│   ├── confirmacion.html      Confirmación de reserva y pedido
 │   ├── login.html            Ingreso (paso 1)
 │   ├── verificacion.html     Ingreso (paso 2: código por correo)
 │   ├── registro.html         Alta de cuenta
@@ -106,7 +106,7 @@ Senderos/
 ├── db/             Esquemas y migraciones SQL
 │
 ├── vendor/         Dependencias de Composer (PHPMailer)
-├── .env            Configuración secreta  ← NO versionar ni entregar
+├── .env            Configuración secreta (no versionar ni entregar)
 ├── .env.example    Plantilla de configuración (segura de versionar)
 └── composer.json   Dependencias PHP
 ```
@@ -118,7 +118,7 @@ Las páginas viven en `html/` y referencian el resto **con rutas relativas**:
 ```html
 <link rel="stylesheet" href="../css/base.css">
 <script src="../js/sesion.js"></script>
-<img src="../img/logo.png">
+<img src="../img/icons/logo.svg" alt="Logo de Senderos">
 ```
 
 Los endpoints se llaman desde `../api/...`. Por eso **las carpetas `api/`, `css/`,
@@ -129,7 +129,9 @@ referencias.
 
 ## Seguridad
 
-- **Verificación en dos pasos (2FA)** por correo al iniciar sesión.
+- **Verificación en dos pasos (2FA)** por correo para los usuarios clientes. El
+  panel de administración accede directo con contraseña: su casilla es una cuenta
+  de prueba que no recibiría el código.
 - Los códigos se guardan **solo como HMAC-SHA256** firmado con una clave del
   servidor: jamás en texto plano, en logs ni en respuestas de la API.
 - Sesión definitiva recién después de los dos pasos, con regeneración de ID y
@@ -159,4 +161,4 @@ La base `senderos_db` tiene 13 tablas. Las dos nuevas de la migración de 2FA so
 
 ## Autor
 
-Proyecto académico —(Senderos Spa).
+Proyecto académico desarrollado por Tomás Edén y Malena Gómez — Senderos Spa, 2026.
